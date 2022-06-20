@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/imagine10255/bear-icon/compare/v1.1.0...v1.1.1) (2022-06-20)
+
+
+### Bug Fixes
+
+* fix tillt.toLocalString() ([152e47d](https://github.com/imagine10255/bear-icon/commit/152e47d3293166ca79976116d1ea62f00e1e6b03))
+
 ## [1.1.0](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.2...v1.1.0) (2022-06-20)
 
 ## [1.1.0-alpha.2](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2022-06-20)
