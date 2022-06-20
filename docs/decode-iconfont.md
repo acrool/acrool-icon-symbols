@@ -1,4 +1,4 @@
-# bear-icon svg-symbols
+# bear-icon decode-iconfont
 
 > build svg icon merge symbols
 

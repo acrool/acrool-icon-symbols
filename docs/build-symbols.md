@@ -1,4 +1,4 @@
-# bear-icon svg-symbols
+# bear-icon build-symbols
 
 > build svg icon merge symbols
 
