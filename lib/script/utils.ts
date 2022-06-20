@@ -16,7 +16,7 @@ const getMultiColor = (svgNode: Array<Node | string>): string[] => {
             if(row.tagName === 'path'){
                 const colors = [];
                 if(row.properties?.fill){
-                    colors.push(row.properties.fillt.toLocaleString());
+                    colors.push(row.properties.fill.toLocaleString());
                 }
 
                 if(row.properties?.['fill-opacity']){
