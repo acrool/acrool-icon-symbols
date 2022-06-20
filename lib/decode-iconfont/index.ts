@@ -69,6 +69,6 @@ async function run(args: IArgs) {
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-run({path: './example/iconfont'});
+// run({path: './example/iconfont'});
 export default run;
 module.exports = run;

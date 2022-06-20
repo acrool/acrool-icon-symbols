@@ -6,12 +6,8 @@
 ## Setting 
 
 in your package.json
-```json
-{
-  "scripts": {
-    "decode-iconfont": "bear-icon decode-iconfont --path=./public/static/plugins/iconfont"
-  }
-}
+```bash
+$ bear-icon decode-iconfont --path=./public/static/plugins/iconfont
 ```
 
 > source svg default in `_sources`
