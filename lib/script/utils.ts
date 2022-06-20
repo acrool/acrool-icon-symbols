@@ -65,7 +65,13 @@ export const remarkSVGPaths = (svgNode: Array<Node | string>, isMultiColor = tru
                     }
                 }
                 if(row.properties?.d){
-                    properties.push(`d="${row.properties.d}"`);
+                    const d = row.properties.d
+                        .toString()
+                        .replace('\n','')
+                        .replace('\t','')
+                        .replace(' ','')
+                    ;
+                    properties.push(`d="${d}"`);
                 }
                 curr.push(`    <path ${properties.join(' ')}/>`);
                 return curr;
