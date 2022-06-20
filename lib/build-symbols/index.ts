@@ -37,7 +37,7 @@ async function run(args: IArgs) {
             const iconCode = [idPrefix, filename].join('-');
 
             const svgContent = fs
-                .readFileSync(path.join(basePath, file), {encoding:'utf8', flag:'r'})
+                .readFileSync(path.join(sourceDirPath, file), {encoding:'utf8', flag:'r'})
                 .toString();
 
             const reg = new RegExp(regRules.svg);
