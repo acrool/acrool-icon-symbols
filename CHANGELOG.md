@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.0.3-alpha.0...v1.1.0-alpha.0) (2022-06-20)
+
+
+### Features
+
+* add auto create dir by decode-iconfont ([71d1225](https://github.com/imagine10255/bear-icon/commit/71d12254ccfae084d879871697b99272b83ad15f))
+
 ### [1.0.3-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.0.2...v1.0.3-alpha.0) (2022-06-20)
 
 
