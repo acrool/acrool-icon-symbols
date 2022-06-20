@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 import logger from '../script/logger';
 import {parse, Node} from 'svg-parser';
-import {bash, checkIsSVGMultiColor, remarkSVGPaths} from '../script/utils';
+import {bash, checkIsSVGMultiColor, getFilesizeInBytes, remarkSVGPaths} from '../script/utils';
 import {regRules} from '../config';
 
 interface IArgs {
@@ -54,7 +54,7 @@ async function run(args: IArgs) {
                 symbol.push(`  <symbol id="${iconCode}" viewBox="0 0 1024 1024">\n${svgPaths.join('\n')}\n  </symbol>`);
                 iconCodes.push(`'${filename}'`);
 
-                logger.success(`${file}`);
+                logger.info(`${file}`);
             }else{
                 logger.error(`${file} --> not find svg tag`);
             }
@@ -69,13 +69,16 @@ async function run(args: IArgs) {
     fs.writeFileSync(targetSvgFile, `<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">\n
 ${symbol.join('\n\n')}\n
 </svg>`);
+    logger.success(`Build to ${targetSvgFile}, size: ${getFilesizeInBytes(targetSvgFile)}`);
+
     fs.writeFileSync(targetTypeFile, `declare type IconCode = ${iconCodes.join('|')};`);
+    logger.success(`Build to ${targetTypeFile}, size: ${getFilesizeInBytes(targetTypeFile)}`);
 
 
     // By OSX Notice
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-// run({path: './example/build-symbols'});
+run({path: './example/build-symbols'});
 export default run;
 module.exports = run;

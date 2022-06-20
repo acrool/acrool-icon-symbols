@@ -16,6 +16,7 @@ in tsconfig.json
 ```
 
 in react component
+
 ```typescript jsx
 import styled, {css, keyframes} from 'styled-components/macro';
 import {asset} from 'utils/config';
@@ -24,7 +25,7 @@ type sizeUnit = 'px'|'%'|'em';
 type size = `${number}${sizeUnit}`;
 interface IProps extends FCProps{
     onClick?: () => void;
-    size?: size;
+    size?: number|size;
     color?: string|'primary'|'secondaryColor';
     code: IconCode;
     isRotateAnimation?: boolean;
@@ -41,17 +42,19 @@ const path = asset('/plugins/iconsvg/index.svg');
  * https://github.com/Hiswe/gulp-svg-symbols
  * https://io-meter.com/img/posts/svg-icons.svg
  */
-const IconSvg = ({
-    style,
-    className,
-    onClick,
-    size = '22px',
-    color = '#bdbdbd',
-    code,
-    isRotateAnimation = false,
-    rotate = 0,
-}: IProps) => {
+const Icon = ({
+      style,
+      className,
+      onClick,
+      size = '34px',
+      color = '#bdbdbd',
+      code,
+      isRotateAnimation = false,
+      rotate = 0,
+  }: IProps) => {
     const iconCode = [idPrefix, code].join('-');
+    const sizeUnit: string = typeof size === 'number'? `${size}px`: size;
+
     return (
         <IconSvgRoot
             xmlns="http://www.w3.org/2000/svg"
@@ -59,7 +62,7 @@ const IconSvg = ({
             className={className}
             isRotateAnimation={isRotateAnimation}
             onClick={onClick}
-            size={size}
+            size={sizeUnit}
             rotate={rotate}
             color={color}
         >
@@ -68,7 +71,7 @@ const IconSvg = ({
     );
 };
 
-export default IconSvg;
+export default Icon;
 
 const rotateAnimine = keyframes`
   from {
@@ -83,26 +86,29 @@ const rotateAnimine = keyframes`
 const IconSvgRoot = styled.svg<{
     onClick: any,
     isRotateAnimation?: boolean,
-    size?: size,
+    size?: string,
     rotate?: number,
 }>`
-        position: relative;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 
-        color: ${props => props.color};
-        width: ${props => props.size};
-        height: ${props => props.size};
+  color: ${props => props.color === 'primary' ? props.theme.primaryColor :
+    props.color === 'secondary' ? props.theme.secondaryColor :
+        props.color};
+  width: ${props => props.size};
+  height: ${props => props.size};
 
-        vertical-align: middle;
-        fill: currentColor;
 
-        transform: rotate(${props => props.rotate}deg);
+  vertical-align: middle;
+  fill: currentColor;
 
-        ${props =>  props.isRotateAnimation && css`
-            animation: ${rotateAnimine} 1s linear infinite;
-        `}
+  transform: rotate(${props => props.rotate}deg);
+
+  ${props =>  props.isRotateAnimation && css`
+    animation: ${rotateAnimine} 1s linear infinite;
+  `}
 
 `;
 ```
