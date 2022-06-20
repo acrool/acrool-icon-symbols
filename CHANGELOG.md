@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.2](https://github.com/imagine10255/bear-icon/compare/v1.0.1...v1.0.2) (2022-06-20)
+
+
+### Bug Fixes
+
+* fix build-symbols name ([2509ca7](https://github.com/imagine10255/bear-icon/commit/2509ca799978e3417bff0367397fd4db9bd151dc))
+
 ### 1.0.1 (2022-06-20)
 
 ## [2.1.0](https://github.com/imagine10255/bear-icon/compare/v2.1.0-alpha.1...v2.1.0) (2022-06-19)
