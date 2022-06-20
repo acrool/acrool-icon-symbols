@@ -1,6 +1,6 @@
 {
   "name": "bear-icon",
-  "version": "1.0.2",
+  "version": "1.0.3-alpha.0",
   "description": "Common tools and methods for project development",
   "keywords": [
     "typescript",
