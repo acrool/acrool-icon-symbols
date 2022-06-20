@@ -26,6 +26,9 @@ async function run(args: IArgs) {
 
     logger.info(`iconfont decode svgs ${basePath} ...`);
 
+    if (!fs.existsSync(sourceDirPath)){
+        fs.mkdirSync(sourceDirPath, {recursive: true});
+    }
 
     const iconfontJsFile = path.join(basePath, 'iconfont.js');
     const jsContent = fs
@@ -44,14 +47,18 @@ async function run(args: IArgs) {
                 const svgString = parse(symbolStr);
                 const svgPaths = remarkSVGPaths(svgString.children);
 
-                const idRes = regRules.id.exec(symbolStr);
+                const idRes = new RegExp(regRules.id).exec(symbolStr);
                 if(idRes && idRes.length > 1){
                     const filename = `${idRes[1].replace(`${idPrefix}-`,'')}.svg`;
+                    logger.success(filename);
+
                     const targetSvgFile = path.join(sourceDirPath, filename);
                     fs.writeFileSync(
                         targetSvgFile,
                         `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="200" height="200">\n${svgPaths.join('\n')}\n</svg>`
                     );
+                }else{
+                    logger.error(symbolStr);
                 }
             });
         }
@@ -62,6 +69,6 @@ async function run(args: IArgs) {
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-// run({path: './example/iconfont'});
+run({path: './example/iconfont'});
 export default run;
 module.exports = run;

@@ -14,11 +14,6 @@ in your package.json
 }
 ```
 
-if you not hava _source dir
-```bash
-$ mkdir ./public/static/plugins/iconfont/_source
-```
-
 > source svg default in `_sources`
 
 ## run
