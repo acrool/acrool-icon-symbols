@@ -16,11 +16,11 @@ const getMultiColor = (svgNode: Array<Node | string>): string[] => {
             if(row.tagName === 'path'){
                 const colors = [];
                 if(row.properties?.fill){
-                    colors.push(row.properties.fill);
+                    colors.push(row.properties.fillt.toLocaleString());
                 }
 
                 if(row.properties?.['fill-opacity']){
-                    colors.push(row.properties?.['fill-opacity']);
+                    colors.push(row.properties?.['fill-opacity'].toString().replace('0.','.'));
                 }
 
                 curr.push(colors.join('_'));
@@ -58,10 +58,10 @@ export const remarkSVGPaths = (svgNode: Array<Node | string>, isMultiColor = tru
                 const properties = [];
                 if(isMultiColor) {
                     if (row.properties?.['fill-opacity']) {
-                        properties.push(`fill-opacity="${row.properties?.['fill-opacity']}"`);
+                        properties.push(`fill-opacity="${row.properties?.['fill-opacity'].toString().replace('0.','.')}"`);
                     }
                     if (row.properties?.fill) {
-                        properties.push(`fill="${row.properties.fill}"`);
+                        properties.push(`fill="${row.properties.fill.toLocaleString()}"`);
                     }
                 }
                 if(row.properties?.d){
