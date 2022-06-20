@@ -1,1 +1,0 @@
-declare type IconCode = 'angle-up'|'clone'|'test';

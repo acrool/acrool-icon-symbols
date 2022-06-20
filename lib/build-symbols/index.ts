@@ -2,7 +2,7 @@ import * as fs from 'fs';
 import path from 'path';
 import logger from '../script/logger';
 import {parse, Node} from 'svg-parser';
-import {bash, remarkSVGPaths} from '../script/utils';
+import {bash, checkIsSVGMultiColor, remarkSVGPaths} from '../script/utils';
 import {regRules} from '../config';
 
 interface IArgs {
@@ -46,7 +46,11 @@ async function run(args: IArgs) {
             if(svgTag && svgTag.length > 0){
                 const result = svgTag[0];
                 const svgString = parse(result);
-                const svgPaths = remarkSVGPaths(svgString.children);
+
+                // diff svgPaths
+                const isMultiColor = checkIsSVGMultiColor(svgString.children);
+                const svgPaths = remarkSVGPaths(svgString.children, isMultiColor);
+
                 symbol.push(`  <symbol id="${iconCode}" viewBox="0 0 1024 1024">\n${svgPaths.join('\n')}\n  </symbol>`);
                 iconCodes.push(`'${filename}'`);
 
@@ -72,6 +76,6 @@ ${symbol.join('\n\n')}\n
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-// run({path: './example/build-symbols/_sources'});
+// run({path: './example/build-symbols'});
 export default run;
 module.exports = run;
