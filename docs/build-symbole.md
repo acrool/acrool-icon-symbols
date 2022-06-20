@@ -111,8 +111,7 @@ in your package.json
 ```json
 {
   "scripts": {
-    "build:icon": "bear-icon svg-symbols --path=./public/static/plugins/iconsvg",
-    "build:icon-from-iconfont": "bear-icon svg-symbols:from-iconfont --path=./public/static/plugins/iconsvg/_sources"
+    "build:icon": "bear-icon build-symbols --path=./public/static/plugins/iconsvg"
   }
 }
 ```

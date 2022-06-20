@@ -19,11 +19,15 @@ module.exports = async function bearScript () {
             run(argv);
         })
 
-        .command('decode-iconfont [jsPath]', 'svg merge symbols', (yargs) => {
+        .command('decode-iconfont [path]', 'svg merge symbols', (yargs) => {
             return yargs
                 .positional('path', {
-                    describe: 'iconfont.js path (ex: ./public/iconfont/iconfont.js)',
-                    default: './public/static/plugins/iconfont/iconfont.js',
+                    describe: 'iconfont path (ex: ./public/iconfont -> ./public/iconfont/iconfont.js)',
+                    default: './public/static/plugins/iconfont',
+                })
+                .positional('idPrefix', {
+                    describe: 'id prefix name (ex: icon -> icon-arrow-right)',
+                    default: 'icon',
                 });
 
         }, (argv) => {

@@ -14,8 +14,8 @@ yarn add -D bear-icon
 
 ## Document
 
-- [bear-icon docker](./docs/docker.md)
-- [bear-icon svg-symbole](./docs/svg-symbole.md)
+- [bear-icon build-symbole](./docs/build-symbole.md)
+- [bear-icon decode-iconfont](./docs/decode-iconfont.md)
 
 ## License
 
