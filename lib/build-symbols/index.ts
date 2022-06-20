@@ -13,7 +13,7 @@ interface IArgs {
 
 /**
  * reg: https://regex101.com/r/ai3qvO/1
- * run test: ts-node lib/build-symbole/index.ts
+ * run test: ts-node lib/build-symbols/index.ts
  * @param args
  */
 async function run(args: IArgs) {
@@ -72,6 +72,6 @@ ${symbol.join('\n\n')}\n
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-// run({path: './example/build-symbole/_sources'});
+// run({path: './example/build-symbols/_sources'});
 export default run;
 module.exports = run;

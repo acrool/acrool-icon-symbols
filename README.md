@@ -14,7 +14,7 @@ yarn add -D bear-icon
 
 ## Document
 
-- [bear-icon build-symbole](./docs/build-symbole.md)
+- [bear-icon build-symbols](./docs/build-symbols.md)
 - [bear-icon decode-iconfont](./docs/decode-iconfont.md)
 
 ## License
