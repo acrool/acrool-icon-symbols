@@ -16,7 +16,6 @@ interface IArgs {
 /**
  * decode iconfont.js to _sources/svgs
  * reg: https://regex101.com/r/ai3qvO/1
- * run test: ts-node lib/decode-iconfont/index.ts
  * @param args
  */
 async function run(args: IArgs) {
@@ -69,6 +68,6 @@ async function run(args: IArgs) {
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-// run({path: './example/iconfont'});
+
 export default run;
 module.exports = run;

@@ -13,8 +13,6 @@ interface IArgs {
 
 /**
  * reg: https://regex101.com/r/ai3qvO/1
- * run test: ts-node lib/build-symbols/index.ts
- * @param args
  */
 async function run(args: IArgs) {
     const basePath = typeof args.path !== 'undefined' ? args.path: './';
@@ -79,6 +77,5 @@ ${symbol.join('\n\n')}\n
     bash(`osascript -e 'display notification "${basePath} done" with title "publish done"'`);
 }
 
-run({path: './example/build-symbols'});
 export default run;
 module.exports = run;
