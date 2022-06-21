@@ -96,7 +96,6 @@ export const remarkSVGPaths = (svgNode: Array<Node | string>, isMultiColor = tru
                         .toString()
                         .replace('\n','')
                         .replace('\t','')
-                        .replace(' ','')
                     ;
                     properties.push(`d="${d}"`);
                 }
