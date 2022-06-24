@@ -1,21 +1,21 @@
-# bear-icon
+# bear-icon-symbols
 
 > Common tools and methods for project development
 
-[![NPM](https://img.shields.io/npm/v/bear-icon.svg)](https://www.npmjs.com/package/bear-icon)
-[![npm](https://img.shields.io/npm/dm/bear-icon.svg)](https://www.npmjs.com/package/bear-icon)
+[![NPM](https://img.shields.io/npm/v/bear-icon-symbols.svg)](https://www.npmjs.com/package/bear-icon-symbols)
+[![npm](https://img.shields.io/npm/dm/bear-icon-symbols.svg)](https://www.npmjs.com/package/bear-icon-symbols)
 
 
 ## Install
 
 ```bash
-yarn add -D bear-icon
+yarn add -D bear-icon-symbols
 ```
 
 ## Document
 
-- [bear-icon build-symbols](./docs/build-symbols.md)
-- [bear-icon decode-iconfont](./docs/decode-iconfont.md)
+- [bear-icon-symbols build-symbols](./docs/build-symbols.md)
+- [bear-icon-symbols decode-iconfont](./docs/decode-iconfont.md)
 
 ## License
 

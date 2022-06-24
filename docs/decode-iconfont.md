@@ -1,4 +1,4 @@
-# bear-icon decode-iconfont
+# bear-icon-symbols decode-iconfont
 
 > build svg icon merge symbols
 
@@ -7,7 +7,7 @@
 
 in your package.json
 ```bash
-$ bear-icon decode-iconfont --path=./public/static/plugins/iconfont
+$ bear-icon-symbols decode-iconfont --path=./public/static/plugins/iconfont
 ```
 
 > source svg default in `_sources`

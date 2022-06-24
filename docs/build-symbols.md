@@ -1,4 +1,4 @@
-# bear-icon build-symbols
+# bear-icon-symbols build-symbols
 
 > build svg icon merge symbols
 
@@ -117,7 +117,7 @@ in your package.json
 ```json
 {
   "scripts": {
-    "build:icon": "bear-icon build-symbols --path=./public/static/plugins/iconsvg"
+    "build:icon": "bear-icon-symbols build-symbols --path=./public/static/plugins/iconsvg"
   }
 }
 ```

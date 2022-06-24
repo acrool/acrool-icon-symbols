@@ -2,7 +2,7 @@
 
 /* istanbul ignore if */
 if (process.version.match(/v(\d+)\./)[1] < 10) {
-    console.error('bear-icon: Node v10 or greater is required. `bear-icon` did not run.')
+    console.error('bear-icon-symbols: Node v10 or greater is required. `bear-icon-symbols` did not run.')
 } else {
     const logger = require('../dist/script/logger');
     const bearScript = require('../dist/index');

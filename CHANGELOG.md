@@ -2,145 +2,145 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.1.5-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.1.4...v1.1.5-alpha.0) (2022-06-21)
+### [1.1.5-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.4...v1.1.5-alpha.0) (2022-06-21)
 
 
 ### Bug Fixes
 
-* fix path d replace space ([eee4cc9](https://github.com/imagine10255/bear-icon/commit/eee4cc9851b3c3d68c3c1cddaea792e6a93bc3e4))
+* fix path d replace space ([eee4cc9](https://github.com/imagine10255/bear-icon-symbols/commit/eee4cc9851b3c3d68c3c1cddaea792e6a93bc3e4))
 
-### [1.1.4](https://github.com/imagine10255/bear-icon/compare/v1.1.3...v1.1.4) (2022-06-20)
+### [1.1.4](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.3...v1.1.4) (2022-06-20)
 
-### [1.1.3](https://github.com/imagine10255/bear-icon/compare/v1.1.2...v1.1.3) (2022-06-20)
+### [1.1.3](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.2...v1.1.3) (2022-06-20)
 
 
 ### Features
 
-* add build-symbols file size ([1b9a2a8](https://github.com/imagine10255/bear-icon/commit/1b9a2a8cc677d74db81f142c5747552631ffddeb))
+* add build-symbols file size ([1b9a2a8](https://github.com/imagine10255/bear-icon-symbols/commit/1b9a2a8cc677d74db81f142c5747552631ffddeb))
 
-### [1.1.2](https://github.com/imagine10255/bear-icon/compare/v1.1.1...v1.1.2) (2022-06-20)
-
-
-### Features
-
-* add d remove ([f8bbdef](https://github.com/imagine10255/bear-icon/commit/f8bbdef3616df52905dd7d9f7c17c0c7210244e7))
-
-### [1.1.1](https://github.com/imagine10255/bear-icon/compare/v1.1.0...v1.1.1) (2022-06-20)
-
-
-### Bug Fixes
-
-* fix tillt.toLocalString() ([152e47d](https://github.com/imagine10255/bear-icon/commit/152e47d3293166ca79976116d1ea62f00e1e6b03))
-
-## [1.1.0](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.2...v1.1.0) (2022-06-20)
-
-## [1.1.0-alpha.2](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2022-06-20)
+### [1.1.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.1...v1.1.2) (2022-06-20)
 
 
 ### Features
 
-* build-symbols check multi color ([f866f56](https://github.com/imagine10255/bear-icon/commit/f866f566f39c21535782995bc6f92dc7f32c61fe))
+* add d remove ([f8bbdef](https://github.com/imagine10255/bear-icon-symbols/commit/f8bbdef3616df52905dd7d9f7c17c0c7210244e7))
 
-## [1.1.0-alpha.1](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2022-06-20)
+### [1.1.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0...v1.1.1) (2022-06-20)
 
 
 ### Bug Fixes
 
-* fix dev run ([0a10006](https://github.com/imagine10255/bear-icon/commit/0a10006e8c7c33b29179992ff53876e3ff869ca1))
+* fix tillt.toLocalString() ([152e47d](https://github.com/imagine10255/bear-icon-symbols/commit/152e47d3293166ca79976116d1ea62f00e1e6b03))
 
-## [1.1.0-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.0.3-alpha.0...v1.1.0-alpha.0) (2022-06-20)
+## [1.1.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0-alpha.2...v1.1.0) (2022-06-20)
+
+## [1.1.0-alpha.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0-alpha.1...v1.1.0-alpha.2) (2022-06-20)
 
 
 ### Features
 
-* add auto create dir by decode-iconfont ([71d1225](https://github.com/imagine10255/bear-icon/commit/71d12254ccfae084d879871697b99272b83ad15f))
+* build-symbols check multi color ([f866f56](https://github.com/imagine10255/bear-icon-symbols/commit/f866f566f39c21535782995bc6f92dc7f32c61fe))
 
-### [1.0.3-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.0.2...v1.0.3-alpha.0) (2022-06-20)
-
-
-### Bug Fixes
-
-* fix build-symbols sourcePath ([e7a891a](https://github.com/imagine10255/bear-icon/commit/e7a891a6380168d1f2f6008de93ef2672a2a391b))
-
-### [1.0.2](https://github.com/imagine10255/bear-icon/compare/v1.0.1...v1.0.2) (2022-06-20)
+## [1.1.0-alpha.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2022-06-20)
 
 
 ### Bug Fixes
 
-* fix build-symbols name ([2509ca7](https://github.com/imagine10255/bear-icon/commit/2509ca799978e3417bff0367397fd4db9bd151dc))
+* fix dev run ([0a10006](https://github.com/imagine10255/bear-icon-symbols/commit/0a10006e8c7c33b29179992ff53876e3ff869ca1))
+
+## [1.1.0-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.3-alpha.0...v1.1.0-alpha.0) (2022-06-20)
+
+
+### Features
+
+* add auto create dir by decode-iconfont ([71d1225](https://github.com/imagine10255/bear-icon-symbols/commit/71d12254ccfae084d879871697b99272b83ad15f))
+
+### [1.0.3-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.2...v1.0.3-alpha.0) (2022-06-20)
+
+
+### Bug Fixes
+
+* fix build-symbols sourcePath ([e7a891a](https://github.com/imagine10255/bear-icon-symbols/commit/e7a891a6380168d1f2f6008de93ef2672a2a391b))
+
+### [1.0.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.1...v1.0.2) (2022-06-20)
+
+
+### Bug Fixes
+
+* fix build-symbols name ([2509ca7](https://github.com/imagine10255/bear-icon-symbols/commit/2509ca799978e3417bff0367397fd4db9bd151dc))
 
 ### 1.0.1 (2022-06-20)
 
-## [2.1.0](https://github.com/imagine10255/bear-icon/compare/v2.1.0-alpha.1...v2.1.0) (2022-06-19)
+## [2.1.0](https://github.com/imagine10255/bear-icon-symbols/compare/v2.1.0-alpha.1...v2.1.0) (2022-06-19)
 
-## [2.1.0-alpha.1](https://github.com/imagine10255/bear-icon/compare/v2.1.0-alpha.0...v2.1.0-alpha.1) (2022-06-19)
-
-
-### Bug Fixes
-
-* fix args command and docs ([37d6e63](https://github.com/imagine10255/bear-icon/commit/37d6e63cbf8594c1255c56918cad6ea6348841bd))
-
-## [2.1.0-alpha.0](https://github.com/imagine10255/bear-icon/compare/v2.0.1...v2.1.0-alpha.0) (2022-06-19)
-
-
-### Features
-
-* add svg command ([3330860](https://github.com/imagine10255/bear-icon/commit/33308603f886f0df1a16d4411055ed2e362df724))
-
-### [2.0.1](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.1...v2.0.1) (2022-06-19)
-
-
-### Features
-
-* 新增 指令改寫 ([c5adf4f](https://github.com/imagine10255/bear-icon/commit/c5adf4ffc2eb863d38a582c6ec5fa5968acf8e45))
-
-## [2.0.0](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.1...v2.0.0) (2022-06-19)
-
-
-### Features
-
-* 新增 指令改寫 ([c5adf4f](https://github.com/imagine10255/bear-icon/commit/c5adf4ffc2eb863d38a582c6ec5fa5968acf8e45))
-
-## [1.1.0-alpha.1](https://github.com/imagine10255/bear-icon/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2022-06-19)
-
-## [1.1.0-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.0.4-alpha.3...v1.1.0-alpha.0) (2022-06-18)
-
-
-### Features
-
-* add args ([f719614](https://github.com/imagine10255/bear-icon/commit/f71961411c09b3020b25cf76d87d00a11f09fe7e))
-
-### [1.0.4-alpha.3](https://github.com/imagine10255/bear-icon/compare/v1.0.4-alpha.2...v1.0.4-alpha.3) (2022-06-18)
-
-### [1.0.4-alpha.2](https://github.com/imagine10255/bear-icon/compare/v1.0.4-alpha.1...v1.0.4-alpha.2) (2022-06-18)
-
-### [1.0.4-alpha.1](https://github.com/imagine10255/bear-icon/compare/v1.0.4-alpha.0...v1.0.4-alpha.1) (2022-06-18)
-
-### [1.0.4-alpha.0](https://github.com/imagine10255/bear-icon/compare/v1.0.3...v1.0.4-alpha.0) (2022-06-18)
-
-### [1.0.3](https://github.com/imagine10255/bear-icon/compare/v0.0.18...v1.0.3) (2022-02-18)
-
-### [1.0.2](https://github.com/imagine10255/bear-icon/compare/v0.0.18...v1.0.2) (2022-02-18)
-
-### [1.0.1](https://github.com/imagine10255/bear-icon/compare/v0.0.18...v1.0.1) (2022-02-18)
-
-### [0.0.18](https://github.com/imagine10255/bear-icon/compare/v2.0.0...v0.0.18) (2022-02-18)
+## [2.1.0-alpha.1](https://github.com/imagine10255/bear-icon-symbols/compare/v2.1.0-alpha.0...v2.1.0-alpha.1) (2022-06-19)
 
 
 ### Bug Fixes
 
-* 修正 package.json script ([d1de109](https://github.com/imagine10255/bear-icon/commit/d1de109775796dd0779b7561c7c491529a95a2d3))
+* fix args command and docs ([37d6e63](https://github.com/imagine10255/bear-icon-symbols/commit/37d6e63cbf8594c1255c56918cad6ea6348841bd))
 
-## [2.0.0](https://github.com/imagine10255/bear-icon/compare/v1.0.2...v2.0.0) (2022-02-18)
+## [2.1.0-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v2.0.1...v2.1.0-alpha.0) (2022-06-19)
 
-### [1.0.2](https://github.com/imagine10255/bear-icon/compare/v1.0.1...v1.0.2) (2022-02-18)
+
+### Features
+
+* add svg command ([3330860](https://github.com/imagine10255/bear-icon-symbols/commit/33308603f886f0df1a16d4411055ed2e362df724))
+
+### [2.0.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0-alpha.1...v2.0.1) (2022-06-19)
+
+
+### Features
+
+* 新增 指令改寫 ([c5adf4f](https://github.com/imagine10255/bear-icon-symbols/commit/c5adf4ffc2eb863d38a582c6ec5fa5968acf8e45))
+
+## [2.0.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0-alpha.1...v2.0.0) (2022-06-19)
+
+
+### Features
+
+* 新增 指令改寫 ([c5adf4f](https://github.com/imagine10255/bear-icon-symbols/commit/c5adf4ffc2eb863d38a582c6ec5fa5968acf8e45))
+
+## [1.1.0-alpha.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.1.0-alpha.0...v1.1.0-alpha.1) (2022-06-19)
+
+## [1.1.0-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.4-alpha.3...v1.1.0-alpha.0) (2022-06-18)
+
+
+### Features
+
+* add args ([f719614](https://github.com/imagine10255/bear-icon-symbols/commit/f71961411c09b3020b25cf76d87d00a11f09fe7e))
+
+### [1.0.4-alpha.3](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.4-alpha.2...v1.0.4-alpha.3) (2022-06-18)
+
+### [1.0.4-alpha.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.4-alpha.1...v1.0.4-alpha.2) (2022-06-18)
+
+### [1.0.4-alpha.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.4-alpha.0...v1.0.4-alpha.1) (2022-06-18)
+
+### [1.0.4-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.3...v1.0.4-alpha.0) (2022-06-18)
+
+### [1.0.3](https://github.com/imagine10255/bear-icon-symbols/compare/v0.0.18...v1.0.3) (2022-02-18)
+
+### [1.0.2](https://github.com/imagine10255/bear-icon-symbols/compare/v0.0.18...v1.0.2) (2022-02-18)
+
+### [1.0.1](https://github.com/imagine10255/bear-icon-symbols/compare/v0.0.18...v1.0.1) (2022-02-18)
+
+### [0.0.18](https://github.com/imagine10255/bear-icon-symbols/compare/v2.0.0...v0.0.18) (2022-02-18)
+
+
+### Bug Fixes
+
+* 修正 package.json script ([d1de109](https://github.com/imagine10255/bear-icon-symbols/commit/d1de109775796dd0779b7561c7c491529a95a2d3))
+
+## [2.0.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.2...v2.0.0) (2022-02-18)
+
+### [1.0.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.0.1...v1.0.2) (2022-02-18)
 
 ### 1.0.1 (2022-02-18)
 
 
 ### Features
 
-* 新增 發布指令 ([3b56f39](https://github.com/imagine10255/bear-icon/commit/3b56f397653f17b725d5c95f522d8f8c7006fb9f))
+* 新增 發布指令 ([3b56f39](https://github.com/imagine10255/bear-icon-symbols/commit/3b56f397653f17b725d5c95f522d8f8c7006fb9f))
 
 ## [1.0.0](https://github.com/imagine10255/deploy/compare/v0.0.30...v1.0.0) (2022-02-17)
 
