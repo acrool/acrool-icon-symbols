@@ -1,1 +1,1 @@
-declare type IconCode = 'angle-up'|'clone'|'test'|'user-profile';
+declare type IconCode = 'angle_up'|'clone'|'test'|'user_profile';

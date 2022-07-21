@@ -27,12 +27,13 @@ async function run(args: IArgs) {
     const dirChildFiles = fs.readdirSync(sourceDirPath);
 
     const targetSvgFile = path.join(basePath, 'index.svg');
-    const targetTypeFile = path.join(basePath, 'icon.d.ts');
+    const targetTsTypeFile = path.join(basePath, 'icon.d.ts');
+    const targetDartTypeFile = path.join(basePath, 'icon.dart');
 
     dirChildFiles.forEach(file => {
         if (path.extname(file) == '.svg'){
             const filename = file.replace('.svg', '');
-            const iconCode = [idPrefix, filename].join('-');
+            const iconCode = [idPrefix, filename].join('');
 
             const svgContent = fs
                 .readFileSync(path.join(sourceDirPath, file), {encoding:'utf8', flag:'r'})
@@ -50,7 +51,7 @@ async function run(args: IArgs) {
                 const svgPaths = remarkSVGPaths(svgString.children, isMultiColor);
 
                 symbol.push(`  <symbol id="${iconCode}" viewBox="0 0 1024 1024">\n${svgPaths.join('\n')}\n  </symbol>`);
-                iconCodes.push(`'${filename}'`);
+                iconCodes.push(`${filename}`);
 
                 logger.info(`${file}`);
             }else{
@@ -69,8 +70,27 @@ ${symbol.join('\n\n')}\n
 </svg>`);
     logger.success(`Build to ${targetSvgFile}, size: ${getFilesizeInBytes(targetSvgFile)}`);
 
-    fs.writeFileSync(targetTypeFile, `declare type IconCode = ${iconCodes.join('|')};`);
-    logger.success(`Build to ${targetTypeFile}, size: ${getFilesizeInBytes(targetTypeFile)}`);
+    // write type file
+    fs.writeFileSync(targetTsTypeFile, `declare type IconCode = ${iconCodes.map(code => `'${code}'`).join('|')};`);
+    logger.success(`Build to ${targetTsTypeFile}, size: ${getFilesizeInBytes(targetTsTypeFile)}`);
+
+    const varName = 'Map<EIconCode, String> iconCodeMapping';
+
+    // write type file
+    fs.writeFileSync(targetDartTypeFile, `
+enum EIconCode {
+  ${iconCodes.join(',\n  ')}
+}
+
+${varName} = {
+  ${iconCodes.map(code => {
+        return `EIconCode.${code}: '${code}',`;
+    }).join('\n  ')}    
+};
+
+
+`);
+    logger.success(`Build to ${targetDartTypeFile}, size: ${getFilesizeInBytes(targetDartTypeFile)}`);
 
 
     // By OSX Notice
