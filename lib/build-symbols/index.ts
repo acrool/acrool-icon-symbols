@@ -17,7 +17,7 @@ interface IArgs {
 async function run(args: IArgs) {
     const basePath = typeof args.path !== 'undefined' ? args.path: './';
     const sourceDirPath = path.join(basePath, '_sources');
-    const idPrefix = typeof args.idPrefix !== 'undefined' ? args.idPrefix: 'icon';
+    const idPrefix = typeof args.idPrefix !== 'undefined' ? args.idPrefix: 'icon_';
 
     logger.info(`svg merge symbols ${basePath} ...`);
 
