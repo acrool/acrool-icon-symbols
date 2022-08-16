@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.0...v1.2.1) (2022-08-16)
+
+
+### Features
+
+* 新增 symbols decode to svg ([2beec65](https://github.com/imagine10255/bear-icon-symbols/commit/2beec65816f142b41530d05e29186e298f0c665c))
+
 ## [1.2.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.0-alpha.0...v1.2.0) (2022-07-21)
 
 
