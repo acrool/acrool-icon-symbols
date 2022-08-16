@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.1...v1.2.2) (2022-08-16)
+
+
+### Bug Fixes
+
+* fix not setting index.ts ([fd72caf](https://github.com/imagine10255/bear-icon-symbols/commit/fd72cafea6ac1e05f33941c88c77f50742aa4bd5))
+
 ### [1.2.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.0...v1.2.1) (2022-08-16)
 
 
