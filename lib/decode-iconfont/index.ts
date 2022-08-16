@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import path from 'path';
+import {regPattern} from 'bear-jsutils/equal';
 import logger from '../script/logger';
-import {parse, Node} from 'svg-parser';
+import {parse} from 'svg-parser';
 import {bash, remarkSVGPaths} from '../script/utils';
-import {regRules} from '../config';
 
 interface IArgs {
     path: string,
@@ -34,10 +34,10 @@ async function run(args: IArgs) {
         .readFileSync(iconfontJsFile, {encoding:'utf8', flag:'r'})
         .toString();
 
-    const svgReg = new RegExp(regRules.svg);
+    const svgReg = new RegExp(regPattern.svg);
     const svgTags = svgReg.exec(jsContent);
     if(svgTags && svgTags.length > 0){
-        const symbolTags = svgTags[0].match(regRules.symbol);
+        const symbolTags = svgTags[0].match(regPattern.symbol);
 
         if(symbolTags && symbolTags.length > 0) {
             // const result = symbolTags[0];
@@ -46,7 +46,7 @@ async function run(args: IArgs) {
                 const svgString = parse(symbolStr);
                 const svgPaths = remarkSVGPaths(svgString.children);
 
-                const idRes = new RegExp(regRules.id).exec(symbolStr);
+                const idRes = new RegExp(regPattern.htmlAttrId).exec(symbolStr);
                 if(idRes && idRes.length > 1){
                     const filename = `${idRes[1].replace(`${idPrefix}-`,'')}.svg`;
                     logger.success(filename);

@@ -1,9 +1,9 @@
 import * as fs from 'fs';
 import path from 'path';
+import {regPattern} from 'bear-jsutils/equal';
 import logger from '../script/logger';
 import {parse, Node} from 'svg-parser';
 import {bash, checkIsSVGMultiColor, getFilesizeInBytes, remarkSVGPaths} from '../script/utils';
-import {regRules} from '../config';
 
 interface IArgs {
     path: string,
@@ -39,7 +39,7 @@ async function run(args: IArgs) {
                 .readFileSync(path.join(sourceDirPath, file), {encoding:'utf8', flag:'r'})
                 .toString();
 
-            const reg = new RegExp(regRules.svg);
+            const reg = new RegExp(regPattern.svg);
             const svgTag = reg.exec(svgContent);
 
             if(svgTag && svgTag.length > 0){
