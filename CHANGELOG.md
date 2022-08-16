@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.3](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.2...v1.2.3) (2022-08-16)
+
+
+### Bug Fixes
+
+* fix id prefix ([d9ed208](https://github.com/imagine10255/bear-icon-symbols/commit/d9ed208b4a9b31f78c6f66bb93512eed54ab4c75))
+
 ### [1.2.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.1...v1.2.2) (2022-08-16)
 
 
