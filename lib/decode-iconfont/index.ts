@@ -21,7 +21,7 @@ interface IArgs {
 async function run(args: IArgs) {
     const basePath = typeof args.path !== 'undefined' ? args.path: './';
     const sourceDirPath = path.join(basePath, '_sources');
-    const idPrefix = typeof args.idPrefix !== 'undefined' ? args.idPrefix: 'icon';
+    const idPrefix = typeof args.idPrefix !== 'undefined' ? args.idPrefix: 'icon_';
 
     logger.info(`iconfont decode svgs ${basePath} ...`);
 
@@ -48,7 +48,7 @@ async function run(args: IArgs) {
 
                 const idRes = new RegExp(regPattern.htmlAttrId).exec(symbolStr);
                 if(idRes && idRes.length > 1){
-                    const filename = `${idRes[1].replace(`${idPrefix}-`,'')}.svg`;
+                    const filename = `${idRes[1].replace(idPrefix,'')}.svg`;
                     logger.success(filename);
 
                     const targetSvgFile = path.join(sourceDirPath, filename);

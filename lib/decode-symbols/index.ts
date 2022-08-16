@@ -7,6 +7,7 @@ import {removeStartEnd} from 'bear-jsutils/string';
 
 interface IArgs {
     path: string,
+    idPrefix?: string
 }
 
 
@@ -16,6 +17,8 @@ async function run(args: IArgs) {
     if (!fs.existsSync(sourceDirPath)){
         fs.mkdirSync(sourceDirPath, {recursive: true});
     }
+    const idPrefix = typeof args.idPrefix !== 'undefined' ? args.idPrefix: 'icon_';
+
 
     logger.info(`symbols split svg ${basePath} ...`);
 
@@ -30,7 +33,7 @@ async function run(args: IArgs) {
         symbols.forEach(symbol => {
             const idRes = new RegExp(regPattern.htmlAttrId).exec(symbol);
             if(idRes && idRes.length > 1){
-                const targetSvgFile = path.join(sourceDirPath, `${idRes[1]}.svg`);
+                const targetSvgFile = path.join(sourceDirPath, `${idRes[1].replace(idPrefix,'')}.svg`);
                 const pathContent = removeStartEnd(symbol, '<symbol\\b[^>]*?(?:viewBox=\\"(\\b[^"]*)\\")?>', '<\\/symbol>');
 
                 // ======== write type file start ========

@@ -11,8 +11,8 @@ module.exports = async function bearScript () {
                     default: './public/static/plugins/iconsvg',
                 })
                 .positional('idPrefix', {
-                    describe: 'id prefix name (ex: icon -> icon-arrow-right)',
-                    default: 'icon',
+                    describe: 'id prefix name (ex: icon_ -> icon_arrow_right)',
+                    default: 'icon_',
                 });
         }, (argv) => {
             const run = require('./build-symbols');
@@ -26,8 +26,8 @@ module.exports = async function bearScript () {
                     default: './public/static/plugins/iconfont',
                 })
                 .positional('idPrefix', {
-                    describe: 'id prefix name (ex: icon -> icon-arrow-right)',
-                    default: 'icon',
+                    describe: 'id prefix name (ex: icon_ -> icon_arrow_right)',
+                    default: 'icon_',
                 });
 
         }, (argv) => {
@@ -40,6 +40,10 @@ module.exports = async function bearScript () {
                 .positional('path', {
                     describe: 'symbols path (ex: ./public/icon -> ./public/icon/index.svg)',
                     default: './public/static/plugins/iconsvg',
+                })
+                .positional('idPrefix', {
+                    describe: 'id prefix name (ex: icon_ -> icon_arrow_right)',
+                    default: 'icon_',
                 });
 
         }, (argv) => {
