@@ -34,6 +34,18 @@ module.exports = async function bearScript () {
             const run = require('./decode-iconfont');
             run(argv);
         })
+
+        .command('decode-symbols [path]', 'symbols split svg list', (yargs) => {
+            return yargs
+                .positional('path', {
+                    describe: 'symbols path (ex: ./public/icon -> ./public/icon/index.svg)',
+                    default: './public/static/plugins/iconsvg',
+                });
+
+        }, (argv) => {
+            const run = require('./decode-symbols');
+            run(argv);
+        })
         .demandCommand(1)
         .parse();
 };
