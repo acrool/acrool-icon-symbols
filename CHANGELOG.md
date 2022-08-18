@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.4](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.3...v1.2.4) (2022-08-18)
+
+
+### Features
+
+* 新增 輸出 enum ([fb3216e](https://github.com/imagine10255/bear-icon-symbols/commit/fb3216e003a5e4f7a34906a3713109021cee0c89))
+
 ### [1.2.3](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.2...v1.2.3) (2022-08-16)
 
 
