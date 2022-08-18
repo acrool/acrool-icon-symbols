@@ -27,8 +27,8 @@ async function run(args: IArgs) {
     const dirChildFiles = fs.readdirSync(sourceDirPath);
 
     const targetSvgFile = path.join(basePath, 'index.svg');
-    const targetTsTypeFile = path.join(basePath, 'icon.d.ts');
-    const targetDartTypeFile = path.join(basePath, 'icon.dart');
+    const targetTsTypeFile = path.join(basePath, 'db.d.ts');
+    const targetDartTypeFile = path.join(basePath, 'db.dart');
 
     dirChildFiles.forEach(file => {
         if (path.extname(file) == '.svg'){
@@ -70,13 +70,20 @@ ${symbol.join('\n\n')}\n
 </svg>`);
     logger.success(`Build to ${targetSvgFile}, size: ${getFilesizeInBytes(targetSvgFile)}`);
 
-    // write type file
-    fs.writeFileSync(targetTsTypeFile, `declare type IconCode = ${iconCodes.map(code => `'${code}'`).join('|')};`);
+
+    // ========= write typescript type file =========
+    fs.writeFileSync(targetTsTypeFile, `
+declare type TIconCode = ${iconCodes.map(code => `'${code}'`).join('|')};
+declare enum EIconCode {
+  ${iconCodes.map(code => `'${code}'='${code}'`).join(',\n  ')}
+}
+export {TIconCode, EIconCode}
+`);
     logger.success(`Build to ${targetTsTypeFile}, size: ${getFilesizeInBytes(targetTsTypeFile)}`);
 
-    const varName = 'Map<EIconCode, String> iconCodeMapping';
 
-    // write type file
+    // ========= write dart flutter type file =========
+    const varName = 'Map<EIconCode, String> iconCodeMapping';
     fs.writeFileSync(targetDartTypeFile, `
 enum EIconCode {
   ${iconCodes.join(',\n  ')}

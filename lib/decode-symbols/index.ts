@@ -37,7 +37,7 @@ async function run(args: IArgs) {
                 const pathContent = removeStartEnd(symbol, '<symbol\\b[^>]*?(?:viewBox=\\"(\\b[^"]*)\\")?>', '<\\/symbol>');
 
                 // ======== write type file start ========
-                fs.writeFileSync(targetSvgFile, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="200" height="200">${pathContent}</svg>`);
+                fs.writeFileSync(targetSvgFile, `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="200" height="200">${pathContent.trim().replace('    ','')}</svg>`);
                 // ======== write type file end ========
             }
 
