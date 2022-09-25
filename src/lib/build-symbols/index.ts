@@ -2,7 +2,8 @@ import * as fs from 'fs';
 import path from 'path';
 import logger from '../script/logger';
 import {bash} from '../script/utils';
-import {decodeSvgPath, getFilesizeInBytes} from '../../src/utils';
+import {getFilesizeInBytes} from '../script/utils';
+import {decodeSvgPath} from '../../utils';
 
 interface IArgs {
     path: string,

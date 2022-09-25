@@ -1,4 +1,3 @@
-import fs from 'fs';
 import path from 'path';
 import {Node, parse} from 'svg-parser';
 import {regPattern} from 'bear-jsutils/equal';
@@ -10,7 +9,7 @@ import {regPattern} from 'bear-jsutils/equal';
  * @returns {string}
  * @param num
  */
-const numToDecimal2 = (num: number): number => {
+export const numToDecimal2 = (num: number): number => {
     const f = Math.floor(num * 100) / 100;
     let s = f.toString();
     let rs = s.indexOf('.');
@@ -24,12 +23,6 @@ const numToDecimal2 = (num: number): number => {
     return Number(s);
 };
 
-
-export const getFilesizeInBytes = (filename: string): string => {
-    const stats = fs.statSync(filename);
-    const fileSizeInBytes = stats.size;
-    return `${numToDecimal2(fileSizeInBytes / 1024)} kB`;
-};
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
     return self.indexOf(value) === index;

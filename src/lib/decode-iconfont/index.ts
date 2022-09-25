@@ -3,7 +3,8 @@ import path from 'path';
 import {regPattern} from 'bear-jsutils/equal';
 import logger from '../script/logger';
 import {parse} from 'svg-parser';
-import {bash, remarkSVGPaths} from '../script/utils';
+import {bash} from '../script/utils';
+import {remarkDeepSVGPaths} from '../../utils';
 
 interface IArgs {
     path: string,
@@ -44,7 +45,7 @@ async function run(args: IArgs) {
             symbolTags.forEach(symbolStr => {
 
                 const svgString = parse(symbolStr);
-                const svgPaths = remarkSVGPaths(svgString.children);
+                const svgPaths = remarkDeepSVGPaths(svgString.children);
 
                 const idRes = new RegExp(regPattern.htmlAttrId).exec(symbolStr);
                 if(idRes && idRes.length > 1){
