@@ -1,6 +1,6 @@
 {
   "name": "bear-icon-symbols",
-  "version": "1.2.4",
+  "version": "1.2.5-alpha.0",
   "description": "Common tools and methods for project development",
   "keywords": [
     "typescript",
@@ -13,6 +13,9 @@
     "type": "git",
     "url": "https://github.com/imagine10255/bear-icon-symbols.git"
   },
+  "main": "dist/bear-icon-symbols.js",
+  "module": "dist/bear-icon-symbols.modern.js",
+  "types": "dist/index.d.ts",
   "bin": "bin/cli.js",
   "files": [
     "dist",
@@ -23,7 +26,8 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "run-s build:claer && tsc --project ./tsconfig.build.json",
+    "build": "run-s build:claer && microbundle src/index.ts -o dist --no-compress --no-css-modules --format modern,cjs",
+    "build3": "run-s build:claer && tsc --project ./tsconfig.build.json",
     "build:claer": "rm -rf ./dist",
     "prepublishOnly": "run-s build",
     "test": "jest --coverage",
