@@ -1,9 +1,8 @@
 import * as fs from 'fs';
 import path from 'path';
-import {regPattern} from 'bear-jsutils/equal';
 import logger from '../script/logger';
-import {parse, Node} from 'svg-parser';
-import {bash, checkIsSVGMultiColor, getFilesizeInBytes, remarkSVGPaths} from '../script/utils';
+import {bash} from '../script/utils';
+import {decodeSvgPath, getFilesizeInBytes} from '../../src/utils';
 
 interface IArgs {
     path: string,
@@ -39,27 +38,10 @@ async function run(args: IArgs) {
                 .readFileSync(path.join(sourceDirPath, file), {encoding:'utf8', flag:'r'})
                 .toString();
 
-            const reg = new RegExp(regPattern.svg);
-            const svgTag = reg.exec(svgContent);
+            const svgPaths = decodeSvgPath(svgContent);
 
-            if(svgTag && svgTag.length > 0){
-                const result = svgTag[0];
-                const svgString = parse(result);
-
-                // diff svgPaths
-                const isMultiColor = checkIsSVGMultiColor(svgString.children);
-                const svgPaths = remarkSVGPaths(svgString.children, isMultiColor);
-
-                symbol.push(`  <symbol id="${iconCode}" viewBox="0 0 1024 1024">\n${svgPaths.join('\n')}\n  </symbol>`);
-                iconCodes.push(`${filename}`);
-
-                logger.info(`${file}`);
-            }else{
-                logger.error(`${file} --> not find svg tag`);
-            }
-
-
-
+            symbol.push(`  <symbol id="${iconCode}" viewBox="0 0 1024 1024">\n${svgPaths.join('\n')}\n  </symbol>`);
+            iconCodes.push(`${filename}`);
         }
 
     });
