@@ -85,12 +85,12 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
                 if(row.properties?.d){
                     const d = row.properties.d
                         .toString()
-                        .replace('\n','')
-                        .replace('\t','')
+                        .replace(/\n/g,'')
+                        .replace(/\t/g, '')
                     ;
                     properties.push(`d="${d}"`);
                 }
-                curr.push(`    <path ${properties.join(' ')}/>`);
+                curr.push(`<path ${properties.join(' ')}/>`);
                 return curr;
             }else if(row.children && row.children.length > 0){
                 return remarkDeepSVGPaths(row.children, isMultiColor);

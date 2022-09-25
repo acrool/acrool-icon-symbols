@@ -1,6 +1,6 @@
 {
   "name": "bear-icon-symbols",
-  "version": "1.2.5-alpha.6",
+  "version": "1.2.5-alpha.7",
   "description": "Common tools and methods for project development",
   "keywords": [
     "typescript",
@@ -25,7 +25,6 @@
     "node": ">=10"
   },
   "scripts": {
-    "build4": "run-s build:claer && microbundle src/index.ts -o dist --no-compress --no-css-modules --format modern,cjs",
     "build": "run-s build:claer && tsc --project ./tsconfig.build.json && run-s copy-dts",
     "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
     "build:claer": "rm -rf ./dist",
@@ -63,7 +62,6 @@
     "cz-customizable": "6.3.0",
     "eslint": "^8.8.0",
     "jest": "^27.4.7",
-    "microbundle": "0.14.2",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
     "standard-version": "9.5.0",
