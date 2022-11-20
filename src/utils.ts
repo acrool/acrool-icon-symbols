@@ -128,6 +128,8 @@ interface IAttr{
     d?: string,
     fill?: string,
     fillOpacity?: string,
+    fillRule?: string,
+    clipRule?: string,
 }
 
 /**
@@ -139,25 +141,32 @@ export const decodeSvgPath2 = (svgContent: string) => {
     const root = $('svg');
     const viewBox = root.attr('viewBox');
 
-    let fillCount = 0;
+    const fillDiffColor: string[] = [];
     const paths: IAttr[] = [];
     root.find('path').each((index, element) => {
-        const d = $(element).attr('d');
-        const fill = $(element).attr('fill');
-        const fillOpacity = $(element).attr('fill-opacity');
-        if(fill){
-            fillCount+=1;
+        const d = $(element).attr('d')?.toString()
+            .replace(/\n/g,'')
+            .replace(/\t/g, '')
+        ;
+        const fill = $(element).attr('fill')?.toLocaleString();
+        const fillOpacity = $(element).attr('fill-opacity')?.toString().replace('0.','.');
+        const fillRule = $(element).attr('fill-rule')?.toString();
+        const clipRule = $(element).attr('clip-rule')?.toString();
+        if(fill && !fillDiffColor.includes(fill)){
+            fillDiffColor.push(fill);
         }
         paths.push({
             d,
             fill,
             fillOpacity,
+            clipRule,
+            fillRule,
         });
 
 
     });
 
-    const isMultiColor = fillCount >= 2;
+    const isMultiColor = fillDiffColor.length >= 2;
 
 
 
@@ -167,19 +176,21 @@ export const decodeSvgPath2 = (svgContent: string) => {
 
             const properties = [];
             if(isMultiColor) {
-                if (row.fillOpacity) {
-                    properties.push(`fill-opacity="${row.fillOpacity.toString().replace('0.','.')}"`);
-                }
                 if (row.fill) {
-                    properties.push(`fill="${row.fill.toLocaleString()}"`);
+                    properties.push(`fill="${row.fill}"`);
+                }
+                if (row.fillOpacity) {
+                    properties.push(`fill-opacity="${row.fillOpacity}"`);
                 }
             }
+            if (row.fillRule) {
+                properties.push(`fill-rule="${row.fillRule}"`);
+            }
+            if (row.clipRule) {
+                properties.push(`clip-rule="${row.clipRule}"`);
+            }
             if(row.d){
-                const d = row.d
-                    .toString()
-                    .replace(/\n/g,'')
-                    .replace(/\t/g, '')
-                ;
+                const d = row.d;
                 properties.push(`d="${d}"`);
             }
             return `<path ${properties.join(' ')}/>`;
