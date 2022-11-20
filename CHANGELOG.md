@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0-alpha.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.0-alpha.1...v1.3.0-alpha.2) (2022-11-20)
+
+
+### Bug Fixes
+
+* add isMultiColor rule, attr fillRule, clipRule ([36bdf76](https://github.com/imagine10255/bear-icon-symbols/commit/36bdf76b3dee62be320235e780598adf80c9f6bd))
+
 ## [1.3.0-alpha.1](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.0-alpha.0...v1.3.0-alpha.1) (2022-11-20)
 
 
