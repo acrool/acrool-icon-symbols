@@ -18,7 +18,7 @@ export declare const remarkDeepSVGPaths: (svgNode: Array<Node | string>, isMulti
 export declare const decodeSvgPath: (svgContent: string) => string[];
 
 
-export declare const decodeSvgPath2: (svgContent: string) => Array<{
+export declare const decodeSvgPath2: (svgContent: string) => {
     viewBox?: string,
     paths?: string[],
-}>;
+};
