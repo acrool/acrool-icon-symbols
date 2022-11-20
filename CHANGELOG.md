@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.5-alpha.0...v1.3.0-alpha.0) (2022-11-20)
+
+
+### Features
+
+* 更改 SVG解析改為使用 cheerio ([cba0328](https://github.com/imagine10255/bear-icon-symbols/commit/cba032875d0be406392068f46d6ab31405fb8062))
+
 ### [1.2.5-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.4...v1.2.5-alpha.0) (2022-09-25)
 
 ### [1.2.4](https://github.com/imagine10255/bear-icon-symbols/compare/v1.2.3...v1.2.4) (2022-08-18)
