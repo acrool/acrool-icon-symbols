@@ -3,7 +3,7 @@ import path from 'path';
 import logger from '../script/logger';
 import {bash} from '../script/utils';
 import {getFilesizeInBytes} from '../script/utils';
-import {decodeSvgPath} from '../../utils';
+import {decodeSvgPath2} from '../../utils';
 
 interface IArgs {
     path: string,
@@ -39,9 +39,9 @@ async function run(args: IArgs) {
                 .readFileSync(path.join(sourceDirPath, file), {encoding:'utf8', flag:'r'})
                 .toString();
 
-            const svgPaths = decodeSvgPath(svgContent);
+            const svgPaths = decodeSvgPath2(svgContent);
 
-            symbol.push(`  <symbol id="${iconCode}" viewBox="0 0 1024 1024">\n${svgPaths.join('\n')}\n  </symbol>`);
+            symbol.push(`  <symbol id="${iconCode}">\n${svgPaths.paths.join('\n')}\n  </symbol>`);
             iconCodes.push(`${filename}`);
         }
 

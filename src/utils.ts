@@ -1,6 +1,7 @@
 import path from 'path';
 import {Node, parse} from 'svg-parser';
 import {regPattern} from 'bear-jsutils/equal';
+import * as cheerio from 'cheerio';
 
 
 
@@ -98,7 +99,7 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
         }
         return curr;
     }, []);
-}
+};
 
 
 /**
@@ -120,6 +121,73 @@ export const decodeSvgPath = (svgContent: string): string[] => {
     }
 
     return [];
+};
+
+
+interface IAttr{
+    d?: string,
+    fill?: string,
+    fillOpacity?: string,
+}
+
+/**
+ * 解析SVGPath2
+ * @param svgContent
+ */
+export const decodeSvgPath2 = (svgContent: string) => {
+    const $ = cheerio.load(svgContent);
+    const root = $('svg');
+    const viewBox = root.attr('viewBox');
+
+    let fillCount = 0;
+    const paths: IAttr[] = [];
+    root.find('path').each((index, element) => {
+        const d = $(element).attr('d');
+        const fill = $(element).attr('fill');
+        const fillOpacity = $(element).attr('fill-opacity');
+        if(fill){
+            fillCount+=1;
+        }
+        paths.push({
+            d,
+            fill,
+            fillOpacity,
+        });
+
+
+    });
+
+    const isMultiColor = fillCount >= 2;
+
+
+
+    return {
+        viewBox,
+        paths: paths.map(row => {
+
+            const properties = [];
+            if(isMultiColor) {
+                if (row.fillOpacity) {
+                    properties.push(`fill-opacity="${row.fillOpacity.toString().replace('0.','.')}"`);
+                }
+                if (row.fill) {
+                    properties.push(`fill="${row.fill.toLocaleString()}"`);
+                }
+            }
+            if(row.d){
+                const d = row.d
+                    .toString()
+                    .replace(/\n/g,'')
+                    .replace(/\t/g, '')
+                ;
+                properties.push(`d="${d}"`);
+            }
+            return `<path ${properties.join(' ')}/>`;
+
+        }),
+    };
+
+
 };
 
 

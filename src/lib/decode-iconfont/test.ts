@@ -1,4 +1,4 @@
 import decodeIconfont from './index';
 
-// $ ts-node lib/decode-iconfont/test.ts
+// $ ts-node src/lib/decode-iconfont/test.ts
 decodeIconfont({path: './example/iconfont'});
