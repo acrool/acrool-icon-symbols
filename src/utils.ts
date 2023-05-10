@@ -1,7 +1,9 @@
 import path from 'path';
 import {Node, parse} from 'svg-parser';
 import {regPattern} from 'bear-jsutils/equal';
+import { removeStartEnd } from 'bear-jsutils/string';
 import * as cheerio from 'cheerio';
+import fs from 'fs';
 
 
 
@@ -102,26 +104,6 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
 };
 
 
-/**
- * 解析SVGPath
- * @param svgContent
- */
-export const decodeSvgPath = (svgContent: string): string[] => {
-
-    const reg = new RegExp(regPattern.svg);
-    const svgTag = reg.exec(svgContent);
-
-    if(svgTag && svgTag.length > 0){
-        const result = svgTag[0];
-        const svgString = parse(result);
-
-        // diff svgPaths
-        const isMultiColor = checkIsSVGMultiColor(svgString.children);
-        return remarkDeepSVGPaths(svgString.children, isMultiColor);
-    }
-
-    return [];
-};
 
 
 interface IAttr{
@@ -133,10 +115,10 @@ interface IAttr{
 }
 
 /**
- * 解析SVGPath2
+ * 解析SVGPath
  * @param svgContent
  */
-export const decodeSvgPath2 = (svgContent: string) => {
+export const decodeSvgPath = (svgContent: string) => {
     const $ = cheerio.load(svgContent);
     const root = $('svg');
     const viewBox = root.attr('viewBox');
@@ -198,6 +180,44 @@ export const decodeSvgPath2 = (svgContent: string) => {
         }),
     };
 
+
+};
+
+
+/**
+ * 解析Symbols
+ * @param symbolsContent
+ */
+export const decodeSymbols = (symbolsContent: string) => {
+    const symbols = symbolsContent.match(regPattern.symbol);
+    const idPrefix = 'icon_';
+
+    const data: Array<{
+        code: string,
+        viewBox: string,
+        content: string,
+    }> = [];
+    if(symbols !== null){
+        symbols.forEach(symbol => {
+            const idRes = new RegExp(regPattern.htmlAttrId).exec(symbol);
+            if(idRes && idRes.length > 1){
+                // const targetSvgFile = path.join(sourceDirPath, `${idRes[1].replace(idPrefix,'')}.svg`);
+                const pathContent = removeStartEnd(symbol, '<symbol\\b[^>]*?(?:viewBox=\\"(\\b[^"]*)\\")?>', '<\\/symbol>');
+                const viewBox = new RegExp(/<symbol\b[^>]*?(?:viewBox=\"(\b[^"]*)\")?>/).exec(symbol);
+
+                // ======== write type file start ========
+                data.push({
+                    code: idRes[1].replace(idPrefix,''),
+                    viewBox: viewBox ? viewBox[1]: '0 0 1024',
+                    content: pathContent.trim().replace('    ',''),
+                });
+                // ======== write type file end ========
+            }
+
+        });
+    }
+
+    return data;
 
 };
 

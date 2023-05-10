@@ -11,14 +11,12 @@ export declare const checkIsSVGMultiColor: (svgNode: Array<Node | string>) => bo
  * @param isMultiColor
  */
 export declare const remarkDeepSVGPaths: (svgNode: Array<Node | string>, isMultiColor?: boolean) => string[];
+
 /**
  * 解析SVGPath
- * @param svgContent
  */
-export declare const decodeSvgPath: (svgContent: string) => string[];
-
-
-export declare const decodeSvgPath2: (svgContent: string) => {
-    viewBox?: string,
-    paths?: string[],
-};
+export declare const decodeSvgPath: (svgContent: string) => Array<{
+    code: string,
+    viewBox: string,
+    content: string,
+}>;
