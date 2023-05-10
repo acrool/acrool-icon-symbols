@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1-alpha.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.0...v1.3.1-alpha.0) (2023-05-10)
+
+
+### Bug Fixes
+
+* fix decodeSvgPath export ([53d4020](https://github.com/imagine10255/bear-icon-symbols/commit/53d4020597fe021492fab0de423868b4b119153d))
+
 ## [1.3.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.0-alpha.2...v1.3.0) (2023-05-10)
 
 
