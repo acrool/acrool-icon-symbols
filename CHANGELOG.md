@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.0-alpha.2...v1.3.0) (2023-05-10)
+
+
+### Features
+
+* add decodeSymbols func ([4091759](https://github.com/imagine10255/bear-icon-symbols/commit/4091759b9bf5a6c2e19a37ff5940eb5f91ce7404))
+
 ## [1.3.0-alpha.2](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.0-alpha.1...v1.3.0-alpha.2) (2022-11-20)
 
 
