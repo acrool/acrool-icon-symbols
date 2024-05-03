@@ -2,15 +2,6 @@ import {Node} from 'svg-parser';
 
 
 
-export declare interface IAttr{
-    d?: string,
-    fill?: string,
-    fillOpacity?: string,
-    fillRule?: string,
-    clipRule?: string,
-}
-
-
 export declare const getFilesizeInBytes: (filename: string) => string;
 /**
  * get svg paths
@@ -51,6 +42,12 @@ export declare const decodeSymbols: (symbolsContent: string) => Array<{
 export declare const decodeSvgPaths: (symbolsContent: string) => {
     fillDiffColor: string[],
     viewBox?: string,
-    paths: IAttr[],
+    paths: {
+        d?: string,
+        fill?: string,
+        fillOpacity?: string,
+        fillRule?: string,
+        clipRule?: string,
+    }
 };
 
