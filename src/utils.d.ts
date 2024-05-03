@@ -1,4 +1,6 @@
-import { Node } from 'svg-parser';
+import {Node} from 'svg-parser';
+import {IAttr} from './types';
+
 export declare const getFilesizeInBytes: (filename: string) => string;
 /**
  * get svg paths
@@ -17,7 +19,7 @@ export declare const remarkDeepSVGPaths: (svgNode: Array<Node | string>, isMulti
  * 解析SVGPath
  * @param svgContent
  */
-export declare const decodeSvgPath: (svgContent: string) => {
+export declare const formatSvgPaths: (svgContent: string) => {
     viewBox?: string,
     paths?: string[],
 };
@@ -30,3 +32,14 @@ export declare const decodeSymbols: (symbolsContent: string) => Array<{
     viewBox: string,
     content: string,
 }>;
+
+
+/**
+ * 解析SVG 的Path
+ * (如果只有 <path .../><path .../> 則自行用 <svg>{paths}</svg> 包裝起來)
+ */
+export declare const decodeSvgPaths: (symbolsContent: string) => {
+    fillDiffColor: string[],
+    viewBox?: string,
+    paths: IAttr[],
+};

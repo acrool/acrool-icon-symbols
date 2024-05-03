@@ -1,10 +1,8 @@
-import path from 'path';
-import {Node, parse} from 'svg-parser';
+import {Node} from 'svg-parser';
 import {regPattern} from 'bear-jsutils/equal';
-import { removeStartEnd } from 'bear-jsutils/string';
+import {removeStartEnd} from 'bear-jsutils/string';
 import * as cheerio from 'cheerio';
-import fs from 'fs';
-
+import {IAttr} from './types';
 
 
 /**
@@ -106,13 +104,6 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
 
 
 
-interface IAttr{
-    d?: string,
-    fill?: string,
-    fillOpacity?: string,
-    fillRule?: string,
-    clipRule?: string,
-}
 
 /**
  * 解析SVGPath
