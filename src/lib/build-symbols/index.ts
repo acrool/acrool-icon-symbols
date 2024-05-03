@@ -3,7 +3,7 @@ import path from 'path';
 import logger from '../script/logger';
 import {bash} from '../script/utils';
 import {getFilesizeInBytes} from '../script/utils';
-import {decodeSvgPath} from '../../utils';
+import {formatSvgPaths} from '../../utils';
 
 interface IArgs {
     path: string,
@@ -39,7 +39,7 @@ async function run(args: IArgs) {
                 .readFileSync(path.join(sourceDirPath, file), {encoding:'utf8', flag:'r'})
                 .toString();
 
-            const svgPaths = decodeSvgPath(svgContent);
+            const svgPaths = formatSvgPaths(svgContent);
 
             symbol.push(`  <symbol id="${iconCode}">\n${svgPaths.paths.join('\n')}\n  </symbol>`);
             iconCodes.push(`${filename}`);
@@ -75,7 +75,7 @@ enum EIconCode {
 ${varName} = {
   ${iconCodes.map(code => {
         return `EIconCode.${code}: '${code}',`;
-    }).join('\n  ')}    
+    }).join('\n  ')}
 };
 
 

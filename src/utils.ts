@@ -118,45 +118,16 @@ interface IAttr{
  * 解析SVGPath
  * @param svgContent
  */
-export const decodeSvgPath = (svgContent: string) => {
-    const $ = cheerio.load(svgContent);
-    const root = $('svg');
-    const viewBox = root.attr('viewBox');
-
-    const fillDiffColor: string[] = [];
-    const paths: IAttr[] = [];
-    root.find('path').each((index, element) => {
-        const d = $(element).attr('d')?.toString()
-            .replace(/\n/g,'')
-            .replace(/\t/g, '')
-        ;
-        const fill = $(element).attr('fill')?.toLocaleString();
-        const fillOpacity = $(element).attr('fill-opacity')?.toString().replace('0.','.');
-        const fillRule = $(element).attr('fill-rule')?.toString();
-        const clipRule = $(element).attr('clip-rule')?.toString();
-        if(fill && !fillDiffColor.includes(fill)){
-            fillDiffColor.push(fill);
-        }
-        paths.push({
-            d,
-            fill,
-            fillOpacity,
-            clipRule,
-            fillRule,
-        });
-
-
-    });
+export const formatSvgPaths = (svgContent: string) => {
+    const {fillDiffColor, paths, viewBox} = decodeSvgPaths(svgContent);
 
     const isMultiColor = fillDiffColor.length >= 2;
-
-
 
     return {
         viewBox,
         paths: paths.map(row => {
-
             const properties = [];
+
             if(isMultiColor) {
                 if (row.fill) {
                     properties.push(`fill="${row.fill}"`);
@@ -172,8 +143,7 @@ export const decodeSvgPath = (svgContent: string) => {
                 properties.push(`clip-rule="${row.clipRule}"`);
             }
             if(row.d){
-                const d = row.d;
-                properties.push(`d="${d}"`);
+                properties.push(`d="${row.d}"`);
             }
             return `<path ${properties.join(' ')}/>`;
 
@@ -222,3 +192,44 @@ export const decodeSymbols = (symbolsContent: string) => {
 };
 
 
+/**
+ * 解析SVG 的Path
+ * (如果只有 <path .../><path .../> 則自行用 <svg>{paths}</svg> 包裝起來)
+ * @param svgContent
+ */
+export const decodeSvgPaths = (svgContent: string) => {
+    const $ = cheerio.load(svgContent);
+    const root = $('svg');
+    const viewBox = root.attr('viewBox');
+
+    const fillDiffColor: string[] = [];
+    const paths: IAttr[] = [];
+    root.find('path').each((index, element) => {
+        const d = $(element).attr('d')?.toString()
+            .replace(/\n/g,'')
+            .replace(/\t/g, '')
+        ;
+
+        // 依照需要的屬性追加
+        const fill = $(element).attr('fill')?.toLocaleString();
+        const fillOpacity = $(element).attr('fill-opacity')?.toString().replace('0.','.');
+        const fillRule = $(element).attr('fill-rule')?.toString();
+        const clipRule = $(element).attr('clip-rule')?.toString();
+        if(fill && !fillDiffColor.includes(fill)){
+            fillDiffColor.push(fill);
+        }
+        paths.push({
+            d,
+            fill,
+            fillOpacity,
+            clipRule,
+            fillRule,
+        });
+    });
+
+    return {
+        fillDiffColor,
+        viewBox,
+        paths,
+    };
+};
