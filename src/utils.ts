@@ -2,7 +2,7 @@ import {Node} from 'svg-parser';
 import {regPattern} from 'bear-jsutils/equal';
 import {removeStartEnd} from 'bear-jsutils/string';
 import * as cheerio from 'cheerio';
-import {IAttr} from './types';
+
 
 
 /**
@@ -182,6 +182,16 @@ export const decodeSymbols = (symbolsContent: string) => {
 
 };
 
+
+
+
+interface IAttr{
+    d?: string,
+    fill?: string,
+    fillOpacity?: string,
+    fillRule?: string,
+    clipRule?: string,
+}
 
 /**
  * 解析SVG 的Path
