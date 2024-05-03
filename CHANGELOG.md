@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1-alpha.6](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.1-alpha.5...v1.3.1-alpha.6) (2024-05-03)
+
 ### [1.3.1-alpha.5](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.1-alpha.4...v1.3.1-alpha.5) (2024-05-03)
 
 ### [1.3.1-alpha.4](https://github.com/imagine10255/bear-icon-symbols/compare/v1.3.1-alpha.3...v1.3.1-alpha.4) (2024-05-03)
