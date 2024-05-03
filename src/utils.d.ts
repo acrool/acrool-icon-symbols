@@ -42,12 +42,12 @@ export declare const decodeSymbols: (symbolsContent: string) => Array<{
 export declare const decodeSvgPaths: (symbolsContent: string) => {
     fillDiffColor: string[],
     viewBox?: string,
-    paths: {
+    paths: Array<{
         d?: string,
         fill?: string,
         fillOpacity?: string,
         fillRule?: string,
         clipRule?: string,
-    }
+    }>
 };
 
