@@ -1,22 +1,35 @@
-# bear-icon-symbols
+# Acrool Icon Symbols
 
-> Common tools and methods for project development
+<p align="center">
+   Common tools and methods for project development
+</p>
 
-[![NPM](https://img.shields.io/npm/v/bear-icon-symbols.svg)](https://www.npmjs.com/package/bear-icon-symbols)
-[![npm](https://img.shields.io/npm/dm/bear-icon-symbols.svg)](https://www.npmjs.com/package/bear-icon-symbols)
+
+
+<div align="center">
+
+[![NPM](https://img.shields.io/npm/v/@acrool/react-icon-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-icon-symbols)
+[![npm](https://img.shields.io/bundlejs/size/@acrool/react-icon-symbols?style=for-the-badge)](https://github.com/acrool/react-icon-symbols/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/l/@acrool/react-icon-symbols?style=for-the-badge)](https://github.com/acrool/acrool-react-icon-symbols/blob/main/LICENSE)
+
+[![npm downloads](https://img.shields.io/npm/dm/@acrool/react-icon-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-icon-symbols)
+[![npm](https://img.shields.io/npm/dt/@acrool/react-icon-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/react-icon-symbols)
+
+</div>
+
 
 
 ## Install
 
 ```bash
-yarn add -D bear-icon-symbols
+yarn add -D @acrool/icon-symbols
 ```
 
 ## Document
 
-- [bear-icon-symbols build-symbols](./docs/build-symbols.md)
-- [bear-icon-symbols decode-iconfont](./docs/decode-iconfont.md)
+- [acrool-icon-symbols build-symbols](./docs/build-symbols.md)
+- [acrool-icon-symbols decode-iconfont](./docs/decode-iconfont.md)
 
 ## License
 
-MIT © [imagine10255](https://github.com/imagine10255)
+MIT © [Acrool](https://github.com/acrool) & [Imagine](https://github.com/imagine10255)
