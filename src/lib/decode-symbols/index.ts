@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import path from 'path';
 import logger from '../script/logger';
 import {bash} from '../script/utils';
-import {regPattern} from 'bear-jsutils/equal';
-import {removeStartEnd} from 'bear-jsutils/string';
+import {regPattern} from '@acrool/js-utils/equal';
+import {removeStartEnd} from '@acrool/js-utils/string';
 
 interface IArgs {
     path: string,

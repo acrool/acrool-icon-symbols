@@ -2,6 +2,11 @@
 # yarn lockfile v1
 
 
+"@acrool/js-utils@^3.2.x":
+  version "3.2.6"
+  resolved "https://registry.yarnpkg.com/@acrool/js-utils/-/js-utils-3.2.6.tgz#042979ba14a3cb743bbc78e2f12165b597108cc9"
+  integrity sha512-qvzT5tzUxdA3fwJfXemloJ0tEbIqop574JiinCCbw9SnRUz10w1LRGh5Nb2RaA7QNN7bNdle7bSeTvyCcL8Shg==
+
 "@ampproject/remapping@^2.1.0":
   version "2.2.0"
   resolved "https://registry.yarnpkg.com/@ampproject/remapping/-/remapping-2.2.0.tgz#56c133824780de3174aed5ab6834f3026790154d"
@@ -1201,11 +1206,6 @@ base64-js@^1.3.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/base64-js/-/base64-js-1.5.1.tgz#1b1b440160a5bf7ad40b650f095963481903930a"
   integrity sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==
-
-bear-jsutils@^1.1.2:
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/bear-jsutils/-/bear-jsutils-1.1.2.tgz#bb8c3bede0c1890d7c4532c9db67a143208cd0dd"
-  integrity sha512-elotgVCEzRHvkAeeMFBEAR/XvOervV1yVRRScLaREuy3+ntv7hvonchZTxBSlab5q2Y08R8PPf4r6w3EBZK6lw==
 
 binary-extensions@^2.0.0:
   version "2.2.0"

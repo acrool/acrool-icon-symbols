@@ -40,10 +40,10 @@
     "release:alpha": "standard-version --prerelease alpha"
   },
   "dependencies": {
+    "@acrool/js-utils": "^3.2.x",
     "ora": "5.4.1",
     "svg-parser": "^2.0.4",
     "yargs": "^17.7.2",
-    "bear-jsutils": "^1.1.2",
     "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
@@ -68,11 +68,7 @@
     "standard-version": "9.5.0",
     "ts-jest": "^27.1.3",
     "ts-node": "10.8.1",
-    "typescript": "4.7.4",
-    "ora": "^5.4.x",
-    "svg-parser": "^2.0.x",
-    "yargs": "^17.5.x",
-    "cheerio": "^1.0.x"
+    "typescript": "4.7.4"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",

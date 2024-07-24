@@ -1,6 +1,6 @@
 import {Node} from 'svg-parser';
-import {regPattern} from 'bear-jsutils/equal';
-import {removeStartEnd} from 'bear-jsutils/string';
+import {regPattern} from '@acrool/js-utils/equal';
+import {removeStartEnd} from '@acrool/js-utils/string';
 import * as cheerio from 'cheerio';
 
 
