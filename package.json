@@ -39,11 +39,11 @@
     "release:patch": "standard-version -r patch",
     "release:alpha": "standard-version --prerelease alpha"
   },
-  "peerDependencies": {
-    "ora": "^8.x",
-    "svg-parser": "^2.x",
-    "yargs": "^17.x",
-    "cheerio": "^1.x"
+  "dependencies": {
+    "ora": "^8.0.1",
+    "svg-parser": "^2.0.4",
+    "yargs": "^17.7.2",
+    "cheerio": "^1.0.0-rc.12"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
@@ -51,7 +51,6 @@
     "@types/cheerio": "^0.22.31",
     "@types/jest": "^27.4.0",
     "@types/node": "18.0.0",
-    "@types/svg-parser": "^2.0.3",
     "@types/yargs": "17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
     "@typescript-eslint/parser": "^5.10.1",
@@ -68,10 +67,7 @@
     "ts-jest": "^27.1.3",
     "ts-node": "10.8.1",
     "typescript": "4.7.4",
-    "ora": "^8.0.1",
-    "svg-parser": "^2.0.4",
-    "yargs": "^17.7.2",
-    "cheerio": "^1.0.0-rc.12"
+    "svg-parser": "^2.0.4"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
