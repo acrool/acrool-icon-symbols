@@ -22,7 +22,7 @@
 ## Install
 
 ```bash
-yarn add -D @acrool/icon-symbols
+yarn add -D acrool-icon-symbols
 ```
 
 ## Document
