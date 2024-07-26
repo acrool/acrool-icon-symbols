@@ -40,14 +40,12 @@
     "release:alpha": "standard-version --prerelease alpha"
   },
   "peerDependencies": {
-    "@acrool/js-utils": "^3.2.x",
     "ora": "^8.x",
     "svg-parser": "^2.x",
     "yargs": "^17.x",
     "cheerio": "^1.x"
   },
   "devDependencies": {
-    "@acrool/js-utils": "^3.2.6",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/user-event": "^7.2.1",
     "@types/cheerio": "^0.22.31",

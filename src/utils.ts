@@ -1,9 +1,27 @@
 import {Node} from 'svg-parser';
-import {regPattern} from '@acrool/js-utils/equal';
-import {removeStartEnd} from '@acrool/js-utils/string';
 import * as cheerio from 'cheerio';
 
 
+export const regPattern = {
+    number: /^(\d+)$/,
+    double: /^\d+(\.\d+)?$/,
+    account: /^[A-Za-z0-9]+$/,
+    email: /^[A-Za-z0-9._-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
+    protocolDomain: /(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}/g,
+    domain: /(:(http(s)?:\/\/.))?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}/g,
+    ipAddress: /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
+    date: /^([0-9]{4})[/.-]{1}([0-9]{1,2})[/.-]{1}([0-9]{1,2})$/,
+    svg: /<svg\b[^>]*?(?:viewBox=\"(\b[^"]*)\")?>([\s\S]*?)<\/svg>/g,
+    symbol: /<symbol\b[^>]*?(?:viewBox=\"(\b[^"]*)\")?>([\s\S]*?)<\/symbol>/g,
+    htmlAttrId: /id=\"(.*?)\"/g,
+};
+
+
+export function removeStartEnd(str: string, startStr: string, endStr: string): string {
+    const regRule = `\\${startStr}|\\${endStr}`;
+    const reg = new RegExp(`^${regRule}$`,'g');
+    return str.replace(reg, '');
+}
 
 /**
  * 保留小數第二位
