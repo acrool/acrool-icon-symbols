@@ -1,9 +1,10 @@
 import * as fs from 'fs';
 import path from 'path';
+
+import {formatSvgPaths} from '../../utils';
 import logger from '../script/logger';
 import {bash} from '../script/utils';
 import {getFilesizeInBytes} from '../script/utils';
-import {formatSvgPaths} from '../../utils';
 
 interface IArgs {
     path: string,
@@ -31,7 +32,7 @@ async function run(args: IArgs) {
     const targetDartTypeFile = path.join(basePath, 'db.dart');
 
     dirChildFiles.forEach(file => {
-        if (path.extname(file) == '.svg'){
+        if (path.extname(file) === '.svg'){
             const filename = file.replace('.svg', '');
             const iconCode = [idPrefix, filename].join('');
 

@@ -7,15 +7,22 @@
     "javscript",
     "utils"
   ],
-  "author": "imagine10255",
+  "author": "info@acrool.com",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/acrool/@acrool/icon-symbols.git"
   },
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
   "bin": "bin/cli.js",
+  "module": "./dist/acrool-react-modal.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+      ".": {
+          "browser": "./dist/acrool-react-modal.es.js",
+          "import": "./dist/acrool-react-modal.es.js"
+      },
+      "./dist/index.css": "./dist/style.css"
+  },
   "files": [
     "dist",
     "bin",
@@ -25,19 +32,19 @@
     "node": ">=10"
   },
   "scripts": {
-    "build": "run-s build:claer && tsc --project ./tsconfig.build.json && run-s copy-dts",
-    "copy-dts": "copyfiles -u 1 \"src/**/*.d.ts\" dist",
-    "build:claer": "rm -rf ./dist",
-    "prepublishOnly": "run-s build",
-    "test": "jest --coverage",
-    "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
-    "lint:fix": "eslint src/lib/*.ts --fix",
-    "cz": "git cz",
-    "release": "standard-version --release-as",
-    "release:major": "standard-version -r major",
-    "release:minor": "standard-version -r minor",
-    "release:patch": "standard-version -r patch",
-    "release:alpha": "standard-version --prerelease alpha"
+      "dev": "NODE_ENV=development vite build -w",
+      "build:claer": "rm -rf ./dist",
+      "prepublishOnly": "run-s build",
+      "build": "run-s build:claer && tsc && vite build",
+      "lint:fix": "eslint ./src --fix",
+      "cz": "git-cz",
+      "test": "jest",
+      "gitlog": "git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cblueby %an %Cgreen(%cr)%Creset'",
+      "release": "standard-version --release-as",
+      "release:major": "standard-version -r major",
+      "release:minor": "standard-version -r minor",
+      "release:patch": "standard-version -r patch",
+      "release:alpha": "standard-version --prerelease alpha"
   },
   "peerDependencies": {
     "@acrool/js-utils": "^3.2.x",
@@ -52,7 +59,7 @@
     "@testing-library/user-event": "^7.2.1",
     "@types/cheerio": "^0.22.31",
     "@types/jest": "^27.4.0",
-    "@types/node": "18.0.0",
+    "@types/node": "^20.14.12",
     "@types/svg-parser": "^2.0.3",
     "@types/yargs": "17.0.10",
     "@typescript-eslint/eslint-plugin": "^5.10.1",
@@ -62,7 +69,10 @@
     "cross-env": "^7.0.2",
     "cz-conventional-changelog": "3.3.0",
     "cz-customizable": "6.3.0",
-    "eslint": "^8.8.0",
+    "eslint": "^8.37.0",
+    "eslint-config-react-app": "^7.0.1",
+    "eslint-plugin-simple-import-sort": "^10.0.0",
+    "rollup-plugin-visualizer": "^5.9.0",
     "jest": "^27.4.7",
     "nodemon": "^2.0.15",
     "npm-run-all": "^4.1.5",
@@ -73,45 +83,9 @@
     "ora": "^8.0.1",
     "svg-parser": "^2.0.4",
     "yargs": "^17.7.2",
-    "cheerio": "^1.0.0-rc.12"
-  },
-  "eslintConfig": {
-    "parser": "@typescript-eslint/parser",
-    "extends": [
-      "plugin:@typescript-eslint/recommended"
-    ],
-    "plugins": [
-      "@typescript-eslint"
-    ],
-    "parserOptions": {
-      "ecmaVersion": 7,
-      "sourceType": "module"
-    },
-    "rules": {
-      "quotes": [
-        "warn",
-        "single"
-      ],
-      "semi": [
-        "warn",
-        "always"
-      ],
-      "indent": [
-        "warn",
-        4
-      ],
-      "object-curly-spacing": [
-        "warn",
-        "never"
-      ],
-      "no-useless-escape": "off",
-      "import/no-anonymous-default-export": "off",
-      "react-hooks/exhaustive-deps": "off",
-      "@typescript-eslint/no-unused-vars": "off",
-      "no-mixed-operators": "off",
-      "@typescript-eslint/ban-ts-comment": "off",
-      "@typescript-eslint/no-explicit-any": "off",
-      "@typescript-eslint/no-var-requires": "off"
-    }
+    "cheerio": "^1.0.0-rc.12",
+    "vite": "^4.2.0",
+    "vite-plugin-dts": "^2.1.0",
+    "vite-plugin-eslint": "^1.8.1"
   }
 }

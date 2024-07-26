@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import yargs from 'yargs/yargs';
 import {hideBin} from 'yargs/helpers';
+import yargs from 'yargs/yargs';
 
-module.exports = async function bearScript () {
+module.exports = async function acroolScript () {
     yargs(hideBin(process.argv))
         .command('build-symbols [path] [idPrefix]', 'svg merge symbols', (yargs) => {
             return yargs

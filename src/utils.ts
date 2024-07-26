@@ -1,7 +1,7 @@
-import {Node} from 'svg-parser';
 import {regPattern} from '@acrool/js-utils/equal';
 import {removeStartEnd} from '@acrool/js-utils/string';
 import * as cheerio from 'cheerio';
+import {Node} from 'svg-parser';
 
 
 
@@ -33,7 +33,7 @@ const getMultiColor = (svgNode: Array<Node | string>): string[] => {
     return svgNode.reduce((curr: string[], row) => {
         if(typeof row !== 'string' && row.type === 'element'){
             if(row.tagName === 'path'){
-                const colors = [];
+                const colors: string[] = [];
                 if(row.properties?.fill){
                     colors.push(row.properties.fill.toLocaleString());
                 }
@@ -74,7 +74,7 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
     return svgNode.reduce((curr: string[], row) => {
         if(typeof row !== 'string' && row.type === 'element'){
             if(row.tagName === 'path'){
-                const properties = [];
+                const properties: string[] = [];
                 if(isMultiColor) {
                     if (row.properties?.['fill-opacity']) {
                         properties.push(`fill-opacity="${row.properties?.['fill-opacity'].toString().replace('0.','.')}"`);
@@ -117,7 +117,7 @@ export const formatSvgPaths = (svgContent: string) => {
     return {
         viewBox,
         paths: paths.map(row => {
-            const properties = [];
+            const properties: string[] = [];
 
             if(isMultiColor) {
                 if (row.fill) {

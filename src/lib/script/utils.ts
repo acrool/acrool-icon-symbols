@@ -1,5 +1,6 @@
 import {execSync} from 'child_process';
 import * as fs from 'fs';
+
 import {numToDecimal2} from '../../utils';
 
 const options = {stdio:[0, 1, 2]};

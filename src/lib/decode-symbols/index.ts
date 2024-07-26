@@ -1,9 +1,10 @@
-import * as fs from 'fs';
-import path from 'path';
-import logger from '../script/logger';
-import {bash} from '../script/utils';
 import {regPattern} from '@acrool/js-utils/equal';
 import {removeStartEnd} from '@acrool/js-utils/string';
+import * as fs from 'fs';
+import path from 'path';
+
+import logger from '../script/logger';
+import {bash} from '../script/utils';
 
 interface IArgs {
     path: string,

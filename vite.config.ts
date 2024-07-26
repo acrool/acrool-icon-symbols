@@ -1,5 +1,4 @@
 import {defineConfig} from 'vite';
-import react from '@vitejs/plugin-react-swc';
 import dts from 'vite-plugin-dts';
 import * as path from 'node:path';
 import {visualizer} from 'rollup-plugin-visualizer';
@@ -9,7 +8,6 @@ import eslint from 'vite-plugin-eslint';
 export default defineConfig({
     plugins: [
         eslint(),
-        react(),
         dts({
             insertTypesEntry: true,
         }),
@@ -21,17 +19,7 @@ export default defineConfig({
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
             formats: ['es'],
-            fileName: (format) => `acrool-react-hooks.${format}.js`,
-        },
-        cssTarget: 'chrome61',
-        rollupOptions: {
-            external: ['react', 'react-dom'],
-            output: {
-                globals: {
-                    react: 'React',
-                    'react-dom': 'ReactDOM',
-                },
-            },
+            fileName: (format) => `acrool-icon-symbols.${format}.js`,
         },
     },
 });
