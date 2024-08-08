@@ -30,6 +30,25 @@
 yarn add -D acrool-icon-symbols
 ```
 
+## Use
+
+```ts
+import {decodeSvgPaths, decodeSymbols} from 'acrool-icon-symbols';
+
+const fileContent = await fs.readFileSync(filePath);
+const svg = decodeSvgPaths(fileContent.toString());
+
+const symbols = decodeSymbols(fileContent.toString());
+
+const newId = await this.iconSymbolService.create({
+    code: file.filename.replace(/[ -]/g,'_').replace(/.svg$/,''),
+    viewBox: svg.viewBox,
+    content: svg.paths.join(''),
+    iconDepotId,
+    creatorId: currentMember.id,
+});
+```
+
 ## Document
 
 - [acrool-icon-symbols build-symbols](./docs/build-symbols.md)
