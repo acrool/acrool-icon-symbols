@@ -160,7 +160,7 @@ export const formatSvgPaths = (svgContent: string) => {
                 }
             }
 
-            return `<path d="${properties}" ${attr.join(' ')} ${properties.join(' ')}/>`;
+            return `<path ${attr.join(' ')} ${properties.join(' ')}/>`;
         }),
     };
 
