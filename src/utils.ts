@@ -10,7 +10,13 @@ import {
 } from '@acrool/js-utils/string';
 import {
     regPattern
-} from "@acrool/js-utils/equal";
+} from '@acrool/js-utils/equal';
+import {
+    ISvgAttributes,
+    TDecodeSvgPaths,
+    TDecodeSymbols,
+    TFormatSvgPaths
+} from './utils.d';
 
 
 
@@ -99,26 +105,26 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
  * 解析SVGPath
  * @param svgContent
  */
-export const formatSvgPaths = (svgContent: string) => {
-    const {fillDiffColor, paths, ellipse, rect, viewBox} = decodeSvgPaths(svgContent);
+export const formatSvgPaths: TFormatSvgPaths = (svgContent) => {
+    const {fillDiffColor, paths, ellipses, rects, viewBox} = decodeSvgPaths(svgContent);
 
     const isMultiColor = fillDiffColor.length >= 2;
 
     return {
         viewBox,
-        rect: rect.map(path => {
-                const attr = objectKeys(path)
-                    .map(attrKey => {
-                        return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                    });
-                return `<rect ${attr.join(' ')}/>`;
+        rects: rects.map(path => {
+            const attr = objectKeys(path)
+                .map(attrKey => {
+                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
+                });
+            return `<rect ${attr.join(' ')}/>`;
         }),
-        ellipse: ellipse.map(path => {
-                const attr = objectKeys(path)
-                    .map(attrKey => {
-                        return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                    });
-                return `<ellipse ${attr.join(' ')}/>`;
+        ellipses: ellipses.map(path => {
+            const attr = objectKeys(path)
+                .map(attrKey => {
+                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
+                });
+            return `<ellipse ${attr.join(' ')}/>`;
         }),
         paths: paths.map(path => {
             const {fill, fillOpacity, stroke, ...pathAttr} = path;
@@ -158,7 +164,7 @@ export const formatSvgPaths = (svgContent: string) => {
  * 解析Symbols
  * @param symbolsContent
  */
-export const decodeSymbols = (symbolsContent: string) => {
+export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
     const symbols = symbolsContent.match(regPattern.symbol);
     const idPrefix = 'icon_';
 
@@ -193,65 +199,20 @@ export const decodeSymbols = (symbolsContent: string) => {
 
 
 
-interface ISvgAttributes {
-    // 通用屬性
-    style?: string | null;
-    transform?: string | null;
-    visibility?: string | null;
-    display?: string | null;
-    opacity?: string | null;
-
-    // 填充相關屬性
-    fill?: string | null;
-    fillOpacity?: string | null;
-    fillRule?: string | null;
-
-    // 剪裁相關屬性
-    clipRule?: string | null;
-
-    // 描邊相關屬性
-    stroke?: string | null;
-    strokeWidth?: string | null;
-    strokeOpacity?: string | null;
-    strokeLinecap?: string | null;
-    strokeLinejoin?: string | null;
-    strokeDasharray?: string | null;
-    strokeDashoffset?: string | null;
-
-    // 幾何屬性
-    x?: string | null;
-    y?: string | null;
-    width?: string | null;
-    height?: string | null;
-    cx?: string | null;
-    cy?: string | null;
-    r?: string | null;
-    rx?: string | null;
-    ry?: string | null;
-    x1?: string | null;
-    y1?: string | null;
-    x2?: string | null;
-    y2?: string | null;
-
-    // 多邊形和路徑
-    points?: string | null;
-    d?: string | null;
-}
-
 /**
  * 解析SVG 的Path
  * (如果只有 <path .../><path .../> 則自行用 <svg>{paths}</svg> 包裝起來)
  * @param svgContent
  */
-export const decodeSvgPaths = (svgContent: string) => {
+export const decodeSvgPaths: TDecodeSvgPaths = (svgContent) => {
     const $ = cheerio.load(svgContent);
     const root = $('svg');
     const viewBox = root.attr('viewBox');
 
     const fillDiffColor: string[] = [];
     const paths: ISvgAttributes[] = [];
-    const rect: ISvgAttributes[] = [];
-    const ellipse: ISvgAttributes[] = [];
+    const rects: ISvgAttributes[] = [];
+    const ellipses: ISvgAttributes[] = [];
 
     root.find('rect').each((index, element) => {
         // 依照需要的屬性追加
@@ -306,7 +267,7 @@ export const decodeSvgPaths = (svgContent: string) => {
         if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
             fillDiffColor.push(attributes.fill);
         }
-        rect.push(attributes);
+        rects.push(attributes);
     });
 
     root.find('ellipse').each((index, element) => {
@@ -362,7 +323,7 @@ export const decodeSvgPaths = (svgContent: string) => {
         if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
             fillDiffColor.push(attributes.fill);
         }
-        ellipse.push(attributes);
+        ellipses.push(attributes);
     });
 
 
@@ -429,7 +390,7 @@ export const decodeSvgPaths = (svgContent: string) => {
         fillDiffColor,
         viewBox,
         paths,
-        rect,
-        ellipse,
+        rects,
+        ellipses,
     };
 };
