@@ -299,7 +299,7 @@ export const decodeSvgPaths = (svgContent: string) => {
         // 依照需要的屬性追加
         const el = $(element);
 
-        const attributes: ISvgAttributes = {
+        const attributes: ISvgAttributes = removeUndefinedValues({
             // id: el.attr('id'),
             // class: el.attr('class'),
             style: el.attr('style'),
@@ -343,12 +343,12 @@ export const decodeSvgPaths = (svgContent: string) => {
             d: el.attr('d')
                 ?.replace(/\n/g,'')
                 .replace(/\t/g, ''),
-        };
+        });
 
         if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
             fillDiffColor.push(attributes.fill);
         }
-        rect.push(attributes);
+        ellipse.push(attributes);
     });
 
 
