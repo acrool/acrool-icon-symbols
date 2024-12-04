@@ -4,7 +4,9 @@ import {
     objectKeys
 } from '@acrool/js-utils/object';
 import {
-    lowerCaseToLowerDashCase
+    lowerCaseToLowerDashCase,
+    removeStartEnd,
+    removeUndefinedValues
 } from '@acrool/js-utils/string';
 
 
@@ -23,11 +25,6 @@ export const regPattern = {
 };
 
 
-export function removeStartEnd(str: string, startStr: string, endStr: string): string {
-    const regRule = `\\${startStr}|\\${endStr}`;
-    const reg = new RegExp(`^${regRule}$`,'g');
-    return str.replace(reg, '');
-}
 
 /**
  * 保留小數第二位
@@ -146,7 +143,6 @@ export const formatSvgPaths = (svgContent: string) => {
             const properties: string[] = [];
 
             const attr = objectKeys(pathAttr)
-                .filter(attrKey => typeof pathAttr[attrKey] !== 'undefined')
                 .map(attrKey => {
                     return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
                 });
@@ -278,7 +274,7 @@ export const decodeSvgPaths = (svgContent: string) => {
         // 依照需要的屬性追加
         const el = $(element);
 
-        const attributes: ISvgAttributes = {
+        const attributes: ISvgAttributes = removeUndefinedValues({
             // id: el.attr('id'),
             // class: el.attr('class'),
             style: el.attr('style'),
@@ -322,7 +318,7 @@ export const decodeSvgPaths = (svgContent: string) => {
             d: el.attr('d')
                 ?.replace(/\n/g,'')
                 .replace(/\t/g, ''),
-        };
+        });
 
         if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
             fillDiffColor.push(attributes.fill);
@@ -392,7 +388,7 @@ export const decodeSvgPaths = (svgContent: string) => {
         // 依照需要的屬性追加
         const el = $(element);
 
-        const attributes: ISvgAttributes = {
+        const attributes: ISvgAttributes = removeUndefinedValues({
             // id: el.attr('id'),
             // class: el.attr('class'),
             style: el.attr('style'),
@@ -436,7 +432,7 @@ export const decodeSvgPaths = (svgContent: string) => {
             d: el.attr('d')
                 ?.replace(/\n/g,'')
                 .replace(/\t/g, ''),
-        };
+        });
 
 
 
