@@ -1,5 +1,11 @@
 import {Node} from 'svg-parser';
 import * as cheerio from 'cheerio';
+import {
+    objectKeys
+} from "@acrool/js-utils/object";
+import {
+    lowerCaseToLowerDashCase
+} from "@acrool/js-utils/string";
 
 
 export const regPattern = {
@@ -134,28 +140,27 @@ export const formatSvgPaths = (svgContent: string) => {
 
     return {
         viewBox,
-        paths: paths.map(row => {
-            const properties = [];
+        paths: paths.map(path => {
+            const {fill, fillOpacity, ...pathAttr} = path;
+
+            const properties: string[] = [];
+
+            const attr = objectKeys(pathAttr)
+                .filter(attrKey => typeof pathAttr[attrKey] !== 'undefined')
+                .map(attrKey => {
+                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
+                });
 
             if(isMultiColor) {
-                if (row.fill) {
-                    properties.push(`fill="${row.fill}"`);
+                if (fill) {
+                    properties.push(`fill="${fill}"`);
                 }
-                if (row.fillOpacity) {
-                    properties.push(`fill-opacity="${row.fillOpacity}"`);
+                if (fillOpacity) {
+                    properties.push(`fill-opacity="${fillOpacity}"`);
                 }
             }
-            if (row.fillRule) {
-                properties.push(`fill-rule="${row.fillRule}"`);
-            }
-            if (row.clipRule) {
-                properties.push(`clip-rule="${row.clipRule}"`);
-            }
-            if(row.d){
-                properties.push(`d="${row.d}"`);
-            }
-            return `<path ${properties.join(' ')}/>`;
 
+            return `<path d="${properties}" ${attr.join(' ')} ${properties.join(' ')}/>`;
         }),
     };
 
