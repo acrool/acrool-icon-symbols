@@ -2,10 +2,10 @@ import {Node} from 'svg-parser';
 import * as cheerio from 'cheerio';
 import {
     objectKeys
-} from "@acrool/js-utils/object";
+} from '@acrool/js-utils/object';
 import {
     lowerCaseToLowerDashCase
-} from "@acrool/js-utils/string";
+} from '@acrool/js-utils/string';
 
 
 export const regPattern = {
@@ -141,7 +141,7 @@ export const formatSvgPaths = (svgContent: string) => {
     return {
         viewBox,
         paths: paths.map(path => {
-            const {fill, fillOpacity, ...pathAttr} = path;
+            const {fill, fillOpacity, stroke, ...pathAttr} = path;
 
             const properties: string[] = [];
 
@@ -157,6 +157,13 @@ export const formatSvgPaths = (svgContent: string) => {
                 }
                 if (fillOpacity) {
                     properties.push(`fill-opacity="${fillOpacity}"`);
+                }
+                if (stroke) {
+                    properties.push(`stroke="${stroke}"`);
+                }
+            }else{
+                if (stroke) {
+                    properties.push('stroke="currentColor"');
                 }
             }
 
