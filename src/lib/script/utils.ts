@@ -1,6 +1,8 @@
 import {execSync} from 'child_process';
 import * as fs from 'fs';
-import {numToDecimal2} from '../../utils';
+import {
+    numToDecimal2
+} from '@acrool/js-utils/number';
 
 const options = {stdio:[0, 1, 2]};
 

@@ -1,10 +1,12 @@
 import * as fs from 'fs';
 import path from 'path';
-import {regPattern} from '../../utils';
 import logger from '../script/logger';
 import {parse} from 'svg-parser';
 import {bash} from '../script/utils';
 import {remarkDeepSVGPaths} from '../../utils';
+import {
+    regPattern
+} from '@acrool/js-utils/equal';
 
 interface IArgs {
     path: string,

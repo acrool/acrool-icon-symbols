@@ -8,42 +8,11 @@ import {
     removeStartEnd,
     removeUndefinedValues
 } from '@acrool/js-utils/string';
+import {
+    regPattern
+} from "@acrool/js-utils/equal";
 
 
-export const regPattern = {
-    number: /^(\d+)$/,
-    double: /^\d+(\.\d+)?$/,
-    account: /^[A-Za-z0-9]+$/,
-    email: /^[A-Za-z0-9._-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/,
-    protocolDomain: /(http(s)?:\/\/.)(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}/g,
-    domain: /(:(http(s)?:\/\/.))?(www\.)?[-a-zA-Z0-9@:%._+~#=]{2,256}\.[a-z]{2,6}/g,
-    ipAddress: /^(\d+)\.(\d+)\.(\d+)\.(\d+)$/,
-    date: /^([0-9]{4})[/.-]{1}([0-9]{1,2})[/.-]{1}([0-9]{1,2})$/,
-    svg: /<svg\b[^>]*?(?:viewBox=\"(\b[^"]*)\")?>([\s\S]*?)<\/svg>/g,
-    symbol: /<symbol\b[^>]*?(?:viewBox=\"(\b[^"]*)\")?>([\s\S]*?)<\/symbol>/g,
-    htmlAttrId: /id=\"(.*?)\"/g,
-};
-
-
-
-/**
- * 保留小數第二位
- * @returns {string}
- * @param num
- */
-export const numToDecimal2 = (num: number): number => {
-    const f = Math.floor(num * 100) / 100;
-    let s = f.toString();
-    let rs = s.indexOf('.');
-    if (rs < 0) {
-        rs = s.length;
-        s += '.';
-    }
-    while (s.length <= rs + 2) {
-        s += '0';
-    }
-    return Number(s);
-};
 
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
