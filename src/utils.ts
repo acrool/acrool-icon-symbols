@@ -100,12 +100,26 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
  * @param svgContent
  */
 export const formatSvgPaths = (svgContent: string) => {
-    const {fillDiffColor, paths, viewBox} = decodeSvgPaths(svgContent);
+    const {fillDiffColor, paths, ellipse, rect, viewBox} = decodeSvgPaths(svgContent);
 
     const isMultiColor = fillDiffColor.length >= 2;
 
     return {
         viewBox,
+        rect: rect.map(path => {
+                const attr = objectKeys(path)
+                    .map(attrKey => {
+                        return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
+                    });
+                return `<rect ${attr.join(' ')}/>`;
+        }),
+        ellipse: ellipse.map(path => {
+                const attr = objectKeys(path)
+                    .map(attrKey => {
+                        return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
+                    });
+                return `<ellipse ${attr.join(' ')}/>`;
+        }),
         paths: paths.map(path => {
             const {fill, fillOpacity, stroke, ...pathAttr} = path;
 
