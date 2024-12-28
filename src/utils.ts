@@ -106,7 +106,7 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
  * @param svgContent
  */
 export const formatSvgPaths: TFormatSvgPaths = (svgContent) => {
-    const {fillDiffColor, paths, ellipses, rects, viewBox} = decodeSvgPaths(svgContent);
+    const {fillDiffColor, paths, ellipses, rects, circle, viewBox} = decodeSvgPaths(svgContent);
 
     const isMultiColor = fillDiffColor.length >= 2;
 
@@ -125,6 +125,13 @@ export const formatSvgPaths: TFormatSvgPaths = (svgContent) => {
                     return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
                 });
             return `<ellipse ${attr.join(' ')}/>`;
+        }),
+        circle: ellipses.map(path => {
+            const attr = objectKeys(path)
+                .map(attrKey => {
+                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
+                });
+            return `<circle ${attr.join(' ')}/>`;
         }),
         paths: paths.map(path => {
             const {fill, fillOpacity, stroke, ...pathAttr} = path;
@@ -213,6 +220,7 @@ export const decodeSvgPaths: TDecodeSvgPaths = (svgContent) => {
     const paths: ISvgAttributes[] = [];
     const rects: ISvgAttributes[] = [];
     const ellipses: ISvgAttributes[] = [];
+    const circle: ISvgAttributes[] = [];
 
     root.find('rect').each((index, element) => {
         // 依照需要的屬性追加
@@ -386,11 +394,72 @@ export const decodeSvgPaths: TDecodeSvgPaths = (svgContent) => {
         paths.push(attributes);
     });
 
+
+    root.find('circle').each((index, element) => {
+
+        // 依照需要的屬性追加
+        const el = $(element);
+
+        const attributes: ISvgAttributes = removeUndefinedValues({
+            // id: el.attr('id'),
+            // class: el.attr('class'),
+            style: el.attr('style'),
+            transform: el.attr('transform'),
+            visibility: el.attr('visibility'),
+            display: el.attr('display'),
+            opacity: el.attr('opacity'),
+
+            // 填充相關
+            fill: el.attr('fill')?.toLocaleString(),
+            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
+            fillRule: el.attr('fill-rule'),
+
+            // 裁切
+            clipRule: el.attr('clip-rule'),
+
+            // 描邊相關
+            stroke: el.attr('stroke'),
+            strokeWidth: el.attr('stroke-width'),
+            strokeOpacity: el.attr('stroke-opacity'),
+            strokeLinecap: el.attr('stroke-linecap'),
+            strokeLinejoin: el.attr('stroke-linejoin'),
+            strokeDasharray: el.attr('stroke-dasharray'),
+            strokeDashoffset: el.attr('stroke-dashoffset'),
+
+            // 幾何屬性 (根據具體元素類型擴展)
+            x: el.attr('x'),
+            y: el.attr('y'),
+            width: el.attr('width'),
+            height: el.attr('height'),
+            cx: el.attr('cx'),
+            cy: el.attr('cy'),
+            r: el.attr('r'),
+            rx: el.attr('rx'),
+            ry: el.attr('ry'),
+            x1: el.attr('x1'),
+            y1: el.attr('y1'),
+            x2: el.attr('x2'),
+            y2: el.attr('y2'),
+            points: el.attr('points'),
+            d: el.attr('d')
+                ?.replace(/\n/g,'')
+                .replace(/\t/g, ''),
+        });
+
+
+
+        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
+            fillDiffColor.push(attributes.fill);
+        }
+        circle.push(attributes);
+    });
+
     return {
         fillDiffColor,
         viewBox,
         paths,
         rects,
         ellipses,
+        circle,
     };
 };
