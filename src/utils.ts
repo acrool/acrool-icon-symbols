@@ -588,6 +588,7 @@ export const decodeSvgPaths: TDecodeSvgPaths = (svgContent) => {
 
 
 
+            stopOpacity: el.attr('stop-opacity'),
             stopColor: el.attr('stop-color'),
             offset: el.attr('offset'),
         });
