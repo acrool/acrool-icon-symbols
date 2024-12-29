@@ -49,6 +49,7 @@ export interface ISvgAttributes {
 
 export type TFormatSvgPaths = (svgContent: string) => {
     viewBox?: string,
+    g: string[],
     rects: string[],
     ellipses: string[],
     paths: string[],
@@ -63,8 +64,10 @@ export type TDecodeSymbols = (symbolsContent: string) => Array<{
 export type TDecodeSvgPaths = (svgContent: string) => {
     viewBox?: string,
     fillDiffColor: string[],
+    g: ISvgAttributes[],
     rects: ISvgAttributes[],
     ellipses: ISvgAttributes[],
     paths: ISvgAttributes[],
     circle: ISvgAttributes[],
+    step: ISvgAttributes[],
 }

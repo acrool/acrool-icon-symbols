@@ -4,10 +4,10 @@ import logger from '../script/logger';
 import {bash} from '../script/utils';
 import {
     regPattern
-} from "@acrool/js-utils/equal";
+} from '@acrool/js-utils/equal';
 import {
     removeStartEnd
-} from "@acrool/js-utils/string";
+} from '@acrool/js-utils/string';
 
 interface IArgs {
     path: string,
