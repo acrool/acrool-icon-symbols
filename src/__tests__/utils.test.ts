@@ -1,5 +1,5 @@
 import {
-    decodeSvgPaths,
+    decodeSvgContent,
     decodeSymbols
 } from '../utils';
 
@@ -21,16 +21,39 @@ describe('decodeSymbols', () => {
 
 });
 
-describe('decodeSvgPaths', () => {
+describe('decodeSvgContent', () => {
 
     it('decode', () => {
-        const result = decodeSvgPaths(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" style="display: none;">
+        const result = decodeSvgContent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10 10" style="display: none;">
 <rect y="0.5" width="60" height="60" rx="30" fill="#179C5F"/>
 <ellipse id="Ellipse 13" cx="30" cy="30.5" rx="24" ry="23.5" fill="#7ACB9A"/>
 <path id="Vector" d="M19.0321 31.9548L26.0096 38.3624C27.0274 39.2993 28.6028 39.2495 29.56 38.2625L42.0081 26.3443C43.0206 25.3707 43.0513 23.7599 42.0773 22.7468C41.1034 21.7353 39.4934 21.7036 38.4809 22.6772L27.6984 33.0009L22.4791 28.2081C21.4451 27.2567 19.8341 27.3235 18.8822 28.3585C17.9304 29.3925 17.9975 31.0025 19.0321 31.9548Z" fill="white"/>
             </svg>`);
 
-        expect(result.rect).toEqual(['<rect fill="#179C5F" height="60" rx="30" width="60" y="0.5" />']);
+        expect(result.content.rect).toEqual([
+            {
+                'fill': '#179C5F',
+                'height': '60',
+                'rx': '30',
+                'width': '60',
+                'y': '0.5'
+            }
+        ]);
+        expect(result.content.ellipse).toEqual([
+            {
+                'cx': '30',
+                'cy': '30.5',
+                'fill': '#7ACB9A',
+                'rx': '24',
+                'ry': '23.5'
+            }
+        ]);
+        expect(result.content.path).toEqual([
+            {
+                'd': 'M19.0321 31.9548L26.0096 38.3624C27.0274 39.2993 28.6028 39.2495 29.56 38.2625L42.0081 26.3443C43.0206 25.3707 43.0513 23.7599 42.0773 22.7468C41.1034 21.7353 39.4934 21.7036 38.4809 22.6772L27.6984 33.0009L22.4791 28.2081C21.4451 27.2567 19.8341 27.3235 18.8822 28.3585C17.9304 29.3925 17.9975 31.0025 19.0321 31.9548Z',
+                'fill': 'white'
+            }
+        ]);
     });
 
 });

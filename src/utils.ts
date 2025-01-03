@@ -12,10 +12,11 @@ import {
     regPattern
 } from '@acrool/js-utils/equal';
 import {
+    TTagKey,
     ISvgAttributes,
-    TDecodeSvgPaths,
+    TDecodeSvgContent,
     TDecodeSymbols,
-    TFormatSvgPaths
+    TFormatSvgContent
 } from './utils.d';
 
 
@@ -105,76 +106,46 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
  * 解析SVGPath
  * @param svgContent
  */
-export const formatSvgPaths: TFormatSvgPaths = (svgContent) => {
-    const {fillDiffColor, paths, ellipses, rects, circle, g, step, viewBox} = decodeSvgPaths(svgContent);
+export const formatSvgContent: TFormatSvgContent = (svgContent) => {
+    const {fillDiffColor, content, viewBox} = decodeSvgContent(svgContent);
 
     const isMultiColor = fillDiffColor.length >= 2;
 
     return {
         viewBox,
-        step: step.map(path => {
-            const attr = objectKeys(path)
-                .map(attrKey => {
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                });
-            return `<rect ${attr.join(' ')}/>`;
-        }),
-        g: g.map(path => {
-            const attr = objectKeys(path)
-                .map(attrKey => {
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                });
-            return `<rect ${attr.join(' ')}/>`;
-        }),
-        rects: rects.map(path => {
-            const attr = objectKeys(path)
-                .map(attrKey => {
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                });
-            return `<rect ${attr.join(' ')}/>`;
-        }),
-        ellipses: ellipses.map(path => {
-            const attr = objectKeys(path)
-                .map(attrKey => {
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                });
-            return `<ellipse ${attr.join(' ')}/>`;
-        }),
-        circle: circle.map(path => {
-            const attr = objectKeys(path)
-                .map(attrKey => {
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${path[attrKey]}"`;
-                });
-            return `<circle ${attr.join(' ')}/>`;
-        }),
-        paths: paths.map(path => {
-            const {fill, fillOpacity, stroke, ...pathAttr} = path;
+        content: objectKeys(content).reduce<string[]>((curr, tag) => {
 
-            const properties: string[] = [];
+            content[tag].forEach(path => {
+                const {fill, fillOpacity, stroke, ...pathAttr} = path;
 
-            const attr = objectKeys(pathAttr)
-                .map(attrKey => {
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
-                });
+                const properties: string[] = [];
 
-            if(isMultiColor) {
-                if (fill) {
-                    properties.push(`fill="${fill}"`);
-                }
-                if (fillOpacity) {
-                    properties.push(`fill-opacity="${fillOpacity}"`);
-                }
-                if (stroke) {
-                    properties.push(`stroke="${stroke}"`);
-                }
-            }else{
-                if (stroke) {
-                    properties.push('stroke="currentColor"');
-                }
-            }
+                const attr = objectKeys(pathAttr)
+                    .map(attrKey => {
+                        return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
+                    });
 
-            return `<path ${attr.join(' ')} ${properties.join(' ')}/>`;
-        }),
+                if(isMultiColor) {
+                    if (fill) {
+                        properties.push(`fill="${fill}"`);
+                    }
+                    if (fillOpacity) {
+                        properties.push(`fill-opacity="${fillOpacity}"`);
+                    }
+                    if (stroke) {
+                        properties.push(`stroke="${stroke}"`);
+                    }
+                }else{
+                    if (stroke) {
+                        properties.push('stroke="currentColor"');
+                    }
+                }
+
+                curr.push(`<${tag} ${attr.join(' ')} ${properties.join(' ')}/>`);
+            });
+
+            return curr;
+        }, []),
     };
 
 
@@ -225,390 +196,93 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
  * (如果只有 <path .../><path .../> 則自行用 <svg>{paths}</svg> 包裝起來)
  * @param svgContent
  */
-export const decodeSvgPaths: TDecodeSvgPaths = (svgContent) => {
+export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
     const $ = cheerio.load(svgContent);
     const root = $('svg');
     const viewBox = root.attr('viewBox');
 
     const fillDiffColor: string[] = [];
-    const paths: ISvgAttributes[] = [];
-    const rects: ISvgAttributes[] = [];
-    const ellipses: ISvgAttributes[] = [];
-    const circle: ISvgAttributes[] = [];
-    const g: ISvgAttributes[] = [];
-    const step: ISvgAttributes[] = [];
 
-    root.find('rect').each((index, element) => {
-        // 依照需要的屬性追加
-        const el = $(element);
+    const content: Record<string, ISvgAttributes[]> = {
+        rect: [],
+        ellipse: [],
+        path: [],
+        circle: [],
+        g: [],
+        step: [],
+    };
 
-        const attributes: ISvgAttributes = removeUndefinedValues({
-            // id: el.attr('id'),
-            // class: el.attr('class'),
-            style: el.attr('style'),
-            transform: el.attr('transform'),
-            visibility: el.attr('visibility'),
-            display: el.attr('display'),
-            opacity: el.attr('opacity'),
+    const contentTags: TTagKey[] = ['rect', 'ellipse', 'path', 'circle', 'g', 'step'];
 
-            // 填充相關
-            fill: el.attr('fill')?.toLocaleString(),
-            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-            fillRule: el.attr('fill-rule'),
+    contentTags.forEach(tag => {
+        root.find(tag).each((index, element) => {
+            // 依照需要的屬性追加
+            const el = $(element);
 
-            // 裁切
-            clipRule: el.attr('clip-rule'),
-            clipPath: el.attr('clip-path'),
+            const attributes: ISvgAttributes = removeUndefinedValues({
+                // id: el.attr('id'),
+                // class: el.attr('class'),
+                style: el.attr('style'),
+                transform: el.attr('transform'),
+                visibility: el.attr('visibility'),
+                display: el.attr('display'),
+                opacity: el.attr('opacity'),
 
-            // 描邊相關
-            stroke: el.attr('stroke'),
-            strokeWidth: el.attr('stroke-width'),
-            strokeOpacity: el.attr('stroke-opacity'),
-            strokeLinecap: el.attr('stroke-linecap'),
-            strokeLinejoin: el.attr('stroke-linejoin'),
-            strokeDasharray: el.attr('stroke-dasharray'),
-            strokeDashoffset: el.attr('stroke-dashoffset'),
+                // 填充相關
+                fill: el.attr('fill')?.toLocaleString(),
+                fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
+                fillRule: el.attr('fill-rule'),
 
-            // 幾何屬性 (根據具體元素類型擴展)
-            x: el.attr('x'),
-            y: el.attr('y'),
-            width: el.attr('width'),
-            height: el.attr('height'),
-            cx: el.attr('cx'),
-            cy: el.attr('cy'),
-            r: el.attr('r'),
-            rx: el.attr('rx'),
-            ry: el.attr('ry'),
-            x1: el.attr('x1'),
-            y1: el.attr('y1'),
-            x2: el.attr('x2'),
-            y2: el.attr('y2'),
-            points: el.attr('points'),
-            d: el.attr('d')
-                ?.replace(/\n/g,'')
-                .replace(/\t/g, ''),
+                // 裁切
+                clipRule: el.attr('clip-rule'),
+                clipPath: el.attr('clip-path'),
+
+                // 描邊相關
+                stroke: el.attr('stroke'),
+                strokeWidth: el.attr('stroke-width'),
+                strokeOpacity: el.attr('stroke-opacity'),
+                strokeLinecap: el.attr('stroke-linecap'),
+                strokeLinejoin: el.attr('stroke-linejoin'),
+                strokeDasharray: el.attr('stroke-dasharray'),
+                strokeDashoffset: el.attr('stroke-dashoffset'),
+
+                // 幾何屬性 (根據具體元素類型擴展)
+                x: el.attr('x'),
+                y: el.attr('y'),
+                width: el.attr('width'),
+                height: el.attr('height'),
+                cx: el.attr('cx'),
+                cy: el.attr('cy'),
+                r: el.attr('r'),
+                rx: el.attr('rx'),
+                ry: el.attr('ry'),
+                x1: el.attr('x1'),
+                y1: el.attr('y1'),
+                x2: el.attr('x2'),
+                y2: el.attr('y2'),
+                points: el.attr('points'),
+                d: el.attr('d')
+                    ?.replace(/\n/g,'')
+                    .replace(/\t/g, ''),
+                stopOpacity: el.attr('stop-opacity'),
+                stopColor: el.attr('stop-color'),
+                offset: el.attr('offset'),
+            });
+
+            if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
+                fillDiffColor.push(attributes.fill);
+            }
+
+            if(content[tag]){
+                content[tag].push(attributes);
+            }
         });
-
-        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-            fillDiffColor.push(attributes.fill);
-        }
-        rects.push(attributes);
     });
 
-    root.find('ellipse').each((index, element) => {
-        // 依照需要的屬性追加
-        const el = $(element);
-
-        const attributes: ISvgAttributes = removeUndefinedValues({
-            // id: el.attr('id'),
-            // class: el.attr('class'),
-            style: el.attr('style'),
-            transform: el.attr('transform'),
-            visibility: el.attr('visibility'),
-            display: el.attr('display'),
-            opacity: el.attr('opacity'),
-
-            // 填充相關
-            fill: el.attr('fill')?.toLocaleString(),
-            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-            fillRule: el.attr('fill-rule'),
-
-            // 裁切
-            clipRule: el.attr('clip-rule'),
-            clipPath: el.attr('clip-path'),
-
-            // 描邊相關
-            stroke: el.attr('stroke'),
-            strokeWidth: el.attr('stroke-width'),
-            strokeOpacity: el.attr('stroke-opacity'),
-            strokeLinecap: el.attr('stroke-linecap'),
-            strokeLinejoin: el.attr('stroke-linejoin'),
-            strokeDasharray: el.attr('stroke-dasharray'),
-            strokeDashoffset: el.attr('stroke-dashoffset'),
-
-            // 幾何屬性 (根據具體元素類型擴展)
-            x: el.attr('x'),
-            y: el.attr('y'),
-            width: el.attr('width'),
-            height: el.attr('height'),
-            cx: el.attr('cx'),
-            cy: el.attr('cy'),
-            r: el.attr('r'),
-            rx: el.attr('rx'),
-            ry: el.attr('ry'),
-            x1: el.attr('x1'),
-            y1: el.attr('y1'),
-            x2: el.attr('x2'),
-            y2: el.attr('y2'),
-            points: el.attr('points'),
-            d: el.attr('d')
-                ?.replace(/\n/g,'')
-                .replace(/\t/g, ''),
-        });
-
-        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-            fillDiffColor.push(attributes.fill);
-        }
-        ellipses.push(attributes);
-    });
-
-
-    root.find('path').each((index, element) => {
-
-        // 依照需要的屬性追加
-        const el = $(element);
-
-        const attributes: ISvgAttributes = removeUndefinedValues({
-            // id: el.attr('id'),
-            // class: el.attr('class'),
-            style: el.attr('style'),
-            transform: el.attr('transform'),
-            visibility: el.attr('visibility'),
-            display: el.attr('display'),
-            opacity: el.attr('opacity'),
-
-            // 填充相關
-            fill: el.attr('fill')?.toLocaleString(),
-            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-            fillRule: el.attr('fill-rule'),
-
-            // 裁切
-            clipRule: el.attr('clip-rule'),
-            clipPath: el.attr('clip-path'),
-
-            // 描邊相關
-            stroke: el.attr('stroke'),
-            strokeWidth: el.attr('stroke-width'),
-            strokeOpacity: el.attr('stroke-opacity'),
-            strokeLinecap: el.attr('stroke-linecap'),
-            strokeLinejoin: el.attr('stroke-linejoin'),
-            strokeDasharray: el.attr('stroke-dasharray'),
-            strokeDashoffset: el.attr('stroke-dashoffset'),
-
-            // 幾何屬性 (根據具體元素類型擴展)
-            x: el.attr('x'),
-            y: el.attr('y'),
-            width: el.attr('width'),
-            height: el.attr('height'),
-            cx: el.attr('cx'),
-            cy: el.attr('cy'),
-            r: el.attr('r'),
-            rx: el.attr('rx'),
-            ry: el.attr('ry'),
-            x1: el.attr('x1'),
-            y1: el.attr('y1'),
-            x2: el.attr('x2'),
-            y2: el.attr('y2'),
-            points: el.attr('points'),
-            d: el.attr('d')
-                ?.replace(/\n/g,'')
-                .replace(/\t/g, ''),
-        });
-
-
-
-        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-            fillDiffColor.push(attributes.fill);
-        }
-        paths.push(attributes);
-    });
-
-
-    root.find('circle').each((index, element) => {
-
-        // 依照需要的屬性追加
-        const el = $(element);
-
-        const attributes: ISvgAttributes = removeUndefinedValues({
-            // id: el.attr('id'),
-            // class: el.attr('class'),
-            style: el.attr('style'),
-            transform: el.attr('transform'),
-            visibility: el.attr('visibility'),
-            display: el.attr('display'),
-            opacity: el.attr('opacity'),
-
-            // 填充相關
-            fill: el.attr('fill')?.toLocaleString(),
-            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-            fillRule: el.attr('fill-rule'),
-
-            // 裁切
-            clipRule: el.attr('clip-rule'),
-            clipPath: el.attr('clip-path'),
-
-            // 描邊相關
-            stroke: el.attr('stroke'),
-            strokeWidth: el.attr('stroke-width'),
-            strokeOpacity: el.attr('stroke-opacity'),
-            strokeLinecap: el.attr('stroke-linecap'),
-            strokeLinejoin: el.attr('stroke-linejoin'),
-            strokeDasharray: el.attr('stroke-dasharray'),
-            strokeDashoffset: el.attr('stroke-dashoffset'),
-
-            // 幾何屬性 (根據具體元素類型擴展)
-            x: el.attr('x'),
-            y: el.attr('y'),
-            width: el.attr('width'),
-            height: el.attr('height'),
-            cx: el.attr('cx'),
-            cy: el.attr('cy'),
-            r: el.attr('r'),
-            rx: el.attr('rx'),
-            ry: el.attr('ry'),
-            x1: el.attr('x1'),
-            y1: el.attr('y1'),
-            x2: el.attr('x2'),
-            y2: el.attr('y2'),
-            points: el.attr('points'),
-            d: el.attr('d')
-                ?.replace(/\n/g,'')
-                .replace(/\t/g, ''),
-        });
-
-
-
-        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-            fillDiffColor.push(attributes.fill);
-        }
-        circle.push(attributes);
-    });
-
-    root.find('g').each((index, element) => {
-
-        // 依照需要的屬性追加
-        const el = $(element);
-
-        const attributes: ISvgAttributes = removeUndefinedValues({
-            // id: el.attr('id'),
-            // class: el.attr('class'),
-            style: el.attr('style'),
-            transform: el.attr('transform'),
-            visibility: el.attr('visibility'),
-            display: el.attr('display'),
-            opacity: el.attr('opacity'),
-
-            // 填充相關
-            fill: el.attr('fill')?.toLocaleString(),
-            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-            fillRule: el.attr('fill-rule'),
-
-            // 裁切
-            clipRule: el.attr('clip-rule'),
-            clipPath: el.attr('clip-path'),
-
-            // 描邊相關
-            stroke: el.attr('stroke'),
-            strokeWidth: el.attr('stroke-width'),
-            strokeOpacity: el.attr('stroke-opacity'),
-            strokeLinecap: el.attr('stroke-linecap'),
-            strokeLinejoin: el.attr('stroke-linejoin'),
-            strokeDasharray: el.attr('stroke-dasharray'),
-            strokeDashoffset: el.attr('stroke-dashoffset'),
-
-            // 幾何屬性 (根據具體元素類型擴展)
-            x: el.attr('x'),
-            y: el.attr('y'),
-            width: el.attr('width'),
-            height: el.attr('height'),
-            cx: el.attr('cx'),
-            cy: el.attr('cy'),
-            r: el.attr('r'),
-            rx: el.attr('rx'),
-            ry: el.attr('ry'),
-            x1: el.attr('x1'),
-            y1: el.attr('y1'),
-            x2: el.attr('x2'),
-            y2: el.attr('y2'),
-            points: el.attr('points'),
-            d: el.attr('d')
-                ?.replace(/\n/g,'')
-                .replace(/\t/g, ''),
-        });
-
-
-
-        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-            fillDiffColor.push(attributes.fill);
-        }
-        g.push(attributes);
-    });
-
-
-    root.find('step').each((index, element) => {
-
-        // 依照需要的屬性追加
-        const el = $(element);
-
-        const attributes: ISvgAttributes = removeUndefinedValues({
-            // id: el.attr('id'),
-            // class: el.attr('class'),
-            style: el.attr('style'),
-            transform: el.attr('transform'),
-            visibility: el.attr('visibility'),
-            display: el.attr('display'),
-            opacity: el.attr('opacity'),
-
-            // 填充相關
-            fill: el.attr('fill')?.toLocaleString(),
-            fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-            fillRule: el.attr('fill-rule'),
-
-            // 裁切
-            clipRule: el.attr('clip-rule'),
-            clipPath: el.attr('clip-path'),
-
-            // 描邊相關
-            stroke: el.attr('stroke'),
-            strokeWidth: el.attr('stroke-width'),
-            strokeOpacity: el.attr('stroke-opacity'),
-            strokeLinecap: el.attr('stroke-linecap'),
-            strokeLinejoin: el.attr('stroke-linejoin'),
-            strokeDasharray: el.attr('stroke-dasharray'),
-            strokeDashoffset: el.attr('stroke-dashoffset'),
-
-            // 幾何屬性 (根據具體元素類型擴展)
-            x: el.attr('x'),
-            y: el.attr('y'),
-            width: el.attr('width'),
-            height: el.attr('height'),
-            cx: el.attr('cx'),
-            cy: el.attr('cy'),
-            r: el.attr('r'),
-            rx: el.attr('rx'),
-            ry: el.attr('ry'),
-            x1: el.attr('x1'),
-            y1: el.attr('y1'),
-            x2: el.attr('x2'),
-            y2: el.attr('y2'),
-            points: el.attr('points'),
-            d: el.attr('d')
-                ?.replace(/\n/g,'')
-                .replace(/\t/g, ''),
-
-
-
-            stopOpacity: el.attr('stop-opacity'),
-            stopColor: el.attr('stop-color'),
-            offset: el.attr('offset'),
-        });
-
-
-
-        if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-            fillDiffColor.push(attributes.fill);
-        }
-        step.push(attributes);
-    });
 
     return {
         fillDiffColor,
         viewBox,
-        paths,
-        rects,
-        ellipses,
-        circle,
-        g,
-        step,
+        content,
     };
 };
