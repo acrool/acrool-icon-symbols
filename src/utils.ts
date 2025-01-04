@@ -174,36 +174,34 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
 
     return {
         viewBox,
-        content: objectKeys(content).reduce<string[]>((curr, tag) => {
+        content: content.reduce<string[]>((curr, tag) => {
 
-            content[tag].forEach(path => {
-                const {fill, fillOpacity, stroke, ...pathAttr} = path;
+            const {fill, fillOpacity, stroke, ...pathAttr} = tag.attr;
 
-                const properties: string[] = [];
+            const properties: string[] = [];
 
-                const attr = objectKeys(pathAttr)
-                    .map(attrKey => {
-                        return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
-                    });
+            const attr = objectKeys(pathAttr)
+                .map(attrKey => {
+                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
+                });
 
-                if(isMultiColor) {
-                    if (fill) {
-                        properties.push(`fill="${fill}"`);
-                    }
-                    if (fillOpacity) {
-                        properties.push(`fill-opacity="${fillOpacity}"`);
-                    }
-                    if (stroke) {
-                        properties.push(`stroke="${stroke}"`);
-                    }
-                }else{
-                    if (stroke) {
-                        properties.push('stroke="currentColor"');
-                    }
+            if(isMultiColor) {
+                if (fill) {
+                    properties.push(`fill="${fill}"`);
                 }
+                if (fillOpacity) {
+                    properties.push(`fill-opacity="${fillOpacity}"`);
+                }
+                if (stroke) {
+                    properties.push(`stroke="${stroke}"`);
+                }
+            }else{
+                if (stroke) {
+                    properties.push('stroke="currentColor"');
+                }
+            }
 
-                curr.push(`<${tag} ${attr.join(' ')} ${properties.join(' ')}/>`);
-            });
+            curr.push(`<${tag} ${attr.join(' ')} ${properties.join(' ')}/>`);
 
             return curr;
         }, []),
@@ -258,86 +256,151 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
  * @param svgContent
  */
 export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
-    const $ = cheerio.load(svgContent, { xmlMode: true });
+    const $ = cheerio.load(svgContent, {xmlMode: true});
     const root = $('svg');
     const viewBox = root.attr('viewBox');
 
     const fillDiffColor: string[] = [];
 
-    const content: Record<TTagKey, ISvgAttributes[]> = {
-        rect: [],
-        ellipse: [],
-        path: [],
-        circle: [],
-        g: [],
-        stop: [],
-    };
+    const content: IDef[] = [];
 
-    const defs: IDef[] = [];
+    const defsContent: IDef[] = [];
 
     // 儲存 Def 中的對應ID (重新命名)
-    const linearGradientIdMap = new Map();
+    const defIdMap = new Map();
 
+    const contentTags: TTagKey[] = ['ellipse', 'path', 'circle', 'g', 'stop', 'rect'];
 
+    const defChildTag = ['clipPath','linearGradient'];
 
     // 處理 Defs
-    const linearGradients = root.find('defs linearGradient');
-    linearGradients.each((index, element) => {
-        const el = $(element);
-        const oldId = el.attr('id');
-        const newId = `svg_def_${ulid().toLowerCase()}`;
+    const defs = root.find('defs');
 
-        linearGradientIdMap.set(oldId, newId);
+    // clipPath 或 linearGradient
+    defChildTag.forEach(tag => {
+        defs.find(`> ${tag}`).each((index, defElement) => {
+            const defEl = $(defElement);
 
-        const linearGradientAttr = {
-            ...getAttr(el),
-            id: newId,
-        };
+            // 找到並設定ID
+            const oldId = defEl.attr('id');
+            const newId = oldId ? `svg_def_${ulid().toLowerCase()}`: undefined;
+            defIdMap.set(oldId, newId);
 
-        const stop: ISvgAttributes[] = [];
-        el.find('> stop').each((index, stopElement) => {
-            const stopEl = $(stopElement);
-            stop.push(getAttr(stopEl));
+            const linearGradientAttr: IDef = {
+                tag: tag,
+                attr: {
+                    ...getAttr(defEl),
+                    id: newId,
+                },
+                children: [],
+            };
+
+            contentTags.forEach(contentTag => {
+                defEl.find(`> ${contentTag}`).each((index, childElement) => {
+                    const stopEl = $(childElement);
+
+                    if(!linearGradientAttr.children) linearGradientAttr.children = [];
+                    linearGradientAttr.children.push({
+                        tag: contentTag,
+                        attr: getAttr(stopEl),
+                    });
+                });
+            });
+
+            defsContent.push(linearGradientAttr);
+
         });
 
-        defs.push({
-            attr: linearGradientAttr,
-            stop,
-        });
     });
-
 
     // 處理一般屬性
-    const contentTags: TTagKey[] = ['rect', 'ellipse', 'path', 'circle', 'g', 'stop'];
-    contentTags.forEach(tag => {
-        root.find(`> ${tag}`).each((index, element) => {
-            // 依照需要的屬性追加
-            const el = $(element);
+    const getData = (rootCheerio: cheerio.Cheerio) => {
+        contentTags.forEach(tag => {
+            rootCheerio.find(`> ${tag}`).each((index, element) => {
+                // 依照需要的屬性追加
+                const el = $(element);
 
-            const attributes: ISvgAttributes = getAttr(el);
+                const attributes: ISvgAttributes = getAttr(el);
 
-            if(attributes.fill){
-                if(attributes.fill.startsWith('url(#')){
-                    const id = extractIdFromUrl(attributes.fill);
-                    attributes.fill = `url(#${linearGradientIdMap.get(id)})`;
-
-                }else if(!fillDiffColor.includes(attributes.fill)){
-                    fillDiffColor.push(attributes.fill);
+                if(attributes.fill){
+                    if(attributes.fill.startsWith('url(#')){
+                        const id = extractIdFromUrl(attributes.fill);
+                        attributes.fill = `url(#${defIdMap.get(id)})`;
+                    }else if(!fillDiffColor.includes(attributes.fill)){
+                        fillDiffColor.push(attributes.fill);
+                    }
                 }
-            }
 
-            // 推入Tag
-            if(content[tag]){
-                content[tag].push(attributes);
-            }
+                if(attributes.clipPath){
+                    if(attributes.clipPath.startsWith('url(#')){
+                        const id = extractIdFromUrl(attributes.clipPath);
+                        attributes.clipPath = `url(#${defIdMap.get(id)})`;
+                    }
+                }
+
+                if(el.children().length > 0){
+
+                    // 再一次
+                    const child: IDef['children'] = [];
+                    contentTags.forEach(childTag => {
+                        el.find(`> ${childTag}`).each((index, element) => {
+                            // 依照需要的屬性追加
+                            const el = $(element);
+
+                            const attributes2: ISvgAttributes = getAttr(el);
+
+                            if(attributes2.fill){
+                                if(attributes2.fill.startsWith('url(#')){
+                                    const id = extractIdFromUrl(attributes2.fill);
+                                    attributes2.fill = `url(#${defIdMap.get(id)})`;
+                                }else if(!fillDiffColor.includes(attributes2.fill)){
+                                    fillDiffColor.push(attributes2.fill);
+                                }
+                            }
+
+                            if(attributes2.clipPath){
+                                if(attributes2.clipPath.startsWith('url(#')){
+                                    const id = extractIdFromUrl(attributes2.clipPath);
+                                    attributes2.clipPath = `url(#${defIdMap.get(id)})`;
+                                }
+                            }
+
+
+                            child.push({
+                                tag: childTag,
+                                attr: attributes2,
+                            });
+
+                        });
+                    });
+
+                    content.push({
+                        tag,
+                        attr: attributes,
+                        children: child,
+                    });
+
+
+                }else{
+                    // 推入Tag
+                    content.push({
+                        tag,
+                        attr: attributes,
+                    });
+                }
+
+            });
         });
-    });
+    };
+
+    getData(root);
+
 
 
     return {
         fillDiffColor,
         viewBox,
         content,
-        defs,
+        defs: defsContent,
     };
 };

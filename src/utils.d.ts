@@ -16,6 +16,7 @@ export interface ISvgAttributes {
 
     // 剪裁相關屬性
     clipRule?: string | null;
+    clipPath?: string | null;
 
     // 描邊相關屬性
     stroke?: string | null;
@@ -61,14 +62,18 @@ export type TDecodeSymbols = (symbolsContent: string) => Array<{
 type TTagKey = 'g'|'rect'|'ellipse'|'path'|'circle'|'stop'
 
 export interface IDef {
+    tag: string,
     attr: ISvgAttributes,
-    stop: ISvgAttributes[],
+    children?: Array<{
+        tag: string,
+        attr: ISvgAttributes,
+    }>,
 }
 
 export type TDecodeSvgContent = (svgContent: string) => {
     viewBox?: string,
     fillDiffColor: string[],
 
-    content: Record<TTagKey, ISvgAttributes[]>,
+    content: IDef[],
     defs: IDef[],
 }
