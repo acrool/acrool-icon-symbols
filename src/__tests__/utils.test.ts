@@ -391,7 +391,7 @@ describe('Format Svg Content', () => {
             `<clipPath id="${id1}">
     <rect fill="white" width="20" height="20"/>
 </clipPath>`,
-            `<linearGradient x1="10.24" y1="20" x2="-1.57997" y2="18.8081" id="${id2}">
+            `<linearGradient gradientUnits="userSpaceOnUse" x1="10.24" y1="20" x2="-1.57997" y2="18.8081" id="${id2}">
     <stop stop-color="#12B9CC"/><stop stop-color="#96D5DC" offset="1"/>
 </linearGradient>`
         ]);

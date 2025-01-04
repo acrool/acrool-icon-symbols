@@ -186,6 +186,9 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
         defs: defs.reduce<string[]>((curr, el) => {
             const attr = objectKeys(el.attr)
                 .map(attrKey => {
+                    if(attrKey === 'gradientUnits'){
+                        return `${attrKey}="${el.attr[attrKey]}"`;
+                    }
                     return `${lowerCaseToLowerDashCase(attrKey as string)}="${el.attr[attrKey]}"`;
                 });
 
@@ -195,6 +198,9 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
 
                     const childAttr = objectKeys(childEl.attr)
                         .map(attrKey => {
+                            if(attrKey === 'gradientUnits'){
+                                return `${attrKey}="${childEl.attr[attrKey]}"`;
+                            }
                             return `${lowerCaseToLowerDashCase(attrKey as string)}="${childEl.attr[attrKey]}"`;
                         });
 
@@ -222,6 +228,9 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
 
             const attr = objectKeys(pathAttr)
                 .map(attrKey => {
+                    if(attrKey === 'gradientUnits'){
+                        return `${attrKey}="${pathAttr[attrKey]}"`;
+                    }
                     return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
                 });
 
@@ -247,6 +256,9 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
 
                     const childAttr = objectKeys(pathAttr)
                         .map(attrKey => {
+                            if(attrKey === 'gradientUnits'){
+                                return `${attrKey}="${pathAttr[attrKey]}"`;
+                            }
                             return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
                         });
 

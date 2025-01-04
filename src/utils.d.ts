@@ -18,6 +18,9 @@ export interface ISvgAttributes {
     clipRule?: string | null;
     clipPath?: string | null;
 
+    // 漸層相關
+    gradientUnits?: string,
+
     // 描邊相關屬性
     stroke?: string | null;
     strokeWidth?: string | null;
