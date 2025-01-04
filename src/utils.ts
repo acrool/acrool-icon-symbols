@@ -70,6 +70,8 @@ const getAttr = (el: cheerio.Cheerio): ISvgAttributes => {
         strokeDasharray: el.attr('stroke-dasharray'),
         strokeDashoffset: el.attr('stroke-dashoffset'),
 
+        gradientUnits: el.attr('gradientUnits'),
+
         // 幾何屬性 (根據具體元素類型擴展)
         x: el.attr('x'),
         y: el.attr('y'),
