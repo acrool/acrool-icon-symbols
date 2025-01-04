@@ -69,5 +69,5 @@ export type TDecodeSvgContent = (svgContent: string) => {
     fillDiffColor: string[],
 
     content: Record<TTagKey, ISvgAttributes[]>,
-    defs: TDef[],
+    defs: IDef[],
 }
