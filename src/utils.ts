@@ -24,10 +24,17 @@ import {
 } from 'ulid';
 
 
-const extractIdFromUrl = (input: string): string | null => {
+export const extractIdFromUrl = (input: string): string | null => {
     const regex = /url\(#([^)]+)\)/; // 正則表達式匹配 `url(#id)`
     const match = input.match(regex); // 使用 `match` 方法找出符合的部分
     return match ? match[1] : null; // 如果找到匹配項，返回捕獲的 `id`，否則返回 `null`
+};
+
+
+export const extractId = (input: string): string | null => {
+    const regex = /id="([^"]+)"/; // 匹配 id 屬性的值
+    const match = input.match(regex);
+    return match ? match[1] : null; // 返回捕獲的值，或返回 null
 };
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
@@ -168,15 +175,46 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
  * @param svgContent
  */
 export const formatSvgContent: TFormatSvgContent = (svgContent) => {
-    const {fillDiffColor, content, viewBox} = decodeSvgContent(svgContent);
+    const {fillDiffColor, content, defs, viewBox} = decodeSvgContent(svgContent);
 
     const isMultiColor = fillDiffColor.length >= 2;
 
     return {
         viewBox,
-        content: content.reduce<string[]>((curr, tag) => {
+        defs: defs.reduce<string[]>((curr, el) => {
+            const attr = objectKeys(el.attr)
+                .map(attrKey => {
+                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${el.attr[attrKey]}"`;
+                });
 
-            const {fill, fillOpacity, stroke, ...pathAttr} = tag.attr;
+            if(el.children){
+
+                const childProperties2 = el.children.reduce<string[]>((childCurr, childEl) => {
+
+                    const childAttr = objectKeys(childEl.attr)
+                        .map(attrKey => {
+                            return `${lowerCaseToLowerDashCase(attrKey as string)}="${childEl.attr[attrKey]}"`;
+                        });
+
+                    childCurr.push(`<${childEl.tag} ${childAttr.join(' ')}/>`);
+
+                    return childCurr;
+                }, []);
+
+                curr.push(`<${el.tag} ${attr.join(' ')}>
+    ${childProperties2.join('')}
+</${el.tag}>`);
+
+
+            }else{
+                curr.push(`<${el.tag} ${attr.join(' ')}/>`);
+            }
+
+            return curr;
+        }, []),
+        content: content.reduce<string[]>((curr, el) => {
+
+            const {fillOpacity, stroke, ...pathAttr} = el.attr;
 
             const properties: string[] = [];
 
@@ -186,9 +224,6 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
                 });
 
             if(isMultiColor) {
-                if (fill) {
-                    properties.push(`fill="${fill}"`);
-                }
                 if (fillOpacity) {
                     properties.push(`fill-opacity="${fillOpacity}"`);
                 }
@@ -201,7 +236,43 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
                 }
             }
 
-            curr.push(`<${tag} ${attr.join(' ')} ${properties.join(' ')}/>`);
+            if(el.children){
+
+                const childProperties2 = el.children.reduce<string[]>((childCurr, childEl) => {
+                    const {fillOpacity, stroke, ...pathAttr} = childEl.attr;
+
+                    const childProperties: string[] = [];
+
+                    const childAttr = objectKeys(pathAttr)
+                        .map(attrKey => {
+                            return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
+                        });
+
+                    if(isMultiColor) {
+                        if (fillOpacity) {
+                            childProperties.push(`fill-opacity="${fillOpacity}"`);
+                        }
+                        if (stroke) {
+                            childProperties.push(`stroke="${stroke}"`);
+                        }
+                    }else{
+                        if (stroke) {
+                            childProperties.push('stroke="currentColor"');
+                        }
+                    }
+                    childCurr.push(`<${childEl.tag} ${childAttr.join(' ')} ${childProperties.join(' ')}/>`);
+
+                    return childCurr;
+                }, []);
+
+                curr.push(`<${el.tag} ${[...attr, ...properties].join(' ')}>
+    ${childProperties2.join('')}
+</${el.tag}>`);
+
+
+            }else{
+                curr.push(`<${el.tag} ${attr.join(' ')} ${properties.join(' ')}/>`);
+            }
 
             return curr;
         }, []),

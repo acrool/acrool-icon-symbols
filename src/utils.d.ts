@@ -52,6 +52,7 @@ export interface ISvgAttributes {
 export type TFormatSvgContent = (svgContent: string) => {
     viewBox?: string,
     content?: string[],
+    defs?: string[],
 }
 export type TDecodeSymbols = (symbolsContent: string) => Array<{
     viewBox?: string,
