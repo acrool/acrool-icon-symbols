@@ -2,6 +2,7 @@
 
 export interface ISvgAttributes {
     // 通用屬性
+    id?: string | null;
     style?: string | null;
     transform?: string | null;
     visibility?: string | null;
