@@ -57,11 +57,17 @@ export type TDecodeSymbols = (symbolsContent: string) => Array<{
     content: string,
 }>
 
-type TTagKey = 'g'|'rect'|'ellipse'|'path'|'circle'|'step'
+type TTagKey = 'g'|'rect'|'ellipse'|'path'|'circle'|'stop'
+
+export interface IDef {
+    attr: ISvgAttributes,
+    stop: ISvgAttributes[],
+}
 
 export type TDecodeSvgContent = (svgContent: string) => {
     viewBox?: string,
     fillDiffColor: string[],
 
     content: Record<TTagKey, ISvgAttributes[]>,
+    defs: TDef[],
 }

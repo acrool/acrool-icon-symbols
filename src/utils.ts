@@ -12,18 +12,79 @@ import {
     regPattern
 } from '@acrool/js-utils/equal';
 import {
+    IDef,
     TTagKey,
     ISvgAttributes,
     TDecodeSvgContent,
     TDecodeSymbols,
     TFormatSvgContent
 } from './utils.d';
+import {
+    ulid
+} from 'ulid';
 
 
-
+const extractIdFromUrl = (input: string): string | null => {
+    const regex = /url\(#([^)]+)\)/; // 正則表達式匹配 `url(#id)`
+    const match = input.match(regex); // 使用 `match` 方法找出符合的部分
+    return match ? match[1] : null; // 如果找到匹配項，返回捕獲的 `id`，否則返回 `null`
+};
 
 const onlyUnique = (value: string, index: number, self: string[]): boolean => {
     return self.indexOf(value) === index;
+};
+
+
+const getAttr = (el: cheerio.Cheerio): ISvgAttributes => {
+    return removeUndefinedValues({
+        // id: el.attr('id'),
+        // class: el.attr('class'),
+        style: el.attr('style'),
+        transform: el.attr('transform'),
+        visibility: el.attr('visibility'),
+        display: el.attr('display'),
+        opacity: el.attr('opacity'),
+
+        // 填充相關
+        fill: el.attr('fill')?.toLocaleString(),
+        fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
+        fillRule: el.attr('fill-rule'),
+
+        // 裁切
+        clipRule: el.attr('clip-rule'),
+        clipPath: el.attr('clip-path'),
+
+        // 描邊相關
+        stroke: el.attr('stroke'),
+        strokeWidth: el.attr('stroke-width'),
+        strokeOpacity: el.attr('stroke-opacity'),
+        strokeLinecap: el.attr('stroke-linecap'),
+        strokeLinejoin: el.attr('stroke-linejoin'),
+        strokeDasharray: el.attr('stroke-dasharray'),
+        strokeDashoffset: el.attr('stroke-dashoffset'),
+
+        // 幾何屬性 (根據具體元素類型擴展)
+        x: el.attr('x'),
+        y: el.attr('y'),
+        width: el.attr('width'),
+        height: el.attr('height'),
+        cx: el.attr('cx'),
+        cy: el.attr('cy'),
+        r: el.attr('r'),
+        rx: el.attr('rx'),
+        ry: el.attr('ry'),
+        x1: el.attr('x1'),
+        y1: el.attr('y1'),
+        x2: el.attr('x2'),
+        y2: el.attr('y2'),
+        points: el.attr('points'),
+        d: el.attr('d')
+            ?.replace(/\n/g,'')
+            .replace(/\t/g, ''),
+        stopOpacity: el.attr('stop-opacity'),
+        stopColor: el.attr('stop-color'),
+        offset: el.attr('offset'),
+    });
 };
 
 const getMultiColor = (svgNode: Array<Node | string>): string[] => {
@@ -197,82 +258,75 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
  * @param svgContent
  */
 export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
-    const $ = cheerio.load(svgContent);
+    const $ = cheerio.load(svgContent, { xmlMode: true });
     const root = $('svg');
     const viewBox = root.attr('viewBox');
 
     const fillDiffColor: string[] = [];
 
-    const content: Record<string, ISvgAttributes[]> = {
+    const content: Record<TTagKey, ISvgAttributes[]> = {
         rect: [],
         ellipse: [],
         path: [],
         circle: [],
         g: [],
-        step: [],
+        stop: [],
     };
 
-    const contentTags: TTagKey[] = ['rect', 'ellipse', 'path', 'circle', 'g', 'step'];
+    const defs: IDef[] = [];
 
+    // 儲存 Def 中的對應ID (重新命名)
+    const linearGradientIdMap = new Map();
+
+
+
+    // 處理 Defs
+    const linearGradients = root.find('defs linearGradient');
+    linearGradients.each((index, element) => {
+        const el = $(element);
+        const oldId = el.attr('id');
+        const newId = `svg_def_${ulid().toLowerCase()}`;
+
+        linearGradientIdMap.set(oldId, newId);
+
+        const linearGradientAttr = {
+            ...getAttr(el),
+            id: newId,
+        };
+
+        const stop: ISvgAttributes[] = [];
+        el.find('> stop').each((index, stopElement) => {
+            const stopEl = $(stopElement);
+            stop.push(getAttr(stopEl));
+        });
+
+        defs.push({
+            attr: linearGradientAttr,
+            stop,
+        });
+    });
+
+
+    // 處理一般屬性
+    const contentTags: TTagKey[] = ['rect', 'ellipse', 'path', 'circle', 'g', 'stop'];
     contentTags.forEach(tag => {
-        root.find(tag).each((index, element) => {
+        root.find(`> ${tag}`).each((index, element) => {
             // 依照需要的屬性追加
             const el = $(element);
 
-            const attributes: ISvgAttributes = removeUndefinedValues({
-                // id: el.attr('id'),
-                // class: el.attr('class'),
-                style: el.attr('style'),
-                transform: el.attr('transform'),
-                visibility: el.attr('visibility'),
-                display: el.attr('display'),
-                opacity: el.attr('opacity'),
+            const attributes: ISvgAttributes = getAttr(el);
 
-                // 填充相關
-                fill: el.attr('fill')?.toLocaleString(),
-                fillOpacity: el.attr('fill-opacity')?.toString().replace('0.','.'),
-                fillRule: el.attr('fill-rule'),
+            if(attributes.fill){
+                if(attributes.fill.startsWith('url(#')){
+                    const id = extractIdFromUrl(attributes.fill);
+                    attributes.fill = `url(#${linearGradientIdMap.get(id)})`;
 
-                // 裁切
-                clipRule: el.attr('clip-rule'),
-                clipPath: el.attr('clip-path'),
-
-                // 描邊相關
-                stroke: el.attr('stroke'),
-                strokeWidth: el.attr('stroke-width'),
-                strokeOpacity: el.attr('stroke-opacity'),
-                strokeLinecap: el.attr('stroke-linecap'),
-                strokeLinejoin: el.attr('stroke-linejoin'),
-                strokeDasharray: el.attr('stroke-dasharray'),
-                strokeDashoffset: el.attr('stroke-dashoffset'),
-
-                // 幾何屬性 (根據具體元素類型擴展)
-                x: el.attr('x'),
-                y: el.attr('y'),
-                width: el.attr('width'),
-                height: el.attr('height'),
-                cx: el.attr('cx'),
-                cy: el.attr('cy'),
-                r: el.attr('r'),
-                rx: el.attr('rx'),
-                ry: el.attr('ry'),
-                x1: el.attr('x1'),
-                y1: el.attr('y1'),
-                x2: el.attr('x2'),
-                y2: el.attr('y2'),
-                points: el.attr('points'),
-                d: el.attr('d')
-                    ?.replace(/\n/g,'')
-                    .replace(/\t/g, ''),
-                stopOpacity: el.attr('stop-opacity'),
-                stopColor: el.attr('stop-color'),
-                offset: el.attr('offset'),
-            });
-
-            if(attributes.fill && !fillDiffColor.includes(attributes.fill)){
-                fillDiffColor.push(attributes.fill);
+                }else if(!fillDiffColor.includes(attributes.fill)){
+                    fillDiffColor.push(attributes.fill);
+                }
             }
 
+            // 推入Tag
             if(content[tag]){
                 content[tag].push(attributes);
             }
@@ -284,5 +338,6 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
         fillDiffColor,
         viewBox,
         content,
+        defs,
     };
 };
