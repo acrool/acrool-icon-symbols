@@ -42,7 +42,7 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
 };
 
 
-const getAttr = (el: cheerio.Cheerio): ISvgAttributes => {
+export const getAttr = (el: cheerio.Cheerio): ISvgAttributes => {
     return removeUndefinedValues({
         // id: el.attr('id'),
         // class: el.attr('class'),
@@ -362,9 +362,14 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
     const defs = root.find('defs');
 
     // clipPath 或 linearGradient
-    defChildTag.forEach(tag => {
-        defs.find(`> ${tag}`).each((index, defElement) => {
+    defs.children()
+        .filter((idx, defElement) => {
             const defEl = $(defElement);
+            return defChildTag.includes(defEl.prop('name'));
+        })
+        .each((index, defElement) => {
+            const defEl = $(defElement);
+            const tag = defEl.prop('name');
 
             // 找到並設定ID
             const oldId = defEl.attr('id');
@@ -380,9 +385,15 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                 children: [],
             };
 
-            contentTags.forEach(contentTag => {
-                defEl.find(`> ${contentTag}`).each((index, childElement) => {
+            defEl.children()
+                .filter((idx, defElement) => {
+                    const defEl = $(defElement);
+                    return contentTags.includes(defEl.prop('name'));
+                })
+                .each((index, childElement) => {
                     const stopEl = $(childElement);
+
+                    const contentTag = stopEl.prop('name');
 
                     if(!linearGradientAttr.children) linearGradientAttr.children = [];
                     linearGradientAttr.children.push({
@@ -390,20 +401,24 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                         attr: getAttr(stopEl),
                     });
                 });
-            });
 
             defsContent.push(linearGradientAttr);
 
         });
 
-    });
-
     // 處理一般屬性
     const getData = (rootCheerio: cheerio.Cheerio) => {
-        contentTags.forEach(tag => {
-            rootCheerio.find(`> ${tag}`).each((index, element) => {
+
+        rootCheerio.children()
+            .filter((idx, defElement) => {
+                const defEl = $(defElement);
+                return contentTags.includes(defEl.prop('name'));
+            })
+            .each((index, element) => {
                 // 依照需要的屬性追加
+
                 const el = $(element);
+                const tag = el.prop('name');
 
                 const attributes: ISvgAttributes = getAttr(el);
 
@@ -427,10 +442,15 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
 
                     // 再一次
                     const child: IDef['children'] = [];
-                    contentTags.forEach(childTag => {
-                        el.find(`> ${childTag}`).each((index, element) => {
+                    el.children()
+                        .filter((idx, defElement) => {
+                            const defEl = $(defElement);
+                            return contentTags.includes(defEl.prop('name'));
+                        })
+                        .each((index, element) => {
                             // 依照需要的屬性追加
                             const el = $(element);
+                            const childTag = el.prop('name');
 
                             const attributes2: ISvgAttributes = getAttr(el);
 
@@ -457,7 +477,6 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                             });
 
                         });
-                    });
 
                     content.push({
                         tag,
@@ -475,7 +494,6 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                 }
 
             });
-        });
     };
 
     getData(root);
