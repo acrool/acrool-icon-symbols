@@ -97,9 +97,9 @@ export interface IDecodeSvgContentRes {
 
     content: IDef[],
     defs: IDef[],
-};
+}
 
-export type TDecodeSvgContent = (svgContent: string) => IDecodeSvgContentRes
+export type TDecodeSvgContent = (svgContent: string) => IDecodeSvgContentRes;
 
 
 
