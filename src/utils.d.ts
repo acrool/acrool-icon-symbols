@@ -61,17 +61,23 @@ export interface ISvgAttributes {
 }
 
 
-
-export type TFormatSvgContent = (svgContent: string) => {
+export interface IFormatSvgContentRes {
     viewBox?: string,
     content?: string[],
     defs?: string[],
 }
-export type TDecodeSymbols = (symbolsContent: string) => Array<{
+
+export type TFormatSvgContent = (svgContent: string) => IFormatSvgContentRes
+
+
+
+
+export interface IDecodeSymbolsRes {
     viewBox?: string,
     code: string,
     content: string,
-}>
+}
+export type TDecodeSymbols = (symbolsContent: string) => IDecodeSymbolsRes[]
 
 export type TTagKey = 'g'|'rect'|'ellipse'|'path'|'circle'|'stop'
 
@@ -84,14 +90,16 @@ export interface IDef {
     }>,
 }
 
-export type TDecodeSvgContent = (svgContent: string) => {
+
+export interface IDecodeSvgContentRes {
     viewBox?: string,
     fillDiffColor: string[],
 
     content: IDef[],
     defs: IDef[],
-}
+};
 
+export type TDecodeSvgContent = (svgContent: string) => IDecodeSvgContentRes
 
 
 
