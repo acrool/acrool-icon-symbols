@@ -63,7 +63,7 @@ export type TDecodeSymbols = (symbolsContent: string) => Array<{
     content: string,
 }>
 
-type TTagKey = 'g'|'rect'|'ellipse'|'path'|'circle'|'stop'
+export type TTagKey = 'g'|'rect'|'ellipse'|'path'|'circle'|'stop'
 
 export interface IDef {
     tag: string,

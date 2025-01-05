@@ -7,7 +7,7 @@
     "strictNullChecks": true,
     "sourceMap": true,
     "esModuleInterop": true,
-    "resolveJsonModule": false
+    "resolveJsonModule": false,
   },
   "include": [
     "src"

@@ -18,7 +18,7 @@ import {
     TDecodeSvgContent,
     TDecodeSymbols,
     TFormatSvgContent
-} from './utils.d';
+} from './types';
 import {
     ulid
 } from 'ulid';

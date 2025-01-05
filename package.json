@@ -13,8 +13,8 @@
     "type": "git",
     "url": "https://github.com/acrool/acrool-icon-symbols.git"
   },
-  "main": "dist/utils.js",
-  "types": "dist/utils.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/types.js",
   "bin": "bin/cli.js",
   "files": [
     "dist",
