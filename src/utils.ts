@@ -425,7 +425,8 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                 if(attributes.fill){
                     if(attributes.fill.startsWith('url(#')){
                         const id = extractIdFromUrl(attributes.fill);
-                        attributes.fill = `url(#${defIdMap.get(id)})`;
+                        const replaceId = defIdMap.get(id) ?? id;
+                        attributes.fill = `url(#${replaceId})`;
                     }else if(!fillDiffColor.includes(attributes.fill)){
                         fillDiffColor.push(attributes.fill);
                     }
@@ -434,7 +435,9 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                 if(attributes.clipPath){
                     if(attributes.clipPath.startsWith('url(#')){
                         const id = extractIdFromUrl(attributes.clipPath);
-                        attributes.clipPath = `url(#${defIdMap.get(id)})`;
+                        const replaceId = defIdMap.get(id) ?? id;
+
+                        attributes.clipPath = `url(#${replaceId})`;
                     }
                 }
 
@@ -457,7 +460,9 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                             if(attributes2.fill){
                                 if(attributes2.fill.startsWith('url(#')){
                                     const id = extractIdFromUrl(attributes2.fill);
-                                    attributes2.fill = `url(#${defIdMap.get(id)})`;
+                                    const replaceId = defIdMap.get(id) ?? id;
+
+                                    attributes2.fill = `url(#${replaceId})`;
                                 }else if(!fillDiffColor.includes(attributes2.fill)){
                                     fillDiffColor.push(attributes2.fill);
                                 }
@@ -466,7 +471,8 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                             if(attributes2.clipPath){
                                 if(attributes2.clipPath.startsWith('url(#')){
                                     const id = extractIdFromUrl(attributes2.clipPath);
-                                    attributes2.clipPath = `url(#${defIdMap.get(id)})`;
+                                    const replaceId = defIdMap.get(id) ?? id;
+                                    attributes2.clipPath = `url(#${replaceId})`;
                                 }
                             }
 
