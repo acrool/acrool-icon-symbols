@@ -9,6 +9,7 @@ import {
     removeUndefinedValues
 } from '@acrool/js-utils/string';
 import {
+    isNotEmpty,
     regPattern
 } from '@acrool/js-utils/equal';
 import {
@@ -174,6 +175,7 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
 
 /**
  * 解析SVGPath
+ * @TODO: 之後透過 ChatGPT 進行優化
  * @param svgContent
  */
 export const formatSvgContent: TFormatSvgContent = (svgContent) => {
@@ -338,6 +340,7 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
 /**
  * 解析SVG 的Path
  * (如果只有 <path .../><path .../> 則自行用 <svg>{paths}</svg> 包裝起來)
+ * @TODO: 之後透過 ChatGPT 進行優化
  * @param svgContent
  */
 export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
@@ -347,7 +350,7 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
 
     const fillDiffColor: string[] = [];
 
-    const content: IDef[] = [];
+    let content: IDef[] = [];
 
     const defsContent: IDef[] = [];
 
@@ -443,7 +446,7 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
 
                 if(el.children().length > 0){
 
-                    // 再一次
+                    // 若有子項再一次 (通常是 g tag)
                     const child: IDef['children'] = [];
                     el.children()
                         .filter((idx, defElement) => {
@@ -484,11 +487,16 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
 
                         });
 
-                    content.push({
-                        tag,
-                        attr: attributes,
-                        children: child,
-                    });
+                    // 如果 g屬性為空, 直接去除
+                    if(isNotEmpty(attributes)){
+                        content.push({
+                            tag,
+                            attr: attributes,
+                            children: child,
+                        });
+                    }else{
+                        content = content.concat(child);
+                    }
 
 
                 }else{
