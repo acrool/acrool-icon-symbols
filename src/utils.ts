@@ -174,127 +174,73 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
 
 
 /**
- * 解析SVGPath
- * @TODO: 之後透過 ChatGPT 進行優化
- * @param svgContent
+ * 格式化 Attr key value
+ * @param key
+ * @param value
  */
+const formatAttrKeyValue = (key: string, value: any) =>
+    key === 'gradientUnits' ? `${key}="${value}"` : `${lowerCaseToLowerDashCase(key)}="${value}"`;
+
+
+/**
+ * 格式化內容
+ * @param children
+ * @param isMultiColor
+ */
+const formatChildren = (children: IDef[], isMultiColor: boolean): string[] => {
+    return children.map(childEl => {
+        const {fillOpacity, stroke, ...pathAttr} = childEl.attr;
+        const childAttr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
+
+        const childProperties: string[] = [];
+        if (isMultiColor) {
+            if (fillOpacity) childProperties.push(`fill-opacity="${fillOpacity}"`);
+            if (stroke) childProperties.push(`stroke="${stroke}"`);
+        } else {
+            if (stroke) childProperties.push('stroke="currentColor"');
+        }
+
+        return `<${childEl.tag} ${[...childAttr, ...childProperties].join(' ')}/>`;
+    });
+};
+
+const createTag = (tag: string, attributes: string[], children?: string[]) => {
+    if (children && children.length > 0) {
+        return `<${tag} ${attributes.join(' ')}>
+${children.join('')}
+</${tag}>`;
+    }
+    return `<${tag} ${attributes.join(' ')}/>`;
+};
+
 export const formatSvgContent: TFormatSvgContent = (svgContent) => {
     const {fillDiffColor, content, defs, viewBox} = decodeSvgContent(svgContent);
-
-    const isMultiColor = fillDiffColor.length >= 2;
+    const uniqueColors = fillDiffColor.filter((c, i, arr) => c && arr.indexOf(c) === i);
+    const isMultiColor = uniqueColors.length >= 2;
 
     return {
         viewBox,
-        defs: defs.reduce<string[]>((curr, el) => {
-            const attr = objectKeys(el.attr)
-                .map(attrKey => {
-                    if(attrKey === 'gradientUnits'){
-                        return `${attrKey}="${el.attr[attrKey]}"`;
-                    }
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${el.attr[attrKey]}"`;
-                });
-
-            if(el.children){
-
-                const childProperties2 = el.children.reduce<string[]>((childCurr, childEl) => {
-
-                    const childAttr = objectKeys(childEl.attr)
-                        .map(attrKey => {
-                            if(attrKey === 'gradientUnits'){
-                                return `${attrKey}="${childEl.attr[attrKey]}"`;
-                            }
-                            return `${lowerCaseToLowerDashCase(attrKey as string)}="${childEl.attr[attrKey]}"`;
-                        });
-
-                    childCurr.push(`<${childEl.tag} ${childAttr.join(' ')}/>`);
-
-                    return childCurr;
-                }, []);
-
-                curr.push(`<${el.tag} ${attr.join(' ')}>
-    ${childProperties2.join('')}
-</${el.tag}>`);
-
-
-            }else{
-                curr.push(`<${el.tag} ${attr.join(' ')}/>`);
-            }
-
-            return curr;
-        }, []),
-        content: content.reduce<string[]>((curr, el) => {
-
+        defs: defs.map(el => {
+            const attr = objectKeys(el.attr).map(attrKey => formatAttrKeyValue(attrKey, el.attr[attrKey]));
+            const children = el.children ? formatChildren(el.children, isMultiColor) : undefined;
+            return createTag(el.tag, attr, children);
+        }),
+        content: content.map(el => {
             const {fillOpacity, stroke, ...pathAttr} = el.attr;
+            const attr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
 
             const properties: string[] = [];
-
-            const attr = objectKeys(pathAttr)
-                .map(attrKey => {
-                    if(attrKey === 'gradientUnits'){
-                        return `${attrKey}="${pathAttr[attrKey]}"`;
-                    }
-                    return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
-                });
-
-            if(isMultiColor) {
-                if (fillOpacity) {
-                    properties.push(`fill-opacity="${fillOpacity}"`);
-                }
-                if (stroke) {
-                    properties.push(`stroke="${stroke}"`);
-                }
-            }else{
-                if (stroke) {
-                    properties.push('stroke="currentColor"');
-                }
+            if (isMultiColor) {
+                if (fillOpacity) properties.push(`fill-opacity="${fillOpacity}"`);
+                if (stroke) properties.push(`stroke="${stroke}"`);
+            } else {
+                if (stroke) properties.push('stroke="currentColor"');
             }
 
-            if(el.children){
-
-                const childProperties2 = el.children.reduce<string[]>((childCurr, childEl) => {
-                    const {fillOpacity, stroke, ...pathAttr} = childEl.attr;
-
-                    const childProperties: string[] = [];
-
-                    const childAttr = objectKeys(pathAttr)
-                        .map(attrKey => {
-                            if(attrKey === 'gradientUnits'){
-                                return `${attrKey}="${pathAttr[attrKey]}"`;
-                            }
-                            return `${lowerCaseToLowerDashCase(attrKey as string)}="${pathAttr[attrKey]}"`;
-                        });
-
-                    if(isMultiColor) {
-                        if (fillOpacity) {
-                            childProperties.push(`fill-opacity="${fillOpacity}"`);
-                        }
-                        if (stroke) {
-                            childProperties.push(`stroke="${stroke}"`);
-                        }
-                    }else{
-                        if (stroke) {
-                            childProperties.push('stroke="currentColor"');
-                        }
-                    }
-                    childCurr.push(`<${childEl.tag} ${childAttr.join(' ')} ${childProperties.join(' ')}/>`);
-
-                    return childCurr;
-                }, []);
-
-                curr.push(`<${el.tag} ${[...attr, ...properties].join(' ')}>
-    ${childProperties2.join('')}
-</${el.tag}>`);
-
-
-            }else{
-                curr.push(`<${el.tag} ${attr.join(' ')} ${properties.join(' ')}/>`);
-            }
-
-            return curr;
-        }, []),
+            const children = el.children ? formatChildren(el.children, isMultiColor) : undefined;
+            return createTag(el.tag, [...attr, ...properties], children);
+        }),
     };
-
-
 };
 
 

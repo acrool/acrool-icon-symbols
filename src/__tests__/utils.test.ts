@@ -395,3 +395,58 @@ describe('Format Svg Content', () => {
 
 
 });
+
+describe('Advanced formatSvgContent tests', () => {
+    it('should handle empty SVG', () => {
+        const result = formatSvgContent(`<svg xmlns="http://www.w3.org/2000/svg"></svg>`);
+        expect(result.content).toEqual([]);
+        expect(result.defs).toBeUndefined();
+    });
+
+    it('should handle unknown tags', () => {
+        const result = formatSvgContent(`<svg><foo x="1" y="2"/><bar custom="yes"/></svg>`);
+        expect(result.content).toEqual([
+            '<foo x="1" y="2" />',
+            '<bar custom="yes" />'
+        ]);
+    });
+
+    it('should handle transparent stroke', () => {
+        const result = formatSvgContent(`<svg><rect width="10" height="10" stroke="rgba(0,0,0,0)" /></svg>`);
+        expect(result.content).toEqual([
+            '<rect stroke="rgba(0,0,0,0)" width="10" height="10" />'
+        ]);
+    });
+
+    it('should handle nested defs', () => {
+        const svg = `<svg>
+<defs>
+  <g id="shapes">
+    <circle id="c" r="10" />
+    <rect id="r" width="20" height="20" />
+  </g>
+</defs>
+<use href="#c" />
+</svg>`;
+        const result = formatSvgContent(svg);
+        // Only one defs, with nested group
+        expect(result.defs).toEqual([
+            `<g id="shapes">
+    <circle id="c" r="10"/>
+    <rect id="r" width="20" height="20"/>
+</g>`
+        ]);
+        expect(result.content).toEqual([
+            '<use href="#c" />'
+        ]);
+    });
+
+    it('should handle single color with opacity', () => {
+        const result = formatSvgContent(`<svg>
+<rect width="100" height="50" fill="#123456" fill-opacity="0.5"/>
+</svg>`);
+        expect(result.content).toEqual([
+            '<rect fill="#123456" fill-opacity="0.5" width="100" height="50" />'
+        ]);
+    });
+});
