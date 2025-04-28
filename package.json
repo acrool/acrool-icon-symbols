@@ -44,8 +44,8 @@
     "ulid": "2.3.0",
     "svg-parser": "^2.0.4",
     "yargs": "^17.7.2",
-    "cheerio": "^1.0.0-rc.12",
-    "@acrool/js-utils": "^3.2.13"
+    "cheerio": "^1.0.0",
+    "@acrool/js-utils": "^3.2.19"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.4",
