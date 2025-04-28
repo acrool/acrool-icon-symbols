@@ -286,7 +286,6 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
 /**
  * 解析SVG 的Path
  * (如果只有 <path .../><path .../> 則自行用 <svg>{paths}</svg> 包裝起來)
- * @TODO: 之後透過 ChatGPT 進行優化
  * @param svgContent
  */
 export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
@@ -295,22 +294,14 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
     const viewBox = root.attr('viewBox');
 
     const fillDiffColor: string[] = [];
-
     let content: IDef[] = [];
-
     const defsContent: IDef[] = [];
-
-    // 儲存 Def 中的對應ID (重新命名)
     const defIdMap = new Map();
-
     const contentTags: TTagKey[] = ['ellipse', 'path', 'circle', 'g', 'stop', 'rect'];
+    const defChildTag = ['clipPath', 'linearGradient'];
 
-    const defChildTag = ['clipPath','linearGradient'];
-
-    // 處理 Defs
+    // 处理 Defs
     const defs = root.find('defs');
-
-    // clipPath 或 linearGradient
     defs.children()
         .filter((idx, defElement) => {
             const defEl = $(defElement);
@@ -320,12 +311,12 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
             const defEl = $(defElement);
             const tag = defEl.prop('name');
 
-            // 找到並設定ID
+            // 找到并设置ID
             const oldId = defEl.attr('id');
-            const newId = oldId ? `svg_def_${ulid().toLowerCase()}`: undefined;
+            const newId = oldId ? `svg_def_${ulid().toLowerCase()}` : undefined;
             defIdMap.set(oldId, newId);
 
-            const linearGradientAttr: IDef = {
+            const defAttr: IDef = {
                 tag: tag,
                 attr: {
                     ...getAttr(defEl),
@@ -340,125 +331,77 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
                     return contentTags.includes(defEl.prop('name'));
                 })
                 .each((index, childElement) => {
-                    const stopEl = $(childElement);
+                    const childEl = $(childElement);
+                    const contentTag = childEl.prop('name');
 
-                    const contentTag = stopEl.prop('name');
-
-                    if(!linearGradientAttr.children) linearGradientAttr.children = [];
-                    linearGradientAttr.children.push({
+                    if (!defAttr.children) defAttr.children = [];
+                    defAttr.children.push({
                         tag: contentTag,
-                        attr: getAttr(stopEl),
+                        attr: getAttr(childEl),
                     });
                 });
 
-            defsContent.push(linearGradientAttr);
-
+            defsContent.push(defAttr);
         });
 
-    // 處理一般屬性
-    const getData = (rootCheerio: cheerio.Cheerio) => {
+    // 处理一般属性
+    const processElement = (el: cheerio.Cheerio): IDef => {
+        const tag = el.prop('name');
+        const attributes: ISvgAttributes = getAttr(el);
 
-        rootCheerio.children()
-            .filter((idx, defElement) => {
-                const defEl = $(defElement);
-                return contentTags.includes(defEl.prop('name'));
+        // 处理 fill 属性
+        if (attributes.fill) {
+            if (attributes.fill.startsWith('url(#')) {
+                const id = extractIdFromUrl(attributes.fill);
+                const replaceId = defIdMap.get(id) ?? id;
+                attributes.fill = `url(#${replaceId})`;
+            } else if (!fillDiffColor.includes(attributes.fill)) {
+                fillDiffColor.push(attributes.fill);
+            }
+        }
+
+        // 处理 clipPath 属性
+        if (attributes.clipPath) {
+            if (attributes.clipPath.startsWith('url(#')) {
+                const id = extractIdFromUrl(attributes.clipPath);
+                const replaceId = defIdMap.get(id) ?? id;
+                attributes.clipPath = `url(#${replaceId})`;
+            }
+        }
+
+        const children: IDef[] = [];
+        el.children()
+            .filter((idx, element) => {
+                const childEl = $(element);
+                return contentTags.includes(childEl.prop('name'));
             })
-            .each((index, element) => {
-                // 依照需要的屬性追加
-
-                const el = $(element);
-                const tag = el.prop('name');
-
-                const attributes: ISvgAttributes = getAttr(el);
-
-                if(attributes.fill){
-                    if(attributes.fill.startsWith('url(#')){
-                        const id = extractIdFromUrl(attributes.fill);
-                        const replaceId = defIdMap.get(id) ?? id;
-                        attributes.fill = `url(#${replaceId})`;
-                    }else if(!fillDiffColor.includes(attributes.fill)){
-                        fillDiffColor.push(attributes.fill);
-                    }
-                }
-
-                if(attributes.clipPath){
-                    if(attributes.clipPath.startsWith('url(#')){
-                        const id = extractIdFromUrl(attributes.clipPath);
-                        const replaceId = defIdMap.get(id) ?? id;
-
-                        attributes.clipPath = `url(#${replaceId})`;
-                    }
-                }
-
-                if(el.children().length > 0){
-
-                    // 若有子項再一次 (通常是 g tag)
-                    const child: IDef['children'] = [];
-                    el.children()
-                        .filter((idx, defElement) => {
-                            const defEl = $(defElement);
-                            return contentTags.includes(defEl.prop('name'));
-                        })
-                        .each((index, element) => {
-                            // 依照需要的屬性追加
-                            const el = $(element);
-                            const childTag = el.prop('name');
-
-                            const attributes2: ISvgAttributes = getAttr(el);
-
-                            if(attributes2.fill){
-                                if(attributes2.fill.startsWith('url(#')){
-                                    const id = extractIdFromUrl(attributes2.fill);
-                                    const replaceId = defIdMap.get(id) ?? id;
-
-                                    attributes2.fill = `url(#${replaceId})`;
-                                }else if(!fillDiffColor.includes(attributes2.fill)){
-                                    fillDiffColor.push(attributes2.fill);
-                                }
-                            }
-
-                            if(attributes2.clipPath){
-                                if(attributes2.clipPath.startsWith('url(#')){
-                                    const id = extractIdFromUrl(attributes2.clipPath);
-                                    const replaceId = defIdMap.get(id) ?? id;
-                                    attributes2.clipPath = `url(#${replaceId})`;
-                                }
-                            }
-
-
-                            child.push({
-                                tag: childTag,
-                                attr: attributes2,
-                            });
-
-                        });
-
-                    // 如果 g屬性為空, 直接去除
-                    if(isNotEmpty(attributes)){
-                        content.push({
-                            tag,
-                            attr: attributes,
-                            children: child,
-                        });
-                    }else{
-                        content = content.concat(child);
-                    }
-
-
-                }else{
-                    // 推入Tag
-                    content.push({
-                        tag,
-                        attr: attributes,
-                    });
-                }
-
+            .each((idx, element) => {
+                children.push(processElement($(element)));
             });
+
+        return {
+            tag,
+            attr: attributes,
+            ...(children.length > 0 && { children }),
+        };
     };
 
-    getData(root);
-
-
+    // 处理根元素下的所有内容
+    root.children()
+        .filter((idx, element) => {
+            const el = $(element);
+            return contentTags.includes(el.prop('name')) && el.prop('name') !== 'defs';
+        })
+        .each((idx, element) => {
+            const el = $(element);
+            const elementDef = processElement(el);
+            
+            if (elementDef.tag === 'g' && !isNotEmpty(elementDef.attr)) {
+                content = content.concat(elementDef.children || []);
+            } else {
+                content.push(elementDef);
+            }
+        });
 
     return {
         fillDiffColor,
