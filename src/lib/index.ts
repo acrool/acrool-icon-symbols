@@ -15,6 +15,7 @@ module.exports = async function bearScript () {
                     default: 'icon_',
                 });
         }, (argv) => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const run = require('./build-symbols');
             run(argv);
         })
@@ -31,6 +32,7 @@ module.exports = async function bearScript () {
                 });
 
         }, (argv) => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const run = require('./decode-iconfont');
             run(argv);
         })
@@ -47,6 +49,7 @@ module.exports = async function bearScript () {
                 });
 
         }, (argv) => {
+            // eslint-disable-next-line @typescript-eslint/no-var-requires
             const run = require('./decode-symbols');
             run(argv);
         })
