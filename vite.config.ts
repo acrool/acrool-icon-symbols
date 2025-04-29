@@ -4,6 +4,7 @@ import glob from 'fast-glob';
 import {visualizer} from 'rollup-plugin-visualizer';
 import eslint from 'vite-plugin-eslint';
 import {viteCommonjs} from '@originjs/vite-plugin-commonjs';
+import path from 'path';
 
 // libraries
 const files = glob.sync(['./src/**/index.ts'])
@@ -13,10 +14,8 @@ const files = glob.sync(['./src/**/index.ts'])
     });
 const entries = Object.fromEntries(files);
 
-
 // https://vitejs.dev/config/
 export default defineConfig({
-
     plugins: [
         eslint(),
         viteCommonjs(),
@@ -29,9 +28,18 @@ export default defineConfig({
         sourcemap: process.env.NODE_ENV !== 'production',
         outDir: 'dist',
         lib: {
-            entry: entries,
-            formats: ['es', 'cjs'],
-            fileName: (format,entryName) => `${entryName}.${format}.js`,
-        }
+            entry: path.resolve(__dirname, 'src/index.ts'),
+            name: 'AcroolIconSymbols',
+            formats: ['es', 'umd'],
+            fileName: (format) => `acrool-icon-symbols.${format}.js`,
+        },
+        rollupOptions: {
+            external: ['y18n'],
+        },
+    },
+    resolve: {
+        alias: {
+            'y18n': path.resolve(__dirname, 'node_modules/y18n/build/lib/platform-shims/browser.js'),
+        },
     },
 });
