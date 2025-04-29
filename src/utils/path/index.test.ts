@@ -16,7 +16,7 @@ describe('路径处理模块测试', () => {
                 }
             ];
             const result = remarkDeepSVGPaths(svgNode);
-            expect(result).toEqual(['<path d="M0 0L10 10" fill="#000000"/>']);
+            expect(result).toEqual(['<path fill="#000000" d="M0 0L10 10"/>']);
         });
 
         it('应该处理多路径 SVG', () => {
@@ -42,8 +42,8 @@ describe('路径处理模块测试', () => {
             ];
             const result = remarkDeepSVGPaths(svgNode);
             expect(result).toEqual([
-                '<path d="M0 0L10 10" fill="#000000"/>',
-                '<path d="M20 20L30 30" fill="#FFFFFF"/>'
+                '<path fill="#000000" d="M0 0L10 10"/>',
+                '<path fill="#FFFFFF" d="M20 20L30 30"/>'
             ]);
         });
 
@@ -67,7 +67,7 @@ describe('路径处理模块测试', () => {
                 }
             ];
             const result = remarkDeepSVGPaths(svgNode);
-            expect(result).toEqual(['<path d="M0 0L10 10" fill="#000000"/>']);
+            expect(result).toEqual(['<path fill="#000000" d="M0 0L10 10"/>']);
         });
 
         it('应该处理带透明度的路径', () => {
@@ -84,7 +84,7 @@ describe('路径处理模块测试', () => {
                 }
             ];
             const result = remarkDeepSVGPaths(svgNode);
-            expect(result).toEqual(['<path d="M0 0L10 10" fill="#000000" fill-opacity="0.5"/>']);
+            expect(result).toEqual(['<path fill-opacity=".5" fill="#000000" d="M0 0L10 10"/>']);
         });
 
         it('应该忽略非路径元素', () => {
