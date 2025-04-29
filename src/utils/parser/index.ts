@@ -211,11 +211,12 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
             return createTag(el.tag, attr, children);
         }),
         content: content.map(el => {
-            const {fillOpacity, stroke, ...pathAttr} = el.attr;
+            const {fill, fillOpacity, stroke, ...pathAttr} = el.attr;
             const attr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
 
             const properties: string[] = [];
             if (isMultiColor) {
+                if (fill) properties.push(`fill="${fill}"`);
                 if (fillOpacity) properties.push(`fill-opacity="${fillOpacity}"`);
                 if (stroke) properties.push(`stroke="${stroke}"`);
             } else {

@@ -85,7 +85,7 @@ describe('解析器模块测试', () => {
     });
 
     describe('formatSvgContent', () => {
-        it('应该正确格式化单色 SVG', () => {
+        it('單色SVG應該要直接去掉顏色 SVG', () => {
             const svgContent = `
                 <svg viewBox="0 0 24 24">
                     <path d="M0 0L10 10" fill="#000000"/>
@@ -95,7 +95,7 @@ describe('解析器模块测试', () => {
             expect(result).toEqual({
                 viewBox: '0 0 24 24',
                 defs: [],
-                content: ['<path d="M0 0L10 10" fill="#000000"/>']
+                content: ['<path d="M0 0L10 10"/>']
             });
         });
 
@@ -113,5 +113,7 @@ describe('解析器模块测试', () => {
                 expect(result.content[1]).toContain('fill="#FFFFFF"');
             }
         });
+
+
     });
 });
