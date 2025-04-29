@@ -4,7 +4,7 @@
     <metrics statements="139" coveredstatements="113" conditionals="85" coveredconditionals="40" methods="28" coveredmethods="20" elements="252" coveredelements="173" complexity="0" loc="139" ncloc="139" packages="2" files="2" classes="2"/>
     <package name="common">
       <metrics statements="15" coveredstatements="11" conditionals="9" coveredconditionals="3" methods="4" coveredmethods="3"/>
-      <file name="index.ts" path="/Users/imagine/project/packages/acrool-icon-symbols/src/utils/common/index.ts">
+      <file name="index.ts" path="/Users/imagine/project/packages/acrool-svg-symbols/src/utils/common/index.ts">
         <metrics statements="15" coveredstatements="11" conditionals="9" coveredconditionals="3" methods="4" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="8" count="1" type="stmt"/>
@@ -25,7 +25,7 @@
     </package>
     <package name="parser">
       <metrics statements="124" coveredstatements="102" conditionals="76" coveredconditionals="37" methods="24" coveredmethods="17"/>
-      <file name="index.ts" path="/Users/imagine/project/packages/acrool-icon-symbols/src/utils/parser/index.ts">
+      <file name="index.ts" path="/Users/imagine/project/packages/acrool-svg-symbols/src/utils/parser/index.ts">
         <metrics statements="124" coveredstatements="102" conditionals="76" coveredconditionals="37" methods="24" coveredmethods="17"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>

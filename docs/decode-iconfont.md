@@ -1,4 +1,4 @@
-# acrool-icon-symbols decode-iconfont
+# acrool-svg-symbols decode-iconfont
 
 > build svg icon merge symbols
 
@@ -7,7 +7,7 @@
 
 in your package.json
 ```bash
-$ acrool-icon-symbols decode-iconfont --path=./public/static/plugins/iconfont
+$ acrool-svg-symbols decode-iconfont --path=./public/static/plugins/iconfont
 ```
 
 > source svg default in `_sources`
