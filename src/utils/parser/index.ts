@@ -2,7 +2,7 @@ import {XMLParser} from 'fast-xml-parser';
 import {ulid} from 'ulid';
 import {objectKeys} from '@acrool/js-utils/object';
 import {isNotEmpty} from '@acrool/js-utils/equal';
-import {IDef, TTagKey, TDecodeSvgContent, TDecodeSymbols, TFormatSvgContent} from '../../utils.d';
+import {IDef, TTagKey, TDecodeSvgContent, TDecodeSymbols, TFormatSvgContent} from '../../types';
 import {extractIdFromUrl} from '../common';
 import {formatAttrKeyValue, createTag} from '../common';
 
@@ -226,4 +226,4 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
             return createTag(el.tag, [...attr, ...properties], children);
         }),
     };
-}; 
+};

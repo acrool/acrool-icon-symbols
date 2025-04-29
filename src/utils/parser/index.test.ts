@@ -95,7 +95,7 @@ describe('解析器模块测试', () => {
             expect(result).toEqual({
                 viewBox: '0 0 24 24',
                 defs: [],
-                content: ['<path d="M0 0L10 10" fill="#000000" stroke="currentColor"/>']
+                content: ['<path d="M0 0L10 10" fill="#000000"/>']
             });
         });
 
