@@ -1,16 +1,39 @@
 {
   "compilerOptions": {
-    "outDir": "dist",
-    "target": "es6",
-    "module": "commonjs",
+    "target": "es2020",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "noImplicitAny": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
     "strict": true,
     "strictNullChecks": true,
-    "sourceMap": true,
-    "esModuleInterop": true,
-    "resolveJsonModule": false
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "downlevelIteration": true,
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "declaration": true
   },
   "include": [
-    "src"
+    "src",
   ],
-  "exclude": ["node_modules", "dist", "example"]
+  "exclude": [
+    "src/dist",
+    "example",
+    "node_modules",
+    "**/*.spec.ts"
+  ],
+  "files": [],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }

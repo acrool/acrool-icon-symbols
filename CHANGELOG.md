@@ -2,6 +2,44 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.8-test.1](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.8-test.0...v1.3.8-test.1) (2025-04-29)
+
+### [1.3.8-test.0](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.18...v1.3.8-test.0) (2025-04-29)
+
+### [1.3.7-alpha.18](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.17...v1.3.7-alpha.18) (2025-04-29)
+
+### [1.3.7-alpha.17](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.16...v1.3.7-alpha.17) (2025-04-29)
+
+### [1.3.7-alpha.16](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.15...v1.3.7-alpha.16) (2025-04-28)
+
+### [1.3.7-alpha.15](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.14...v1.3.7-alpha.15) (2025-01-05)
+
+### [1.3.7-alpha.14](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.13...v1.3.7-alpha.14) (2025-01-05)
+
+### [1.3.7-alpha.13](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.12...v1.3.7-alpha.13) (2025-01-05)
+
+### [1.3.7-alpha.12](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.11...v1.3.7-alpha.12) (2025-01-05)
+
+### [1.3.7-alpha.11](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.10...v1.3.7-alpha.11) (2025-01-05)
+
+### [1.3.7-alpha.10](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.9...v1.3.7-alpha.10) (2025-01-05)
+
+### [1.3.7-alpha.9](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.8...v1.3.7-alpha.9) (2025-01-05)
+
+### [1.3.7-alpha.8](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.7...v1.3.7-alpha.8) (2025-01-05)
+
+### [1.3.7-alpha.7](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.6...v1.3.7-alpha.7) (2025-01-04)
+
+### [1.3.7-alpha.6](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.5...v1.3.7-alpha.6) (2025-01-04)
+
+### [1.3.7-alpha.5](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.4...v1.3.7-alpha.5) (2025-01-04)
+
+### [1.3.7-alpha.4](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.3...v1.3.7-alpha.4) (2025-01-04)
+
+### [1.3.7-alpha.3](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.2...v1.3.7-alpha.3) (2025-01-04)
+
+### [1.3.7-alpha.2](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.1...v1.3.7-alpha.2) (2025-01-04)
+
 ### [1.3.7-alpha.1](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.0...v1.3.7-alpha.1) (2024-12-29)
 
 ### [1.3.7-alpha.0](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.6...v1.3.7-alpha.0) (2024-12-29)
