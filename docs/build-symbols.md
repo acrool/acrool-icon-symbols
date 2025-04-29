@@ -1,4 +1,4 @@
-# acrool-svg-symbols build-symbols
+# acrool-icon-symbols build-symbols
 
 > build svg icon merge symbols
 
@@ -21,7 +21,7 @@ in your package.json
 ```json
 {
   "scripts": {
-    "build:icon": "acrool-svg-symbols build-symbols --path=./public/static/plugins/iconsvg"
+    "build:icon": "acrool-icon-symbols build-symbols --path=./public/static/plugins/iconsvg"
   }
 }
 ```

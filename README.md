@@ -1,4 +1,4 @@
-# Acrool Svg Symbols
+# Acrool Icon Symbols
 
 <p align="center">
    Merge svg into svg symbols, and unpack svg symbols into individual svg
@@ -26,13 +26,13 @@
 ## Install
 
 ```bash
-yarn add -D acrool-svg-symbols
+yarn add @acrool/icon-symbols
 ```
 
 ## Use
 
 ```ts
-import {decodeSvgPaths, decodeSymbols} from 'acrool-svg-symbols';
+import {decodeSvgPaths, decodeSymbols} from '@acrool/icon-symbols';
 
 const fileContent = await fs.readFileSync(filePath);
 const svg = decodeSvgPaths(fileContent.toString());
@@ -50,8 +50,8 @@ const newId = await this.iconSymbolService.create({
 
 ## Document
 
-- [acrool-svg-symbols build-symbols](./docs/build-symbols.md)
-- [acrool-svg-symbols decode-iconfont](./docs/decode-iconfont.md)
+- [acrool-icon-symbols build-symbols](./docs/build-symbols.md)
+- [acrool-icon-symbols decode-iconfont](./docs/decode-iconfont.md)
 
 ## License
 

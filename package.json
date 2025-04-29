@@ -1,25 +1,25 @@
 {
-    "name": "@acrool/svg-symbols",
+    "name": "@acrool/icon-symbols",
     "version": "2.0.0",
-    "description": "Common tools and methods for project development",
+    "description": "Merge svg into svg symbols, and unpack svg symbols into individual svg",
     "keywords": [
         "typescript",
         "javscript",
         "utils"
     ],
-    "author": "imagine10255",
+    "author": "imagine10255@gmail.com",
     "license": "MIT",
     "repository": {
         "type": "git",
-        "url": "https://github.com/acrool/acrool-svg-symbols.git"
+        "url": "https://github.com/acrool/acrool-icon-symbols.git"
     },
-    "main": "dist/acrool-svg-symbols.umd.js",
-    "module": "dist/acrool-svg-symbols.es.js",
+    "main": "dist/acrool-icon-symbols.umd.js",
+    "module": "dist/acrool-icon-symbols.es.js",
     "types": "dist/index.d.ts",
     "exports": {
         ".": {
-            "import": "./dist/acrool-svg-symbols.es.js",
-            "require": "./dist/acrool-svg-symbols.umd.js",
+            "import": "./dist/acrool-icon-symbols.es.js",
+            "require": "./dist/acrool-icon-symbols.umd.js",
             "types": "./dist/index.d.ts"
         }
     },

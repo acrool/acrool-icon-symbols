@@ -31,7 +31,7 @@ export default defineConfig({
             entry: path.resolve(__dirname, 'src/index.ts'),
             name: 'AcroolIconSymbols',
             formats: ['es', 'umd'],
-            fileName: (format) => `acrool-svg-symbols.${format}.js`,
+            fileName: (format) => `acrool-icon-symbols.${format}.js`,
         },
         rollupOptions: {
             external: ['y18n'],
