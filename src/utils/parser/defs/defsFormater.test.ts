@@ -1,6 +1,6 @@
-import {formatDefs} from './defsFormater';
+import {formatDefs} from './defsFormatter';
 
-describe('defsFormater', () => {
+describe('defsFormatter', () => {
     it('应该正确处理简单的 defs', () => {
         const defs = [{
             tag: 'linearGradient',
@@ -51,4 +51,4 @@ describe('defsFormater', () => {
         const result = formatDefs(defs);
         expect(result).toHaveLength(6); // 两个 gradient 各占 3 行
     });
-}); 
+});

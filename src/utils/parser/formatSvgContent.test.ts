@@ -70,4 +70,24 @@ describe('formatSvgContent', () => {
             ]
         });
     });
+
+    it('当 SVG 已经有 g 标签时，应该直接给 g 标签添加 fill="none" 属性', () => {
+        const svgContent = `
+                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
+                    <g>
+                        <path d="M10 2L18 10L10 18L2 10L10 2Z"/>
+                    </g>
+                </svg>
+            `;
+        const result = formatSvgContent(svgContent);
+        expect(result).toEqual({
+            viewBox: '0 0 20 20',
+            defs: [],
+            content: [
+                '<g fill="none">',
+                '<path d="M10 2L18 10L10 18L2 10L10 2Z"/>',
+                '</g>'
+            ]
+        });
+    });
 });
