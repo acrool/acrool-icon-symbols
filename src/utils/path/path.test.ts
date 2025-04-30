@@ -1,4 +1,4 @@
-import {remarkDeepSVGPaths} from './index';
+import {remarkDeepSVGPaths} from './path';
 
 interface SVGNode {
     '#name'?: string;

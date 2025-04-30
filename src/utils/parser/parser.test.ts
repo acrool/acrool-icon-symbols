@@ -1,4 +1,4 @@
-import {decodeSymbols, decodeSvgContent, formatSvgContent} from './index';
+import {decodeSymbols, decodeSvgContent, formatSvgContent} from './parser';
 
 describe('解析器模块测试', () => {
     describe('decodeSymbols', () => {
