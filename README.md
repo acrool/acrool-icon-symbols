@@ -7,12 +7,12 @@
 <div align="center">
 
 
-[![NPM](https://img.shields.io/npm/v/@acrool/svg-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/svg-symbols)
-[![npm](https://img.shields.io/bundlejs/size/@acrool/svg-symbols?style=for-the-badge)](https://github.com/acrool/@acrool/svg-symbols/blob/main/LICENSE)
-[![npm](https://img.shields.io/npm/l/@acrool/svg-symbols?style=for-the-badge)](https://github.com/acrool/svg-symbols/blob/main/LICENSE)
+[![NPM](https://img.shields.io/npm/v/@acrool/icon-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/icon-symbols)
+[![npm](https://img.shields.io/bundlejs/size/@acrool/icon-symbols?style=for-the-badge)](https://github.com/acrool/@acrool/icon-symbols/blob/main/LICENSE)
+[![npm](https://img.shields.io/npm/l/@acrool/icon-symbols?style=for-the-badge)](https://github.com/acrool/icon-symbols/blob/main/LICENSE)
 
-[![npm downloads](https://img.shields.io/npm/dm/@acrool/svg-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/svg-symbols)
-[![npm](https://img.shields.io/npm/dt/@acrool/svg-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/svg-symbols)
+[![npm downloads](https://img.shields.io/npm/dm/@acrool/icon-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/icon-symbols)
+[![npm](https://img.shields.io/npm/dt/@acrool/icon-symbols.svg?style=for-the-badge)](https://www.npmjs.com/package/@acrool/icon-symbols)
 
 </div>
 
