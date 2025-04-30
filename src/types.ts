@@ -55,6 +55,9 @@ export interface ISvgAttributes {
     x2?: string | null;
     y2?: string | null;
 
+    offset?: string | null;
+    'stop-color'?: string | null;
+
     // 多邊形和路徑
     points?: string | null;
     d?: string | null;
@@ -67,7 +70,7 @@ export interface IFormatSvgContentRes {
     defs?: string[],
 }
 
-export type TFormatSvgContent = (svgContent: string) => IFormatSvgContentRes
+// export type TFormatSvgContent = (svgContent: string) => IFormatSvgContentRes
 
 
 
@@ -94,12 +97,11 @@ export interface IDef {
 export interface IDecodeSvgContentRes {
     viewBox?: string,
     fillDiffColor: string[],
-
+    fillNone: boolean,
     content: IDef[],
     defs: IDef[],
 }
 
-export type TDecodeSvgContent = (svgContent: string) => IDecodeSvgContentRes;
 
 
 
