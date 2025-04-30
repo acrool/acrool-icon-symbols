@@ -15,7 +15,7 @@ interface SVGNode {
  */
 export const formatSvgProperties = (properties: Record<string, any>, isMultiColor: boolean): string[] => {
     const result: string[] = [];
-    if (isMultiColor || properties.fill?.startsWith('url(#')) {
+    if (isMultiColor || properties.fill === 'none' || properties.fill?.startsWith('url(#')) {
         if (properties.fill) {
             result.push(`fill="${properties.fill.toLocaleString()}"`);
         }

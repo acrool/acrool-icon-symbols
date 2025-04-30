@@ -64,6 +64,22 @@ describe('formatSvgContent', () => {
         });
     });
 
+    it('应该正确处理 PATH 标签带有 fill="none" 属性, 單色也不應該被排除的情況', () => {
+        const svgContent = `
+                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10 2L18 10L10 18L2 10L10 2Z" fill="none"/>
+                </svg>
+            `;
+        const result = formatSvgContent(svgContent);
+        expect(result).toEqual({
+            viewBox: '0 0 20 20',
+            defs: [],
+            content: [
+                '<path d="M10 2L18 10L10 18L2 10L10 2Z" fill="none"/>',
+            ]
+        });
+    });
+
 
     it('应该正确处理带有 defs 的 SVG', () => {
         const svgContent = `
