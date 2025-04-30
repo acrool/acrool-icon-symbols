@@ -90,4 +90,26 @@ describe('formatSvgContent', () => {
             ]
         });
     });
+
+    it('应该正确处理带有 defs 的 SVG', () => {
+        const svgContent = `
+                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#FF0000"/>
+                            <stop offset="100%" stop-color="#00FF00"/>
+                        </linearGradient>
+                    </defs>
+                    <path d="M10 2L18 10L10 18L2 10L10 2Z" fill="url(#gradient)"/>
+                </svg>
+            `;
+        const result = formatSvgContent(svgContent);
+        if (result.defs && result.content) {
+            expect(result.defs).toHaveLength(1);
+            expect(result.defs[0]).toContain('linearGradient');
+            expect(result.defs[0]).toContain('stop-color="#FF0000"');
+            expect(result.defs[0]).toContain('stop-color="#00FF00"');
+            expect(result.content[0]).toContain('fill="url(#gradient)"');
+        }
+    });
 });

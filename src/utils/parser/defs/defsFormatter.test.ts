@@ -1,8 +1,9 @@
 import {formatDefs} from './defsFormatter';
+import {IDef} from '../../../types';
 
 describe('defsFormatter', () => {
     it('应该正确处理简单的 defs', () => {
-        const defs = [{
+        const defs: IDef[] = [{
             tag: 'linearGradient',
             attr: {
                 id: 'gradient',
@@ -20,7 +21,7 @@ describe('defsFormatter', () => {
             }]
         }];
 
-        const result = formatDefs(defs);
+        const result = formatDefs(defs, false);
         expect(result).toEqual([
             '<linearGradient id="gradient" x1="0" y1="0" x2="1" y2="1">',
             '<stop offset="0%" stop-color="#000000"/>',
@@ -29,7 +30,7 @@ describe('defsFormatter', () => {
     });
 
     it('应该处理多个 defs 元素', () => {
-        const defs = [
+        const defs: IDef[] = [
             {
                 tag: 'linearGradient',
                 attr: {id: 'grad1'},
@@ -48,7 +49,7 @@ describe('defsFormatter', () => {
             }
         ];
 
-        const result = formatDefs(defs);
+        const result = formatDefs(defs, false);
         expect(result).toHaveLength(6); // 两个 gradient 各占 3 行
     });
 });

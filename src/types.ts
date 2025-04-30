@@ -55,6 +55,9 @@ export interface ISvgAttributes {
     x2?: string | null;
     y2?: string | null;
 
+    offset?: string | null;
+    'stop-color'?: string | null;
+
     // 多邊形和路徑
     points?: string | null;
     d?: string | null;
