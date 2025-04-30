@@ -1,4 +1,5 @@
 import {Node} from 'svg-parser';
+import {removeLeadingZero} from '../common';
 
 /**
  * 递归处理 SVG 路径，生成路径字符串数组
@@ -13,7 +14,7 @@ export const remarkDeepSVGPaths = (svgNode: Array<Node | string>, isMultiColor =
                 const properties = [];
                 if(isMultiColor) {
                     if (row.properties?.['fill-opacity']) {
-                        properties.push(`fill-opacity="${row.properties?.['fill-opacity'].toString().replace('0.','.')}"`);
+                        properties.push(`fill-opacity="${removeLeadingZero(row.properties?.['fill-opacity'].toString())}"`);
                     }
                     if (row.properties?.fill) {
                         properties.push(`fill="${row.properties.fill.toLocaleString()}"`);

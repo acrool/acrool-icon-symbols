@@ -1,5 +1,6 @@
 import {Node} from 'svg-parser';
 import {isNotEmpty} from '@acrool/js-utils/equal';
+import {removeLeadingZero} from '../common';
 
 /**
  * 检查数组中元素是否唯一
@@ -27,7 +28,7 @@ const getMultiColor = (svgNode: Array<Node | string>): string[] => {
                 }
 
                 if(row.properties?.['fill-opacity']){
-                    colors.push(row.properties?.['fill-opacity'].toString().replace('0.','.'));
+                    colors.push(removeLeadingZero(row.properties?.['fill-opacity'].toString()));
                 }
 
                 curr.push(colors.join('_'));
