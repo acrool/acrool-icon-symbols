@@ -15,7 +15,7 @@ export const formatChildren = (children: IDef[], isMultiColor: boolean): string[
             if (stroke) childProperties.push('stroke="currentColor"');
         }
 
-        return `<${childEl.tag} ${[...childAttr, ...childProperties].join(' ')}/>`;
+        return createTag(childEl.tag, [...childAttr, ...childProperties]);
     });
 };
 
