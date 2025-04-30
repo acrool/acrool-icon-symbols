@@ -3,7 +3,7 @@ import {IFormatSvgContentRes} from '../../types';
 import {decodeSvgContent} from './decodeSvgContent';
 import {formatAttrKeyValue, createTag} from '../common';
 import {formatSvgProperties} from '../path';
-import {formatChildren, formatDefs} from './defs';
+import {formatChildren, formatDefs} from './defs/defsFormatter';
 
 
 /**
@@ -24,7 +24,7 @@ export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
     // 檢查是否需要處理 fill 屬性
     const hasGGroup = content.some(el => el.tag === 'g');
 
-    let formattedContent = content.map(el => {
+    let formattedContent = content.flatMap(el => {
         const {fill, fillOpacity, stroke, ...pathAttr} = el.attr;
         const attr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
         const properties = formatSvgProperties(el.attr, isMultiColor);

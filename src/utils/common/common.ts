@@ -36,13 +36,15 @@ export const formatAttrKeyValue = (key: string, value: any) =>
  * @param tag - 标签名
  * @param attributes - 属性数组
  * @param children - 子元素数组（可选）
- * @returns 格式化后的标签字符串
+ * @returns 格式化后的标签字符串数组
  */
 export const createTag = (tag: string, attributes: string[], children?: string[]) => {
     if (children && children.length > 0) {
-        return `<${tag} ${attributes.join(' ')}>
-${children.join('')}
-</${tag}>`;
+        return [
+            `<${tag} ${attributes.join(' ')}>`,
+            ...children,
+            `</${tag}>`
+        ];
     }
-    return `<${tag} ${attributes.join(' ')}/>`;
+    return [`<${tag} ${attributes.join(' ')}/>`];
 };
