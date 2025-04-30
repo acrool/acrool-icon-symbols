@@ -40,11 +40,7 @@ export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
 
     // 如果需要處理 fill 屬性且沒有 g 標籤，則創建一個新的 g 標籤
     if (fillNone && !hasGGroup) {
-        formattedContent = [
-            '<g fill="none">',
-            ...formattedContent,
-            '</g>'
-        ];
+        formattedContent = createTag('g', ['fill="none"'], formattedContent);
     }
 
     return {

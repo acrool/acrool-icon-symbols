@@ -38,23 +38,23 @@ describe('通用工具函数测试', () => {
 
     describe('createTag', () => {
         it('应该创建不带子元素的标签', () => {
-            expect(createTag('path', ['d="M0 0"', 'fill="#000"'])).toBe('<path d="M0 0" fill="#000"/>');
+            expect(createTag('path', ['d="M0 0"', 'fill="#000"'])).toEqual(['<path d="M0 0" fill="#000"/>']);
         });
 
         it('应该创建带子元素的标签', () => {
-            expect(createTag('g', ['id="group"'], ['<path d="M0 0"/>'])).toBe(
-                `<g id="group">
-<path d="M0 0"/>
-</g>`
-            );
+            expect(createTag('g', ['id="group"'], ['<path d="M0 0"/>'])).toEqual([
+                '<g id="group">',
+                '<path d="M0 0"/>',
+                '</g>'
+            ]);
         });
 
         it('应该处理空属性数组', () => {
-            expect(createTag('path', [])).toBe('<path />');
+            expect(createTag('path', [])).toEqual(['<path />']);
         });
 
         it('应该处理空子元素数组', () => {
-            expect(createTag('g', ['id="group"'], [])).toBe('<g id="group"/>');
+            expect(createTag('g', ['id="group"'], [])).toEqual(['<g id="group"/>']);
         });
     });
 });
