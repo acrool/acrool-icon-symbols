@@ -1,6 +1,6 @@
 {
     "name": "@acrool/icon-symbols",
-    "version": "2.0.1-alpha.4",
+    "version": "2.0.1",
     "description": "Merge svg into svg symbols, and unpack svg symbols into individual svg",
     "keywords": [
         "typescript",
