@@ -104,7 +104,7 @@ describe('formatSvgContent', () => {
                 </svg>
             `;
         const result = formatSvgContent(svgContent);
-        
+
         // 验证基本结构
         expect(result.viewBox).toBe('0 0 20 20');
         expect(result.defs).toHaveLength(4);
@@ -112,6 +112,7 @@ describe('formatSvgContent', () => {
 
         // 获取生成的 ID
         const defsContent = result.defs![0];
+        console.log('result.defs', result.defs);
         const generatedId = defsContent.match(/id="([^"]+)"/)?.[1];
         expect(generatedId).toBeDefined();
 
@@ -121,9 +122,9 @@ describe('formatSvgContent', () => {
             '<stop offset="0%" stop-color="#FF0000"/>',
             '<stop offset="100%" stop-color="#00FF00"/>',
             '</linearGradient>'
-        ].join('');
+        ];
 
-        expect(defsContent).toBe(expectedDefs);
+        expect(result.defs).toEqual(expectedDefs);
 
         // 验证 content 内容
         const content = result.content![0];
