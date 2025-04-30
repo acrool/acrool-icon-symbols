@@ -21,8 +21,14 @@ export const formatChildren = (children: IDef[], isMultiColor: boolean): string[
 
 export const formatDefs = (defs: IDef[], isMultiColor: boolean): string[] => {
     return defs.flatMap(el => {
-        const attr = objectKeys(el.attr).map(attrKey => formatAttrKeyValue(attrKey, el.attr[attrKey]));
+        const {stop, ...otherAttrs} = el.attr as any;
+        
+        const attr = objectKeys(otherAttrs)
+            .filter(key => otherAttrs[key] !== undefined && otherAttrs[key] !== null)
+            .map(attrKey => formatAttrKeyValue(String(attrKey), otherAttrs[attrKey]));
+        
         const children = el.children ? formatChildren(el.children, isMultiColor) : undefined;
+        
         return createTag(el.tag, attr, children);
     });
 }; 
