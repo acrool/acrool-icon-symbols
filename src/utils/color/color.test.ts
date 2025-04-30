@@ -1,5 +1,5 @@
 import {Node} from 'svg-parser';
-import {checkIsSVGMultiColor} from './index';
+import {checkIsSVGMultiColor} from './color';
 
 describe('颜色处理模块测试', () => {
     describe('checkIsSVGMultiColor', () => {
