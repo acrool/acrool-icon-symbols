@@ -1,5 +1,8 @@
 import {objectKeys} from '@acrool/js-utils/object';
-import {IDef, TFormatSvgContent} from '../../types';
+import {
+    IDef,
+    IFormatSvgContentRes
+} from '../../types';
 import {decodeSvgContent} from './decodeSvgContent';
 import {formatAttrKeyValue, createTag} from '../common';
 import {formatSvgProperties} from '../path/path';
@@ -29,7 +32,7 @@ const formatChildren = (children: IDef[], isMultiColor: boolean): string[] => {
  * 3. 格式化 SVG 内容，处理 fill 和 stroke 属性
  * 4. 如果需要，添加 g 标签包装
  */
-export const formatSvgContent: TFormatSvgContent = (svgContent) => {
+export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
     const {fillDiffColor, content, defs, viewBox} = decodeSvgContent(svgContent);
     const uniqueColors = fillDiffColor.filter((c, i, arr) => c && arr.indexOf(c) === i);
     const isMultiColor = uniqueColors.length >= 2;
@@ -62,4 +65,4 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
         }),
         content: formattedContent,
     };
-}; 
+};

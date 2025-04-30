@@ -2,7 +2,13 @@ import {XMLParser} from 'fast-xml-parser';
 import {ulid} from 'ulid';
 import {objectKeys} from '@acrool/js-utils/object';
 import {isNotEmpty} from '@acrool/js-utils/equal';
-import {IDef, TTagKey, TDecodeSvgContent, TDecodeSymbols, TFormatSvgContent} from '../../types';
+import {
+    IDef,
+    TTagKey,
+    TDecodeSvgContent,
+    TDecodeSymbols,
+    IFormatSvgContentRes
+} from '../../types';
 import {extractIdFromUrl} from '../common';
 import {formatAttrKeyValue, createTag} from '../common';
 
@@ -222,7 +228,7 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
  * @param svgContent - SVG内容字符串
  * @returns 包含格式化后的视图框、定义和内容的对象
  */
-export const formatSvgContent: TFormatSvgContent = (svgContent) => {
+export const formatSvgContent  = (svgContent: string): IFormatSvgContentRes => {
     const {fillDiffColor, content, defs, viewBox} = decodeSvgContent(svgContent);
     const uniqueColors = fillDiffColor.filter((c, i, arr) => c && arr.indexOf(c) === i);
     const isMultiColor = uniqueColors.length >= 2;

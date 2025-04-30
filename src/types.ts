@@ -67,7 +67,7 @@ export interface IFormatSvgContentRes {
     defs?: string[],
 }
 
-export type TFormatSvgContent = (svgContent: string) => IFormatSvgContentRes
+// export type TFormatSvgContent = (svgContent: string) => IFormatSvgContentRes
 
 
 
