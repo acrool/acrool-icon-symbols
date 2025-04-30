@@ -5,22 +5,11 @@ import {
 } from '../../types';
 import {decodeSvgContent} from './decodeSvgContent';
 import {formatAttrKeyValue, createTag} from '../common';
-import {formatSvgProperties} from '../path/path';
+import {formatSvgProperties} from '../path';
+import {
+    formatChildren
+} from './defs';
 
-/**
- * 格式化 SVG 子元素的属性
- * @param children - SVG 子元素数组
- * @param isMultiColor - 是否为多色图标
- * @returns 格式化后的子元素字符串数组
- */
-const formatChildren = (children: IDef[], isMultiColor: boolean): string[] => {
-    return children.map(childEl => {
-        const {fillOpacity, stroke, ...pathAttr} = childEl.attr;
-        const childAttr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
-        const childProperties = formatSvgProperties(childEl.attr, isMultiColor);
-        return `<${childEl.tag} ${[...childAttr, ...childProperties].join(' ')}/>`;
-    });
-};
 
 /**
  * 格式化 SVG 内容
@@ -39,6 +28,7 @@ export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
 
     // 檢查是否需要處理 fill 屬性
     const hasRootFill = content.some(el => el.attr.fill);
+    console.log('hasRootFill', content);
     const hasGGroup = content.some(el => el.tag === 'g');
 
     let formattedContent = content.map(el => {
