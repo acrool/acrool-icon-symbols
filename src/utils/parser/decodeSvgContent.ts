@@ -43,6 +43,7 @@ export const decodeSvgContent = (svgContent: string): IDecodeSvgContentRes => {
     const parsed = xmlParser.parse(svgContent);
     const svg = parsed.svg;
     const viewBox = svg?.viewBox;
+    const fillNone = svg?.fill === 'none';
 
     const fillDiffColor: string[] = [];
     const contentTags: TTagKey[] = ['ellipse', 'path', 'circle', 'g', 'stop', 'rect'];
@@ -166,5 +167,6 @@ export const decodeSvgContent = (svgContent: string): IDecodeSvgContentRes => {
         viewBox,
         content,
         defs: defsContent,
+        fillNone,
     };
 };

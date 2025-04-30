@@ -22,13 +22,11 @@ import {
  * 4. 如果需要，添加 g 标签包装
  */
 export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
-    const {fillDiffColor, content, defs, viewBox} = decodeSvgContent(svgContent);
+    const {fillDiffColor, content, defs, fillNone, viewBox} = decodeSvgContent(svgContent);
     const uniqueColors = fillDiffColor.filter((c, i, arr) => c && arr.indexOf(c) === i);
     const isMultiColor = uniqueColors.length >= 2;
 
     // 檢查是否需要處理 fill 屬性
-    const hasRootFill = content.some(el => el.attr.fill);
-    console.log('hasRootFill', content);
     const hasGGroup = content.some(el => el.tag === 'g');
 
     let formattedContent = content.map(el => {
@@ -40,7 +38,7 @@ export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
     });
 
     // 如果需要處理 fill 屬性且沒有 g 標籤，則創建一個新的 g 標籤
-    if (hasRootFill && !hasGGroup) {
+    if (fillNone && !hasGGroup) {
         formattedContent = [
             createTag('g', ['fill="none"'], formattedContent)
         ];

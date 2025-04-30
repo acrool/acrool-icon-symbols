@@ -94,7 +94,7 @@ export interface IDef {
 export interface IDecodeSvgContentRes {
     viewBox?: string,
     fillDiffColor: string[],
-
+    fillNone: boolean,
     content: IDef[],
     defs: IDef[],
 }

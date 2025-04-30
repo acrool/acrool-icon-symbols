@@ -11,6 +11,7 @@ describe('decodeSvgContent', () => {
         expect(result).toEqual({
             fillDiffColor: ['#000000'],
             viewBox: '0 0 24 24',
+            fillNone: false,
             content: [
                 {
                     tag: 'path',
@@ -38,5 +39,16 @@ describe('decodeSvgContent', () => {
         const result = decodeSvgContent(svgContent);
         expect(result.defs).toHaveLength(1);
         expect(result.defs[0].tag).toBe('linearGradient');
+        expect(result.fillNone).toBe(false);
+    });
+
+    it('应该检测 SVG 的 fill="none" 属性', () => {
+        const svgContent = `
+            <svg viewBox="0 0 24 24" fill="none">
+                <path d="M0 0L10 10"/>
+            </svg>
+        `;
+        const result = decodeSvgContent(svgContent);
+        expect(result.fillNone).toBe(true);
     });
 }); 
