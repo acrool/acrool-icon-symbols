@@ -104,33 +104,30 @@ describe('formatSvgContent', () => {
                 </svg>
             `;
         const result = formatSvgContent(svgContent);
-
+        
         // 验证基本结构
         expect(result.viewBox).toBe('0 0 20 20');
         expect(result.defs).toHaveLength(4);
         expect(result.content).toHaveLength(1);
 
-        // 验证 defs 内容
+        // 获取生成的 ID
         const defsContent = result.defs![0];
-        expect(defsContent).toMatch(/^<linearGradient id="svg_def_[^"]+" x1="0%" y1="0%" x2="100%" y2="100%">$/);
+        const generatedId = defsContent.match(/id="([^"]+)"/)?.[1];
+        expect(generatedId).toBeDefined();
 
-        // 验证 stop 元素
-        const stopElements = defsContent.match(/<stop[^>]*>/g) || [];
-        expect(stopElements).toHaveLength(0);
-        expect(stopElements[0]).toContain('offset="0%"');
-        expect(stopElements[0]).toContain('stop-color="#FF0000"');
-        expect(stopElements[1]).toContain('offset="100%"');
-        expect(stopElements[1]).toContain('stop-color="#00FF00"');
+        // 使用生成的 ID 构建预期的 defs 内容
+        const expectedDefs = [
+            `<linearGradient id="${generatedId}" x1="0%" y1="0%" x2="100%" y2="100%">`,
+            '<stop offset="0%" stop-color="#FF0000"/>',
+            '<stop offset="100%" stop-color="#00FF00"/>',
+            '</linearGradient>'
+        ].join('');
 
-        expect(defsContent).toContain('</linearGradient>');
+        expect(defsContent).toBe(expectedDefs);
 
         // 验证 content 内容
         const content = result.content![0];
-        expect(content).toMatch(/^<path d="M10 2L18 10L10 18L2 10L10 2Z" fill="url\(#svg_def_[^"]+\)"\/>$/);
-
-        // 验证 ID 引用关系
-        const defsId = defsContent.match(/id="([^"]+)"/)?.[1];
-        const contentRefId = content.match(/fill="url\(#([^)]+)\)"/)?.[1];
-        expect(defsId).toBe(contentRefId);
+        const expectedContent = `<path d="M10 2L18 10L10 18L2 10L10 2Z" fill="url(#${generatedId})"/>`;
+        expect(content).toBe(expectedContent);
     });
 });
