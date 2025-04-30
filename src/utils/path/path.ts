@@ -15,11 +15,7 @@ interface SVGNode {
  */
 export const formatSvgProperties = (properties: Record<string, any>, isMultiColor: boolean): string[] => {
     const result: string[] = [];
-    if (isMultiColor) {
-        if (properties['fill-opacity']) {
-            const opacity = removeLeadingZero(properties['fill-opacity'].toString());
-            result.push(`fill-opacity="${opacity}"`);
-        }
+    if (isMultiColor || properties.fill?.startsWith('url(#')) {
         if (properties.fill) {
             result.push(`fill="${properties.fill.toLocaleString()}"`);
         }
@@ -30,6 +26,11 @@ export const formatSvgProperties = (properties: Record<string, any>, isMultiColo
         if (properties.stroke) {
             result.push('stroke="currentColor"');
         }
+    }
+
+    if (properties['fill-opacity']) {
+        const opacity = removeLeadingZero(properties['fill-opacity'].toString());
+        result.push(`fill-opacity="${opacity}"`);
     }
     return result;
 };

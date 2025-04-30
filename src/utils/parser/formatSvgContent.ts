@@ -3,7 +3,7 @@ import {IFormatSvgContentRes} from '../../types';
 import {decodeSvgContent} from './decodeSvgContent';
 import {formatAttrKeyValue, createTag} from '../common';
 import {formatSvgProperties} from '../path';
-import {formatChildren, formatDefs} from './defs/defsFormatter';
+import {formatChildren, formatDefs} from './defs';
 
 
 /**

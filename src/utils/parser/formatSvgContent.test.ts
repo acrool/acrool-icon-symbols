@@ -111,8 +111,7 @@ describe('formatSvgContent', () => {
         expect(result.content).toHaveLength(1);
 
         // 获取生成的 ID
-        const defsContent = result.defs![0];
-        console.log('result.defs', result.defs);
+        const defsContent = result.defs?.[0] ?? '';
         const generatedId = defsContent.match(/id="([^"]+)"/)?.[1];
         expect(generatedId).toBeDefined();
 
@@ -127,7 +126,7 @@ describe('formatSvgContent', () => {
         expect(result.defs).toEqual(expectedDefs);
 
         // 验证 content 内容
-        const content = result.content![0];
+        const content = result.content?.[0] ?? '';
         const expectedContent = `<path d="M10 2L18 10L10 18L2 10L10 2Z" fill="url(#${generatedId})"/>`;
         expect(content).toBe(expectedContent);
     });

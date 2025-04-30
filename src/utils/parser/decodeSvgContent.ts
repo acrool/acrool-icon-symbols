@@ -108,10 +108,11 @@ export const decodeSvgContent = (svgContent: string): IDecodeSvgContentRes => {
         });
 
         if (attributes.fill) {
-            if (typeof attributes.fill === 'string' && attributes.fill.startsWith('url(#')) {
+            if (attributes.fill.startsWith('url(#')) {
                 const id = extractIdFromUrl(attributes.fill);
                 const replaceId = defIdMap.get(id) ?? id;
                 attributes.fill = `url(#${replaceId})`;
+                
             } else if (!fillDiffColor.includes(attributes.fill)) {
                 fillDiffColor.push(attributes.fill);
             }

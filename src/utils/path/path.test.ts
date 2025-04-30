@@ -84,7 +84,7 @@ describe('路径处理模块测试', () => {
                 }
             ];
             const result = remarkDeepSVGPaths(svgNode);
-            expect(result).toEqual(['<path fill-opacity=".5" fill="#000000" d="M0 0L10 10"/>']);
+            expect(result).toEqual(['<path fill="#000000" fill-opacity=".5" d="M0 0L10 10"/>']);
         });
 
         it('应该忽略非路径元素', () => {
