@@ -1,6 +1,5 @@
 import {Node} from 'svg-parser';
-import {isNotEmpty} from '@acrool/js-utils/equal';
-import {removeLeadingZero} from '../common';
+import {removeLeadingZero} from '@acrool/js-utils/number';
 
 /**
  * 检查数组中元素是否唯一
@@ -50,4 +49,4 @@ export const checkIsSVGMultiColor = (svgNode: Array<Node | string>): boolean => 
     const fillColors = getMultiColor(svgNode);
     const colorLength = fillColors.filter(onlyUnique).length;
     return colorLength > 1;
-}; 
+};

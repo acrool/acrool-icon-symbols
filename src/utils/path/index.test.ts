@@ -1,12 +1,17 @@
-import {Node} from 'svg-parser';
 import {remarkDeepSVGPaths} from './index';
+
+interface SVGNode {
+    '#name'?: string;
+    tagName?: string;
+    properties?: Record<string, any>;
+    children?: SVGNode[];
+}
 
 describe('路径处理模块测试', () => {
     describe('remarkDeepSVGPaths', () => {
         it('应该正确处理单路径 SVG', () => {
-            const svgNode: Array<Node | string> = [
+            const svgNode: SVGNode[] = [
                 {
-                    type: 'element',
                     tagName: 'path',
                     properties: {
                         d: 'M0 0L10 10',
@@ -20,9 +25,8 @@ describe('路径处理模块测试', () => {
         });
 
         it('应该处理多路径 SVG', () => {
-            const svgNode: Array<Node | string> = [
+            const svgNode: SVGNode[] = [
                 {
-                    type: 'element',
                     tagName: 'path',
                     properties: {
                         d: 'M0 0L10 10',
@@ -31,7 +35,6 @@ describe('路径处理模块测试', () => {
                     children: []
                 },
                 {
-                    type: 'element',
                     tagName: 'path',
                     properties: {
                         d: 'M20 20L30 30',
@@ -48,13 +51,11 @@ describe('路径处理模块测试', () => {
         });
 
         it('应该处理嵌套的 SVG 元素', () => {
-            const svgNode: Array<Node | string> = [
+            const svgNode: SVGNode[] = [
                 {
-                    type: 'element',
                     tagName: 'g',
                     children: [
                         {
-                            type: 'element',
                             tagName: 'path',
                             properties: {
                                 d: 'M0 0L10 10',
@@ -71,9 +72,8 @@ describe('路径处理模块测试', () => {
         });
 
         it('应该处理带透明度的路径', () => {
-            const svgNode: Array<Node | string> = [
+            const svgNode: SVGNode[] = [
                 {
-                    type: 'element',
                     tagName: 'path',
                     properties: {
                         d: 'M0 0L10 10',
@@ -88,9 +88,8 @@ describe('路径处理模块测试', () => {
         });
 
         it('应该忽略非路径元素', () => {
-            const svgNode: Array<Node | string> = [
+            const svgNode: SVGNode[] = [
                 {
-                    type: 'element',
                     tagName: 'circle',
                     properties: {
                         cx: '10',

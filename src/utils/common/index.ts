@@ -46,16 +46,3 @@ ${children.join('')}
     }
     return `<${tag} ${attributes.join(' ')}/>`;
 };
-
-/**
- * 安全地移除数字字符串中的前导零
- * @param str 要处理的字符串
- * @returns 处理后的字符串
- */
-export const removeLeadingZero = (str: string): string => {
-    // 检查是否为数字字符串（可能包含小数点）
-    if (/^\d+\.?\d*$/.test(str)) {
-        return str.replace(/^0+(?=\d)/, '');
-    }
-    return str;
-}; 
