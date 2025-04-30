@@ -30,28 +30,7 @@ describe('formatSvgContent', () => {
         }
     });
 
-    it('应该正确处理带有 stroke 属性的 SVG', () => {
-        const svgContent = `
-                <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
-                    <path
-                        d="M10 2C8.52462 2 7.07798 2.408 5.82001 3.17888C4.56204 3.94976 3.54176 5.0535 2.87195 6.36808C2.20214 7.68265 1.9089 9.15684 2.02466 10.6277C2.14042 12.0985 2.66066 13.5087 3.52786 14.7023C4.39507 15.8959 5.57546 16.8264 6.93853 17.391C8.3016 17.9556 9.79426 18.1323 11.2515 17.9015C12.7087 17.6707 14.0737 17.0414 15.1956 16.0832C16.3175 15.1251 17.1525 13.8753 17.6085 12.4721"
-                        stroke-width="1.3"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            `;
-        const result = formatSvgContent(svgContent);
-        expect(result).toEqual({
-            viewBox: '0 0 20 20',
-            defs: [],
-            content: [
-                '<g fill="none">',
-                '<path d="M10 2C8.52462 2 7.07798 2.408 5.82001 3.17888C4.56204 3.94976 3.54176 5.0535 2.87195 6.36808C2.20214 7.68265 1.9089 9.15684 2.02466 10.6277C2.14042 12.0985 2.66066 13.5087 3.52786 14.7023C4.39507 15.8959 5.57546 16.8264 6.93853 17.391C8.3016 17.9556 9.79426 18.1323 11.2515 17.9015C12.7087 17.6707 14.0737 17.0414 15.1956 16.0832C16.3175 15.1251 17.1525 13.8753 17.6085 12.4721" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>',
-                '</g>'
-            ]
-        });
-    });
+
 
     it('应该正确处理 SVG 标签带有 fill="none" 属性的情况', () => {
         const svgContent = `
@@ -64,19 +43,15 @@ describe('formatSvgContent', () => {
             viewBox: '0 0 20 20',
             defs: [],
             content: [
-                '<g fill="none">',
                 '<path d="M10 2L18 10L10 18L2 10L10 2Z"/>',
-                '</g>'
             ]
         });
     });
 
-    it('当 SVG 已经有 g 标签时，应该直接给 g 标签添加 fill="none" 属性', () => {
+    it('应该正确处理 SVG 标签带有 fill="none" 属性, 並且 path 使用 stroke 的情况', () => {
         const svgContent = `
                 <svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" fill="none">
-                    <g>
-                        <path d="M10 2L18 10L10 18L2 10L10 2Z"/>
-                    </g>
+                    <path d="M10 2L18 10L10 18L2 10L10 2Z" stroke="#fff"/>
                 </svg>
             `;
         const result = formatSvgContent(svgContent);
@@ -84,12 +59,11 @@ describe('formatSvgContent', () => {
             viewBox: '0 0 20 20',
             defs: [],
             content: [
-                '<g fill="none">',
-                '<path d="M10 2L18 10L10 18L2 10L10 2Z"/>',
-                '</g>'
+                '<path d="M10 2L18 10L10 18L2 10L10 2Z" stroke="currentColor" fill="none"/>',
             ]
         });
     });
+
 
     it('应该正确处理带有 defs 的 SVG', () => {
         const svgContent = `
