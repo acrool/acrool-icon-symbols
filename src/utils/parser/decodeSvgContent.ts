@@ -13,6 +13,29 @@ const xmlParser = new XMLParser({
     parseAttributeValue: false,
 });
 
+/**
+ * 解析 SVG 内容并提取关键信息
+ * 
+ * 该函数将 SVG 字符串内容解析为结构化的对象，包括：
+ * - 不同的填充颜色列表
+ * - 视图框信息
+ * - SVG 内容元素
+ * - 定义（defs）元素
+ * 
+ * 处理过程中会：
+ * 1. 解析 SVG XML 内容
+ * 2. 处理 defs 元素并生成新的唯一 ID
+ * 3. 处理所有 SVG 元素及其属性
+ * 4. 收集所有不同的填充颜色
+ * 5. 维护元素之间的引用关系
+ * 
+ * @param {string} svgContent - 要解析的 SVG 字符串内容
+ * @returns {Object} 解析后的 SVG 信息对象，包含：
+ *   - fillDiffColor: string[] - 所有不同的填充颜色列表
+ *   - viewBox: string - SVG 的视图框信息
+ *   - content: IDef[] - SVG 的主要内容元素
+ *   - defs: IDef[] - SVG 的定义元素
+ */
 export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
     const parsed = xmlParser.parse(svgContent);
     const svg = parsed.svg;

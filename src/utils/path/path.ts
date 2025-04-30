@@ -1,4 +1,3 @@
-import {XMLParser} from 'fast-xml-parser';
 import {removeLeadingZero} from '@acrool/js-utils/number';
 
 interface SVGNode {
@@ -8,13 +7,6 @@ interface SVGNode {
     children?: SVGNode[];
 }
 
-const xmlParser = new XMLParser({
-    ignoreAttributes: false,
-    attributeNamePrefix: '',
-    allowBooleanAttributes: true,
-    parseTagValue: false,
-    parseAttributeValue: false,
-});
 
 /**
  * 递归处理 SVG 路径，生成路径字符串数组

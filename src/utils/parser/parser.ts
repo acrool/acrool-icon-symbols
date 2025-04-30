@@ -14,6 +14,12 @@ const xmlParser = new XMLParser({
     parseAttributeValue: false,
 });
 
+/**
+ * 格式化子元素的属性
+ * @param children - 子元素数组
+ * @param isMultiColor - 是否为多色图标
+ * @returns 格式化后的子元素字符串数组
+ */
 const formatChildren = (children: IDef[], isMultiColor: boolean): string[] => {
     return children.map(childEl => {
         const {fillOpacity, stroke, ...pathAttr} = childEl.attr;
@@ -31,6 +37,12 @@ const formatChildren = (children: IDef[], isMultiColor: boolean): string[] => {
     });
 };
 
+/**
+ * 解码SVG符号内容
+ * 从SVG符号字符串中提取每个符号的代码、视图框和内容
+ * @param symbolsContent - SVG符号内容字符串
+ * @returns 包含符号信息的数组，每个元素包含code、viewBox和content
+ */
 export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
     const data: Array<{
         code: string,
@@ -68,6 +80,12 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
     return data;
 };
 
+/**
+ * 解码SVG内容
+ * 解析SVG内容，提取视图框、颜色信息和元素结构
+ * @param svgContent - SVG内容字符串
+ * @returns 包含填充颜色、视图框、内容元素和定义的对象
+ */
 export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
     const parsed = xmlParser.parse(svgContent);
     const svg = parsed.svg;
@@ -198,6 +216,12 @@ export const decodeSvgContent: TDecodeSvgContent = (svgContent) => {
     };
 };
 
+/**
+ * 格式化SVG内容
+ * 将解码后的SVG内容格式化为可用的HTML字符串
+ * @param svgContent - SVG内容字符串
+ * @returns 包含格式化后的视图框、定义和内容的对象
+ */
 export const formatSvgContent: TFormatSvgContent = (svgContent) => {
     const {fillDiffColor, content, defs, viewBox} = decodeSvgContent(svgContent);
     const uniqueColors = fillDiffColor.filter((c, i, arr) => c && arr.indexOf(c) === i);

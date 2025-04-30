@@ -1,8 +1,16 @@
 import {ulid} from 'ulid';
-import {objectKeys} from '@acrool/js-utils/object';
 import {IDef, TTagKey} from '../../../types';
 import {extractIdFromUrl} from '../../common';
 
+/**
+ * 解析 SVG 中的 defs 元素
+ * @param defs - SVG 中的 defs 元素数据
+ * @param contentTags - 需要处理的内容标签列表
+ * @returns 包含 defIdMap 和 defsContent 的对象
+ * @description
+ * - defIdMap: 存储原始 ID 到新生成 ID 的映射关系
+ * - defsContent: 处理后的 defs 内容数组
+ */
 export const parseDefs = (defs: any, contentTags: TTagKey[]) => {
     const defChildTag = ['clipPath', 'linearGradient'];
     const defIdMap = new Map<string | undefined, string | undefined>();
@@ -54,6 +62,17 @@ export const parseDefs = (defs: any, contentTags: TTagKey[]) => {
     return {defIdMap, defsContent};
 };
 
+/**
+ * 处理 SVG 元素，包括属性处理和子元素递归处理
+ * @param el - 要处理的 SVG 元素
+ * @param contentTags - 需要处理的内容标签列表
+ * @param defIdMap - ID 映射关系表
+ * @returns 处理后的元素对象
+ * @description
+ * - 处理元素的标签名和属性
+ * - 处理 fill 和 clipPath 中的 URL 引用
+ * - 递归处理子元素
+ */
 export const processElement = (el: any, contentTags: TTagKey[], defIdMap: Map<string | undefined, string | undefined>): IDef => {
     const tag = el ? el['#name'] || el.tagName || Object.keys(el).find(k => contentTags.includes(k as TTagKey)) : undefined;
     if (!tag) return {tag: '', attr: {}};
@@ -99,4 +118,4 @@ export const processElement = (el: any, contentTags: TTagKey[], defIdMap: Map<st
         attr: attributes,
         ...(children.length > 0 && {children}),
     };
-}; 
+};
