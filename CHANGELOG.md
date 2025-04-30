@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1-alpha.1](https://github.com/acrool/acrool-icon-symbols/compare/v2.0.1-alpha.0...v2.0.1-alpha.1) (2025-04-30)
+
 ### [2.0.1-alpha.0](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.7-alpha.1...v2.0.1-alpha.0) (2025-04-30)
 
 ### [1.3.8-test.1](https://github.com/acrool/acrool-icon-symbols/compare/v1.3.8-test.0...v1.3.8-test.1) (2025-04-29)
