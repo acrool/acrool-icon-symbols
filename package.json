@@ -23,10 +23,8 @@
             "types": "./dist/index.d.ts"
         }
     },
-    "bin": "bin/cli.js",
     "files": [
         "dist",
-        "bin",
         "config",
         "README.md"
     ],
