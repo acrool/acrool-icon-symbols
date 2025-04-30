@@ -2,6 +2,7 @@ import {objectKeys} from '@acrool/js-utils/object';
 import {IDef, TFormatSvgContent} from '../../types';
 import {decodeSvgContent} from './decodeSvgContent';
 import {formatAttrKeyValue, createTag} from '../common';
+import {formatSvgProperties} from '../path/path';
 
 /**
  * 格式化 SVG 子元素的属性
@@ -13,15 +14,7 @@ const formatChildren = (children: IDef[], isMultiColor: boolean): string[] => {
     return children.map(childEl => {
         const {fillOpacity, stroke, ...pathAttr} = childEl.attr;
         const childAttr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
-
-        const childProperties: string[] = [];
-        if (isMultiColor) {
-            if (fillOpacity) childProperties.push(`fill-opacity="${fillOpacity}"`);
-            if (stroke) childProperties.push(`stroke="${stroke}"`);
-        } else {
-            if (stroke) childProperties.push('stroke="currentColor"');
-        }
-
+        const childProperties = formatSvgProperties(childEl.attr, isMultiColor);
         return `<${childEl.tag} ${[...childAttr, ...childProperties].join(' ')}/>`;
     });
 };
@@ -48,16 +41,7 @@ export const formatSvgContent: TFormatSvgContent = (svgContent) => {
     let formattedContent = content.map(el => {
         const {fill, fillOpacity, stroke, ...pathAttr} = el.attr;
         const attr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
-
-        const properties: string[] = [];
-        if (isMultiColor) {
-            if (fill) properties.push(`fill="${fill}"`);
-            if (fillOpacity) properties.push(`fill-opacity="${fillOpacity}"`);
-            if (stroke) properties.push(`stroke="${stroke}"`);
-        } else {
-            if (stroke) properties.push('stroke="currentColor"');
-        }
-
+        const properties = formatSvgProperties(el.attr, isMultiColor);
         const children = el.children ? formatChildren(el.children, isMultiColor) : undefined;
         return createTag(el.tag, [...attr, ...properties], children);
     });
