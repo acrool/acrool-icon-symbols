@@ -93,11 +93,11 @@ export const processElement = (el: any, contentTags: TTagKey[], defIdMap: Map<st
         }
     }
 
-    if (attributes.clipPath) {
-        if (typeof attributes.clipPath === 'string' && attributes.clipPath.startsWith('url(#')) {
-            const id = extractIdFromUrl(attributes.clipPath);
+    if (attributes['clip-path']) {
+        if (typeof attributes['clip-path'] === 'string' && attributes['clip-path'].startsWith('url(#')) {
+            const id = extractIdFromUrl(attributes['clip-path']);
             const replaceId = defIdMap.get(id) ?? id;
-            attributes.clipPath = `url(#${replaceId})`;
+            attributes['clip-path'] = `url(#${replaceId})`;
         }
     }
 

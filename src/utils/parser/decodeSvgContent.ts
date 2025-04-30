@@ -112,17 +112,17 @@ export const decodeSvgContent = (svgContent: string): IDecodeSvgContentRes => {
                 const id = extractIdFromUrl(attributes.fill);
                 const replaceId = defIdMap.get(id) ?? id;
                 attributes.fill = `url(#${replaceId})`;
-                
+
             } else if (!fillDiffColor.includes(attributes.fill)) {
                 fillDiffColor.push(attributes.fill);
             }
         }
 
-        if (attributes.clipPath) {
-            if (typeof attributes.clipPath === 'string' && attributes.clipPath.startsWith('url(#')) {
-                const id = extractIdFromUrl(attributes.clipPath);
+        if (attributes['clip-path']) {
+            if (attributes['clip-path'].startsWith('url(#')) {
+                const id = extractIdFromUrl(attributes['clip-path']);
                 const replaceId = defIdMap.get(id) ?? id;
-                attributes.clipPath = `url(#${replaceId})`;
+                attributes['clip-path'] = `url(#${replaceId})`;
             }
         }
 

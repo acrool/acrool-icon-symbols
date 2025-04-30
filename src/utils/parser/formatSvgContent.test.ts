@@ -120,4 +120,48 @@ describe('formatSvgContent', () => {
         const expectedContent = `<path d="M10 2L18 10L10 18L2 10L10 2Z" fill="url(#${generatedId})"/>`;
         expect(content).toBe(expectedContent);
     });
+
+    it('应该正确处理带有 clipPath 的 SVG', () => {
+        const svgContent = `
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_1134_19167)">
+                    <path d="M10 2L18 10L10 18L2 10L10 2Z" fill="#878787"/>
+                    <path d="M2 2L18 18" fill="#878787"/>
+                </g>
+                <defs>
+                    <clipPath id="clip0_1134_19167">
+                        <rect width="16" height="14.3996" fill="white" transform="translate(2.33499 2.80023)"/>
+                    </clipPath>
+                </defs>
+            </svg>
+        `;
+        const result = formatSvgContent(svgContent);
+
+        // 验证基本结构
+        expect(result.viewBox).toBe('0 0 20 20');
+        expect(result.defs).toHaveLength(3);
+        expect(result.content).toHaveLength(4);
+
+        // 获取生成的 ID
+        const defsContent = result.defs?.[0] ?? '';
+        const generatedId = defsContent.match(/id="([^"]+)"/)?.[1];
+        expect(generatedId).toBeDefined();
+
+        // 验证 defs 内容
+        const expectedDefs = [
+            `<clipPath id="${generatedId}">`,
+            '<rect width="16" height="14.3996" fill="white" transform="translate(2.33499 2.80023)"/>',
+            '</clipPath>'
+        ];
+        expect(result.defs).toEqual(expectedDefs);
+
+        // 验证 content 内容
+        const expectedContent = [
+            `<g clip-path="url(#${generatedId})">`,
+            '<path d="M10 2L18 10L10 18L2 10L10 2Z" fill="#878787"/>',
+            '<path d="M2 2L18 18" fill="#878787"/>',
+            '</g>'
+        ];
+        expect(result.content).toEqual(expectedContent);
+    });
 });
