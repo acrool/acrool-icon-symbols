@@ -1,5 +1,11 @@
 # Acrool Icon Symbols
 
+
+<a href="https://github.com/acrool/acrool-icon-symbols" title="Acrool Icon Symbols - Merge svg into svg symbols, and unpack svg symbols into individual svg">
+    <img src="https://raw.githubusercontent.com/acrool/acrool-icon-symbols/refs/heads/main/public/og.png" alt="Acrool Icon Symbols Logo"/>
+</a>
+
+
 <p align="center">
    Merge svg into svg symbols, and unpack svg symbols into individual svg
 </p>
