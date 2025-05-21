@@ -23,8 +23,8 @@ export default defineConfig({
             entry: path.resolve(__dirname, 'src/index.ts'),
             formats: ['es', 'cjs'],
             fileName: (format) => {
-                if (format === 'es') return 'acrool-js-logger.mjs';
-                if (format === 'cjs') return 'acrool-js-logger.cjs';
+                if (format === 'es') return 'acrool-icon-symbols.mjs';
+                if (format === 'cjs') return 'acrool-icon-symbols.cjs';
                 return `acrool-icon-symbols.${format}.js`;
             }
         },

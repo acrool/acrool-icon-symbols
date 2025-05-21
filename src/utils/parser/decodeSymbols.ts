@@ -1,4 +1,5 @@
 import {XMLParser} from 'fast-xml-parser';
+
 import {TDecodeSymbols} from '../../types';
 
 const xmlParser = new XMLParser({
@@ -55,4 +56,4 @@ export const decodeSymbols: TDecodeSymbols = (symbolsContent) => {
     });
 
     return data;
-}; 
+};

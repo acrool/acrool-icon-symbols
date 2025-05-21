@@ -1,5 +1,5 @@
-import {formatDefs} from './defsFormatter';
 import {IDef} from '../../../types';
+import {formatDefs} from './defsFormatter';
 
 describe('defsFormatter', () => {
     it('应该正确处理简单的 defs', () => {

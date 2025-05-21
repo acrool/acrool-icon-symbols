@@ -1,11 +1,11 @@
+import {isNotEmpty} from '@acrool/js-utils/equal';
 import {XMLParser} from 'fast-xml-parser';
 import {ulid} from 'ulid';
-import {isNotEmpty} from '@acrool/js-utils/equal';
+
 import {
+    IDecodeSvgContentRes,
     IDef,
-    TTagKey,
-    IDecodeSvgContentRes
-} from '../../types';
+    TTagKey} from '../../types';
 import {extractIdFromUrl} from '../common';
 
 const xmlParser = new XMLParser({

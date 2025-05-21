@@ -1,4 +1,4 @@
-import {extractIdFromUrl, extractId, formatAttrKeyValue, createTag} from './common';
+import {createTag,extractId, extractIdFromUrl, formatAttrKeyValue} from './common';
 
 describe('通用工具函数测试', () => {
     describe('extractIdFromUrl', () => {
