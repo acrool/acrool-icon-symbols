@@ -25,7 +25,7 @@ export default defineConfig({
             fileName: (format) => {
                 if (format === 'es') return 'acrool-js-logger.mjs';
                 if (format === 'cjs') return 'acrool-js-logger.cjs';
-                return `acrool-js-logger.${format}.js`;
+                return `acrool-icon-symbols.${format}.js`;
             }
         },
         rollupOptions: {
