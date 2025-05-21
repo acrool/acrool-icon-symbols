@@ -1,18 +1,10 @@
 import {defineConfig} from 'vite';
 import dts from 'vite-plugin-dts';
-import glob from 'fast-glob';
 import {visualizer} from 'rollup-plugin-visualizer';
 import eslint from 'vite-plugin-eslint';
 import {viteCommonjs} from '@originjs/vite-plugin-commonjs';
 import path from 'path';
 
-// libraries
-const files = glob.sync(['./src/**/index.ts'])
-    .map(file => {
-        const key = file.match(/(?<=\.\/src\/).*(?=\.ts)/);
-        return [key[0], file];
-    });
-const entries = Object.fromEntries(files);
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -29,9 +21,12 @@ export default defineConfig({
         outDir: 'dist',
         lib: {
             entry: path.resolve(__dirname, 'src/index.ts'),
-            name: 'AcroolIconSymbols',
-            formats: ['es', 'umd'],
-            fileName: (format) => `acrool-icon-symbols.${format}.js`,
+            formats: ['es', 'cjs'],
+            fileName: (format) => {
+                if (format === 'es') return 'acrool-js-logger.mjs';
+                if (format === 'cjs') return 'acrool-js-logger.cjs';
+                return `acrool-js-logger.${format}.js`;
+            }
         },
         rollupOptions: {
             external: ['y18n'],

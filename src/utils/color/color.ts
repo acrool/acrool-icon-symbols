@@ -1,5 +1,6 @@
-import {Node} from 'svg-parser';
 import {removeLeadingZero} from '@acrool/js-utils/number';
+
+import {SVGNode} from './types';
 
 /**
  * 检查数组中元素是否唯一
@@ -17,23 +18,22 @@ const onlyUnique = (value: string, index: number, self: string[]): boolean => {
  * @param svgNode - SVG 节点数组
  * @returns 包含所有颜色信息的数组，格式为 "颜色_透明度"
  */
-const getMultiColor = (svgNode: Array<Node | string>): string[] => {
+const getMultiColor = (svgNode: Array<SVGNode | string>): string[] => {
     return svgNode.reduce((curr: string[], row) => {
-        if(typeof row !== 'string' && row.type === 'element'){
-            if(row.tagName === 'path'){
+        if (typeof row !== 'string' && row.type === 'element') {
+            if (row.tagName === 'path') {
                 const colors = [];
-                if(row.properties?.fill){
-                    colors.push(row.properties.fill.toLocaleString());
+                if (row.properties?.fill) {
+                    colors.push(row.properties.fill.toString());
                 }
-
-                if(row.properties?.['fill-opacity']){
-                    colors.push(removeLeadingZero(row.properties?.['fill-opacity'].toString()));
+                if (row.properties?.['fill-opacity']) {
+                    colors.push(removeLeadingZero(row.properties['fill-opacity'].toString()));
                 }
-
                 curr.push(colors.join('_'));
-                return curr;
-            }else if(row.children && row.children.length > 0){
-                return getMultiColor(row.children);
+            }
+            // 遞迴收集所有子節點的 path 顏色
+            if (row.children && row.children.length > 0) {
+                curr.push(...getMultiColor(row.children));
             }
         }
         return curr;
@@ -45,7 +45,7 @@ const getMultiColor = (svgNode: Array<Node | string>): string[] => {
  * @param svgNode - SVG 节点数组
  * @returns 如果 SVG 包含多种颜色则返回 true，否则返回 false
  */
-export const checkIsSVGMultiColor = (svgNode: Array<Node | string>): boolean => {
+export const checkIsSVGMultiColor = (svgNode: Array<SVGNode | string>): boolean => {
     const fillColors = getMultiColor(svgNode);
     const colorLength = fillColors.filter(onlyUnique).length;
     return colorLength > 1;

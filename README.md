@@ -54,10 +54,9 @@ const newId = await this.iconSymbolService.create({
 });
 ```
 
-## Document
+## CLI Tools
 
-- [acrool-icon-symbols build-symbols](./docs/build-symbols.md)
-- [acrool-icon-symbols decode-iconfont](./docs/decode-iconfont.md)
+- [acrool-icon-symbols-cli](https://github.com/acrool/acrool-icon-symbols-cli)
 
 ## License
 
