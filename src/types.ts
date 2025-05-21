@@ -1,14 +1,3 @@
-import {Node} from 'svg-parser';
-import {
-    lowerCaseToLowerDashCase,
-    removeStartEnd,
-    removeUndefinedValues
-} from '@acrool/js-utils/string';
-
-
-
-
-
 
 export interface ISvgAttributes {
     // 通用屬性
@@ -102,23 +91,3 @@ export interface IDecodeSvgContentRes {
     defs: IDef[],
 }
 
-
-
-
-
-//
-// export const extractIdFromUrl: (input: string) => string | null;
-// export const extractId: (input: string) => string | null;
-// export const getAttr: (el: cheerio.Cheerio) => ISvgAttributes;
-// export const checkIsSVGMultiColor: (svgNode: Array<Node | string>) => boolean;
-// export const remarkDeepSVGPaths: (svgNode: Array<Node | string>, isMultiColor?: boolean) => string[]
-//
-//
-//
-//
-//
-//
-//
-// export const formatSvgContent: TFormatSvgContent;
-// export const decodeSymbols: TDecodeSymbols;
-// export const decodeSvgContent: TDecodeSvgContent;
