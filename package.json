@@ -49,7 +49,7 @@
         "release:alpha": "standard-version --prerelease alpha"
     },
     "dependencies": {
-        "@acrool/js-utils": "^3.2.20-alpha.2",
+        "@acrool/js-utils": "^3.2.25",
         "fast-xml-parser": "^5.2.1",
         "ulid": "2.3.0"
     },

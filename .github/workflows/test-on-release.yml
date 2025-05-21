@@ -1,33 +1,35 @@
 name: Test on Release
 
 on:
-    push:
-        branches:
-            - main
-            - develop
-        tags:
-            - 'v[0-9]+.[0-9]+.[0-9]+'
-    pull_request:
-        branches:
-            - main
-            - develop
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+'
+  pull_request:
+    branches:
+      - main
+      - develop
 
 jobs:
-    test:
-        if: github.event_name == 'push' || github.event_name == 'pull_request'
-        runs-on: ubuntu-latest
+  test:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
 
-        steps:
-            - uses: actions/checkout@v3
+    steps:
+      - uses: actions/checkout@v3
 
-            - name: Setup Node.js
-              uses: actions/setup-node@v3
-              with:
-                  node-version: '20'
-                  cache: 'yarn'
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'yarn'
 
-            - name: Install dependencies
-              run: yarn install --frozen-lockfile
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
 
-            - name: Run tests
-              run: yarn test
+      - name: Run tests
+        run: yarn test
+
+  

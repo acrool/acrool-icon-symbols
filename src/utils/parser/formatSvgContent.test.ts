@@ -164,4 +164,18 @@ describe('formatSvgContent', () => {
         ];
         expect(result.content).toEqual(expectedContent);
     });
+
+    it('應該過濾掉所有自定義屬性', () => {
+        const svgContent = `
+            <svg viewBox="0 0 24 24">
+                <path d="M0 0L10 10" fill="#000000" p-id="12345" data-foo="bar" foo-bar="baz"/>
+                <g p-id="g1" data-foo="bar">
+                  <rect x="1" y="1" width="10" height="10" foo-bar="baz"/>
+                </g>
+            </svg>
+        `;
+        const result = formatSvgContent(svgContent);
+        // content 會包含 path 和 g 及其子元素
+        expect(result.content && result.content.some(str => str.includes('p-id') || str.includes('data-foo') || str.includes('foo-bar'))).toBe(false);
+    });
 });

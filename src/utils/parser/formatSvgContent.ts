@@ -1,9 +1,11 @@
 import {objectKeys} from '@acrool/js-utils/object';
+
 import {IFormatSvgContentRes} from '../../types';
-import {decodeSvgContent} from './decodeSvgContent';
-import {formatAttrKeyValue, createTag} from '../common';
+import {createTag,formatAttrKeyValue} from '../common';
 import {formatSvgProperties} from '../path';
-import {formatChildren, formatDefs} from './defs/defsFormatter';
+import {SVG_ATTR_WHITELIST} from './config';
+import {decodeSvgContent} from './decodeSvgContent';
+import {formatChildren, formatDefs} from './defs';
 
 
 /**
@@ -23,7 +25,10 @@ export const formatSvgContent = (svgContent: string): IFormatSvgContentRes => {
 
     const formattedContent = content.flatMap(el => {
         const {fill, fillOpacity, stroke, ...pathAttr} = el.attr;
-        const attr = objectKeys(pathAttr).map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
+        // 只保留白名單屬性
+        const attr = objectKeys(pathAttr)
+            .filter(attrKey => SVG_ATTR_WHITELIST.includes(String(attrKey)))
+            .map(attrKey => formatAttrKeyValue(attrKey, pathAttr[attrKey]));
         const properties = formatSvgProperties(el.attr, isMultiColor);
         const children = el.children ? formatChildren(el.children, isMultiColor) : undefined;
 
